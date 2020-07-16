@@ -16,6 +16,7 @@
     }
   }
   &__details{
+    text-align: center;
     margin: 0;
     // background: $color-primary-blue;
     justify-content: space-between;
@@ -30,6 +31,7 @@
     }
     &-cart{
       display: inline-block;
+      display: none;
       position: absolute;
       right: 0;
       font-size: 4.1rem;
