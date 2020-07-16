@@ -17,6 +17,28 @@ class Static extends Component {
     render(){
         return(
             <main >
+               <div className="cart">
+                    <span className="cart__count">8</span>
+                    <label htmlFor="cart__checkbox" className="cart__label"><i className="fa fa-shopping-bag cart__icon" aria-hidden="true"></i></label>
+                    <input id="cart__checkbox" type="checkbox" className="cart__checkbox"/>
+                    <div className="cart__component">
+                         <ul className="cart__list">
+                            <li className="cart__list-item">kart item</li>
+                            <li className="cart__list-item">kart item</li>
+                            <li className="cart__list-item">kart item</li>
+                            <li className="cart__list-item">kart item</li>
+                         </ul>
+                    </div>
+
+                </div>
+
+               <div className="links">
+                  <ul className="links__list">
+                     <span className="links__list-item"><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/innerclanofficial/?igshid=gpgcb833gqme"><i class="fa fa-instagram" aria-hidden="true"></i></a></span>
+                     <span className="links__list-item"><a target="_blank" rel="noopener noreferrer"  href="https://www.instagram.com/innerclanofficial/?igshid=gpgcb833gqme"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+                     <span className="links__list-item"><a target="_blank" rel="noopener noreferrer"  href="https://www.instagram.com/innerclanofficial/?igshid=gpgcb833gqme"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+                  </ul>
+               </div>
 
                <nav className="nav">
                   <img className="nav__image" src={logo} alt="logo"/>
@@ -35,6 +57,7 @@ class Static extends Component {
                           <span className="dropdown__item">t-shirt</span>
                           <span className="dropdown__item">t-shirt</span>
                       </span></span>
+                      <span className="nav__list--item">Who are we?</span>
                   </div>
                   <div className="search">
                      <input className="search__checkbox" id="search" type="checkbox"/>
