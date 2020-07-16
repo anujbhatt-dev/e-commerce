@@ -1,0 +1,55 @@
+.card{
+  cursor: pointer;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  margin-bottom: 12rem;
+  width: 30rem;
+  box-shadow: 1rem 10rem 2rem $color-black;
+  transform: rotate3d(10, 10, 20, 5deg);
+  transition: all .5s;
+  &__image{
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 40rem;
+    width: 30rem;
+
+  }
+  &__details{
+    margin: 0;
+    background: $color-primary-blue;
+    justify-content: space-between;
+    color: $color-white;
+    font-size: 2.5rem;
+    &-name{
+      padding: 1.5rem;
+      text-align: center;
+    }
+    &-price{
+      padding: 1rem 2rem;
+      display: inline-block;
+    }
+    &-cart{
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      font-size: 4rem;
+      padding: .4rem;
+      background: $color-white;
+      color: $color-primary-blue;
+      // height: 100%;
+      &:hover{
+        color: $color-black;
+
+      }
+    }
+  }
+  &__priceBtn{
+    position: relative;
+    // display: flex;
+    // justify-content: center;
+  }
+  &:hover{
+    box-shadow: 0rem 0rem 2rem $color-black;
+    transform: rotate3d(0, 0, 0, 0deg);
+  }
+}

@@ -1,0 +1,10 @@
+.heading{
+   padding: 4rem;
+   display: flex;
+   justify-content: center;
+  &__span{
+    font-size: 6rem;
+    letter-spacing: 5px;
+    color: $color-primary-blue;
+  }
+}

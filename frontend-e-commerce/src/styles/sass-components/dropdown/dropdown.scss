@@ -1,0 +1,32 @@
+ .dropdown{
+    z-index: 5;
+    flex-flow: column;
+    position: absolute;
+    top:100%;
+    right: 0;
+    transition: all .2s;
+    background: $color-white;
+    &__item{
+      width: 15rem;
+      // display: none;
+      transition: all .3s;
+      text-align: center;
+      color:$color-grey-dark-3;
+
+      color:$color-primary-blue;
+      font-size: 0;
+      // transform: translate(-50%,-50%);
+      text-transform: capitalize;
+      &:hover{
+        background: $color-grey-light-2;
+      }
+    }
+    display: flex;
+ }
+.nav__list--item:hover > .dropdown{
+
+}
+.nav__list--item:hover > .dropdown > .dropdown__item{
+  font-size: 1.5rem;
+  padding: 1rem 2rem;
+}
