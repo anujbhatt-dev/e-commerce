@@ -11,9 +11,6 @@
     border-top-right-radius: 8px;
     height: 28rem;
     width: 25rem;
-    &:hover{
-      filter: hue-rotate(180deg);
-    }
   }
   &__details{
     text-align: center;
@@ -24,6 +21,15 @@
     font-size: 1.5rem;
     &-name{
       padding: 1rem;
+      font-weight: bold;
+    }
+
+    &-hr{
+      border: none;
+      border-bottom: 1px solid $color-black;
+      width: 0;
+      transition: all .5s;
+      margin: 0 auto;
     }
     &-price{
       padding: .5rem;
@@ -51,8 +57,16 @@
   }
   &:hover{
     box-shadow: 0rem 0rem 2rem rgba($color-black,.5);
+    & > .card__details > .card__details-hr{
+      width: 80%;
+
+    }
   }
   @include respond(phone){
     margin-right:5rem;
+    &__image{
+      height: 23rem;
+      width: 20rem;
+    }
   }
 }

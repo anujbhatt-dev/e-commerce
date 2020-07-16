@@ -21,7 +21,18 @@
     font-size: 2rem;
   }
   @include respond(phone){
-     flex-flow:column;
+     padding: 2rem 5rem;
+     &__ul{
+
+       &-li{
+         font-size: 3rem;
+         margin-left: 2rem;
+       }
+     }
+     &__image{
+       height: 20rem;
+       width: 20rem;
+     }
   }
 
 }

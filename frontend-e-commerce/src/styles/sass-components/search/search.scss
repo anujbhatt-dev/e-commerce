@@ -10,7 +10,7 @@
     height: 5rem;
     width: 5rem;
     padding-left: 2rem;
-    transition:border-radius .4s, width .5s;
+    transition: border-radius .4s, width .5s;
     border-radius: 10rem;
     color: transparent;
     right: 0;
@@ -21,6 +21,7 @@
       outline: none;
     }
     &:active{
+
       outline: none;
     }
     &::placeholder{
@@ -38,6 +39,7 @@
         border-radius: 0rem;
         width: 45rem;
         position: absolute;
+        border: 1px solid rgba($color-primary-blue,1);
         padding-right: 5rem;
         color: $color-black;
         @include respond(tab-port){
@@ -62,8 +64,12 @@
     padding: 0 1.5rem;
   }
   @include respond(phone){
-    align-self: flex-end;
+    // align-self: flex-end;
     width: 95%;
     // flex-shrink: 2;
+    // order:-1;
+    flex-basis: 45%;
+    position: relative;
+    top:1rem;
   }
 }

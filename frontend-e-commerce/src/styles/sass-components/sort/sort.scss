@@ -1,0 +1,11 @@
+.sort{
+  display: flex;
+  justify-content: space-between;
+  margin: 0 25rem;
+  align-items: center;
+
+  &__productCount{
+    font-size: 1.5rem;
+    margin-right: 2rem;
+  }
+}

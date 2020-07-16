@@ -1,6 +1,6 @@
 .bigImage{
    position: relative;
-   height: 76vh;
+   height: 60vh;
 
 
   &__image{
@@ -33,7 +33,7 @@
       width: 40%;
       font-size: 4rem;
       margin-left: 15rem;
-      transform: rotateY(35deg) rotate(4deg);
+      transform: rotateY(0deg) rotate(0deg);
       @include respond(tab-port){
         width: 50%;
         margin-left: 5rem;
@@ -42,6 +42,7 @@
 
     }
     &-span1{
+      display: none;
       font-size: 11rem;
       margin-bottom: 10rem;
       letter-spacing: 20px;

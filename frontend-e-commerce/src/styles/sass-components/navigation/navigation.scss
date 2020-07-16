@@ -18,30 +18,38 @@
       width: 15rem;
       margin: 1rem 2rem;
       padding: 1rem 2rem;
-      font-size: 2rem;
+      font-size: 1.5rem;
       text-transform: uppercase;
-      border-bottom: 3px solid rgba($color-white,.8);
+      // border-bottom: 3px solid rgba($color-primary-blue,.8);
       &:hover,&:active{
          color: $color-black;
-         background: $color-primary-blue;
+         background-image: linear-gradient(to bottom,$color-white 0%,$color-white 95%,$color-primary-blue 5%);
       }
    }
   }
   &__image{
      height: 8rem;
      width: 18rem;
-     margin-left: 2rem;
+     margin:  .5rem;
      cursor: pointer;
   }
    @include respond(phone){
+     margin: 0;
      flex-flow: column;
      align-items: stretch;
+     flex-wrap: wrap;
      & > *{
-     height: 8rem;
-     padding: 1rem 2rem;
+     height: 6rem;
+     padding: 0;
+     margin: 0;
      }
      &__image{
+       width: 50%;
        align-self: center;
+     }
+     &__list{
+       padding: 0;
+       margin: 0;
      }
    }
 }
