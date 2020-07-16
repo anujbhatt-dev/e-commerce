@@ -7,29 +7,32 @@ import thomas from "../../assets/images/thomas_for_ig.jpg"
 import final from "../../assets/images/final_template.jpg"
 import tshirt from "../../assets/images/t-shirt.jpg"
 import go from "../../assets/images/goLogo.png"
-
+import Modal from "../../UI/modal/modal"
+import Backdrop from "../../UI/backdrop/backdrop"
 
 
 class Static extends Component {
 
+  state={
+    show:true
+  }
 
+  modalToggleHandler=()=>{
+     console.log("in");
+     if(this.state.show){
+       this.setState({show:false})
+     }else{
+       this.setState({show:true})
+     }
+  }
 
     render(){
         return(
+          <>
             <main >
                <div className="cart">
                     <span className="cart__count">8</span>
-                    <label htmlFor="cart__checkbox" className="cart__label"><i className="fa fa-shopping-bag cart__icon" aria-hidden="true"></i></label>
-                    <input id="cart__checkbox" type="checkbox" className="cart__checkbox"/>
-                    <div className="cart__component">
-                         <ul className="cart__list">
-                            <li className="cart__list-item">kart item</li>
-                            <li className="cart__list-item">kart item</li>
-                            <li className="cart__list-item">kart item</li>
-                            <li className="cart__list-item">kart item</li>
-                         </ul>
-                    </div>
-
+                    <label onClick={this.modalToggleHandler} htmlFor="cart__checkbox" className="cart__label"><i className="fa fa-shopping-bag cart__icon" aria-hidden="true"></i></label>
                 </div>
 
                <div className="links">
@@ -296,6 +299,11 @@ class Static extends Component {
 
                </div>
 
+
+               <div style={{display:"flex",justifyContent:"center"}}>
+                   <button onClick={this.modalToggleHandler} style={{padding:"2rem",fontSize:"3ren",margin:"1rem auto"}}>Modal</button>
+               </div>
+
                <footer className="footer">
                       <ul className="footer__ul">
                          <li className="footer__ul-li">bla bla bla</li>
@@ -307,6 +315,13 @@ class Static extends Component {
                </footer>
 
             </main>
+            <Modal show={this.state.show}>
+                  <div style={{fontSize:"2rem"}}>
+                      modal
+                  </div>
+            </Modal>
+            <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>
+          </>
         )
     }
 }
