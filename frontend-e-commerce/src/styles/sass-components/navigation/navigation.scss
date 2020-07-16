@@ -1,7 +1,6 @@
 .nav{
+   padding: 5rem 2rem;
    z-index: 1000;
-   position: sticky;
-   top:0;
    display: flex;
    background: $color-white;
   &__list{
