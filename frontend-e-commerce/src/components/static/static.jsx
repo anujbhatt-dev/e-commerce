@@ -253,7 +253,7 @@ class Static extends Component {
                          <li className="footer__ul-li">bla</li>
                       </ul>
                      <img className="footer__image" src={go} alt=""/>
-                     <div className="footer__copyright">&copy; copyright inner clan designs</div>
+                     <div className="footer__copyright">&copy; copyright 2020 inner clan designs</div>
                </footer>
 
             </main>

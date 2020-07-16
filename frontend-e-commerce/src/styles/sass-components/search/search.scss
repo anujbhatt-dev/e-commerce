@@ -15,7 +15,7 @@
     color: transparent;
     right: 0;
     position: absolute;
-    border: none;
+    border: 1px solid rgba($color-black,.5);
 
     &:focus{
       outline: none;

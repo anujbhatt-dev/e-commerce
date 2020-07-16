@@ -10,15 +10,15 @@
 }
 
 ::-webkit-scrollbar{
-   width: 2rem;
+   // width: 2rem;
 }
 
 ::-webkit-scrollbar-track{
 }
 
 ::-webkit-scrollbar-thumb{
-  background: $color-primary-blue;
-  border-radius: 1000px;
+  // background: $color-primary-blue;
+  // border-radius: 1000px;
 }
 
 html{
@@ -46,5 +46,4 @@ body{
   padding: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  background: rgba($color-primary-blue,.2);
 }

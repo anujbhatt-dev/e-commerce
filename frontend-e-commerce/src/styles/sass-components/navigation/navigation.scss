@@ -3,9 +3,8 @@
    position: sticky;
    top:0;
    display: flex;
-   background: $color-primary-blue;
+   background: $color-white;
   &__list{
-    color: $color-white;
     position: relative;
     flex-grow: 1;
     display: flex;
@@ -22,8 +21,8 @@
       text-transform: uppercase;
       border-bottom: 3px solid rgba($color-white,.8);
       &:hover,&:active{
-         color: $color-primary-blue;
-         background: $color-white;
+         color: $color-black;
+         background: $color-primary-blue;
       }
    }
   }
