@@ -28,7 +28,7 @@
     }
   }
   &__icon{
-    font-size: 3rem;
+    font-size: 2rem;
 
   }
   &__checkbox{
@@ -59,7 +59,7 @@
     justify-content: center;
     cursor: pointer;
     align-items: center;
-    padding-right: 1rem;
+    padding: 0 1.5rem;
   }
   @include respond(phone){
     align-self: flex-end;
