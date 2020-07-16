@@ -1,8 +1,8 @@
 .cart{
   position: fixed;
-  top:15rem;
   z-index: 10000;
-  left:1rem;
+  top:15%;
+  left:1%;
   &__label{
     font-size:2rem;
     z-index: 2100;
@@ -46,5 +46,9 @@
      &:checked + .cart__component{
 
      }
+  }
+  @include respond(phone){
+    top:88%;
+    left:80%;
   }
 }

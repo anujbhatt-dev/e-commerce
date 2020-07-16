@@ -64,8 +64,8 @@
     padding: 0 1.5rem;
   }
   @include respond(phone){
-    // align-self: flex-end;
-    width: 95%;
+    align-self: flex-end;
+    width: 75%;
     // flex-shrink: 2;
     // order:-1;
     flex-basis: 45%;
