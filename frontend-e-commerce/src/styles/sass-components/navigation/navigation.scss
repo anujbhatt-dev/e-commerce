@@ -7,12 +7,13 @@
    top: 0;
   &__list{
     position: relative;
+    // left: -4rem;
     flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
    &--item{
+      cursor: pointer;
       position: relative;
       text-align: center;
       width: 15rem;
@@ -25,13 +26,29 @@
          color: $color-black;
          background-image: linear-gradient(to bottom,$color-white 0%,$color-white 95%,$color-primary-blue 5%);
       }
+      &-modifier{
+        width: 20rem
+      }
    }
   }
   &__image{
+     position: relative;
+     top:-2rem;
      height: 8rem;
-     width: 18rem;
+     width: 25rem;
      margin:  .5rem;
      cursor: pointer;
+  }
+  @include respond(tab-port){
+    &__list{
+      &--item{
+        margin: 0 1rem;
+        width:12rem;
+        &-modifier{
+          width:18rem;
+        }
+      }
+    }
   }
    @include respond(phone){
      margin: 0;
@@ -44,14 +61,19 @@
      // margin: 0;
      }
      &__image{
-
+        top:0rem;
        align-self: center;
      }
      &__list{
        padding: 0;
+       // align-self: center;
        margin: 0;
        &--item{
          margin: 0;
+         width:12rem;
+         &-modifier{
+           width:18rem;
+         }
        }
      }
    }

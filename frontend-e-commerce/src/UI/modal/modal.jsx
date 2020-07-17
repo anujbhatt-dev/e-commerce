@@ -10,8 +10,10 @@
      console.log("in modal");
      let modal=null
      if(this.props.show){
-       modal=<div style={{fontSize:"10rem"}} className="modal">
+       modal=<div
+        className="modal">
                   {this.props.children}
+                  <i onClick={this.props.clicked} className="fa fa-times modalCross" aria-hidden="true"></i>
               </div>
      }
      return (

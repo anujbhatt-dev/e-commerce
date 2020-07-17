@@ -48,3 +48,9 @@ body{
   overflow-y: auto;
   overflow-x: hidden;
 }
+a{
+  color:black;
+}
+a:focus,a:hover{
+  color: $color-primary-blue;
+}

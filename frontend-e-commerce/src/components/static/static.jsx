@@ -14,7 +14,7 @@ import Backdrop from "../../UI/backdrop/backdrop"
 class Static extends Component {
 
   state={
-    show:true
+    show:false
   }
 
   modalToggleHandler=()=>{
@@ -60,7 +60,7 @@ class Static extends Component {
                           <span className="dropdown__item">t-shirt</span>
                           <span className="dropdown__item">t-shirt</span>
                       </span></span>
-                      <span className="nav__list--item">Who are we?</span>
+                      <span className="nav__list--item  nav__list--item-modifier">Who are we?</span>
                   </div>
                   <div className="search">
                      <input className="search__checkbox" id="search" type="checkbox"/>
@@ -97,7 +97,7 @@ class Static extends Component {
 
                <div className="feature">
 
-                     <div className="card">
+                     <div onClick={this.modalToggleHandler} className="card">
                          <img className="card__image" src={sidhu} alt="thomas"/>
                          <div className="card__details">
                             <div className="card__details-name">
@@ -301,12 +301,21 @@ class Static extends Component {
 
 
                <div style={{display:"flex",justifyContent:"center"}}>
-                   <button onClick={this.modalToggleHandler} style={{padding:"2rem",fontSize:"3ren",margin:"1rem auto"}}>Modal</button>
+                   <div className="pagination">
+                        <span className="pagination__minus">-</span>
+                        <span className="pagination__pageNumber">1/3</span>
+                        <span className="pagination__plus">+</span>
+                   </div>
                </div>
 
                <footer className="footer">
                       <ul className="footer__ul">
-                         <li className="footer__ul-li">bla bla bla</li>
+                         <li className="footer__ul-li">
+                            <div className="subscribe">
+                                <input placeholder="subscribe to my Newsletter" className="subscribe__input" type="text"/>
+                                <button className="subscribe__btn" type="submit">subscribe</button>
+                            </div>
+                         </li>
                          <li className="footer__ul-li">bla bla</li>
                          <li className="footer__ul-li">bla</li>
                       </ul>
@@ -315,10 +324,74 @@ class Static extends Component {
                </footer>
 
             </main>
-            <Modal show={this.state.show}>
-                  <div style={{fontSize:"2rem"}}>
-                      modal
+            <Modal clicked={this.modalToggleHandler} show={this.state.show}>
+                  <span className="productsTogglerLeft"> {"<"} </span>
+                  <div className="product">
+                      <div className="product__imageBox">
+                          <ul className="product__imageBox--angle">
+                             <li className="product__imageBox--angle-item"><img src={sidhu} alt="angle-1"/></li>
+                             <li className="product__imageBox--angle-item"><img src={sidhu} alt="angle-2"/></li>
+                             <li className="product__imageBox--angle-item"><img src={sidhu} alt="angle-3"/></li>
+                             <li className="product__imageBox--angle-item"><img src={sidhu} alt="angle-3"/></li>
+                          </ul>
+                          <div className="product__imageBox--angle-image"><img src={sidhu} alt="selected image"/></div>
+                      </div>
+                      <div className="product__details">
+                         <div className="product__details--name">
+                             SLEEPING SHEEP UNISEX HOODED SWEATSHIRT
+                         </div>
+                         <div className="product__details--price">
+                             <span className="product__details--price-actualPrice">₹ 1,899.00 </span>
+                             <span className="product__details--price-salePrice"> ₹ 1,199.00</span>
+                             <span className="product__details--price-savePrice"> Save ₹ 700.00</span>
+                         </div>
+                         <div className="product__details--similar">
+                            <div className="product__details--similar-item">
+                                <img src={sidhu} alt="image"/>
+                                <div className="product__details--similar-color">red</div>
+                            </div>
+                            <div className="product__details--similar-item">
+                                <img src={sidhu} alt="image"/>
+                                <div className="product__details--similar-color">blue</div>
+                            </div>
+                            <div className="product__details--similar-item">
+                                <img src={sidhu} alt="image"/>
+                                <div className="product__details--similar-color">yellow</div>
+                            </div>
+                         </div>
+                         <div className="product__details--aspect">
+                         <div className="nav__list--item product__details--aspect-size">Size
+                         <span className="dropdown">
+                             <span className="dropdown__item">S</span>
+                             <span className="dropdown__item">M</span>
+                             <span className="dropdown__item">L</span>
+                             <span className="dropdown__item">XL</span>
+                             <span className="dropdown__item">XXL</span>
+                         </span></div>
+                         <div className="nav__list--item product__details--aspect-quantity">Quantity
+                         <span className="dropdown">
+                             <span className="dropdown__item">
+                                <span className="product__details--aspect-quantity--minus">-</span>
+                                <span className="product__details--aspect-quantity--amount">2</span>
+                                <span className="product__details--aspect-quantity--plus">+</span>
+                             </span>
+                         </span></div>
+                         </div>
+                         <div className="product__details--cart">
+                             <div className="nav__list--item product__details--cart-btn">Add to cart</div>
+                         </div>
+                         <div className="product__details--comment">
+                             <div className="product__details--comment-head">Nothing better than some fresh Coca...</div>
+                             <ul className="product__details--comment-list">
+                               <li className="product__details--comment-item">PREMIUM CREW NECK</li>
+                               <li className="product__details--comment-item">100% BIO WASHED COTTON</li>
+                               <li className="product__details--comment-item">DTG PRINT</li>
+                               <li className="product__details--comment-item">MACHINE WASH</li>
+                             </ul>
+                         </div>
+                      </div>
                   </div>
+                  <span className="productsTogglerRight">{">"}</span>
             </Modal>
             <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>
           </>

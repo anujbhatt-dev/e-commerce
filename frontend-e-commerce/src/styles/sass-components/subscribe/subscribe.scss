@@ -1,0 +1,43 @@
+.subscribe{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+  &__input{;
+    height:5rem;
+    border: none;
+    outline: none;
+    padding: 1rem;
+    border-bottom:5px solid $color-black;
+    width: 35rem;
+    transition: all .2s;
+    @include respond(phone){
+      width: 20rem;
+      height: 5rem;
+    }
+  }
+  &__btn{
+    height:5rem;
+    border: none;
+    outline: none;
+    padding: 1rem;
+    margin-right: -25rem;
+    border-bottom:5px solid $color-black;
+    transition: all .2s;
+    cursor: pointer;
+    &:hover{
+       background: $color-black;
+       color: $color-white;
+    }
+    &:active{
+       font-size: 1rem;
+    }
+    @include respond(phone){
+      // width: 8rem;
+      height: 5rem;
+      margin-right: 0rem;
+    }
+  }
+}
+.subscribe__input:placeholder-shown{
+   border-bottom:5px solid $color-white;
+}

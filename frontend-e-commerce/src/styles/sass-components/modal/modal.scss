@@ -5,35 +5,39 @@
   position:fixed;
   transform: translate(-50%,-50%);
   background: linear-gradient(90deg, rgba(237,233,233,1) 0%, rgba(255,255,255,1) 50%, rgba(237,233,233,1) 100%);
-  width:50%;
-  height:70%;
+  width:85%;
+  height:90%;
   z-index: 500;
   top:50%;
   left: 50%;
-  box-shadow: 0rem 0rem 1rem rgba($color-white,.5);
-  padding: 1rem;
-  border-radius: 10px;
   font-size: 2rem;
-  animation: modal .8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  @include respond(tab-port){
-    width:90%;
-    height:80%;
-  }
+  animation: modal .3s ease-out;
 }
 @keyframes modal {
     0%{
       top:-10%;
-    }
-    25%{
-      top:53%;
-    }
-    50%{
-      top:47%;
-    }
-    75%{
-      top:53%;
+      opacity: 0.5;
     }
     100%{
       top:50%;
+      opacity: 1;
     }
+}
+.modalCross{
+  position: absolute;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  background:$color-white;
+  bottom: 1rem;
+  right:1rem;
+  padding: 1rem 1.3rem;
+  box-shadow: 0 0 1rem $color-black;
+  border-radius: 50%;
+  transition: all .2s;
+  &:hover,&:active{
+    border-bottom: 20px solid $color-primary-blue;
+    background: $color-black;
+    color: $color-white;
+    box-shadow: 0 0 0rem $color-black;
+  }
 }
