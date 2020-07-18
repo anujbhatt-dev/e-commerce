@@ -1,0 +1,249 @@
+.product{
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-start;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  font-size: 2rem;
+   padding: 1rem;
+   &::-webkit-scrollbar{
+     width: 1.5rem;
+   }
+   &::-webkit-scrollbar-track{
+     background: $color-white;
+   }
+   &::-webkit-scrollbar-thumb{
+     background: rgba($color-grey,.7);
+   }
+}
+
+
+
+
+
+
+
+.product{
+  &__imageBox{
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    &--angle{
+      list-style: none;
+      &-item{
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+        height: 10rem;
+        width: 10rem;
+        & img{
+          height: 100%;
+          width: 100%;
+        }
+      }
+      &-image{
+        height: 60rem;
+        width: 60rem;
+        margin-bottom: 2rem;
+        & img{
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+  }
+  &__details{
+    text-align: center;
+    flex-grow: 1;
+    &--name{
+      font-size: 3rem;
+      font-weight: 1000;
+      margin-bottom: 1rem;
+    }
+    &--price{
+      font-weight: 100;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      &-actualPrice{
+        text-decoration: line-through;;
+      }
+      &-salePrice{
+        margin: 0 1rem;
+      }
+      &-savePrice{
+        font-size: 1.5rem;
+        color: $color-orangered;
+      }
+    }
+    &--similar{
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      &-item{
+        cursor: pointer;
+        margin: 0 3rem;
+        &:hover >  .product__details--similar-color{
+          border-bottom: 2px solid $color-primary-blue;
+        }
+        @include respond(phone){
+          margin: 0 1rem;
+        }
+       & img{
+         height: 10rem;
+         width: 10rem;
+       }
+      }
+      &-color{
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        padding-bottom: .5rem;
+        border-bottom: 2px solid transparent;
+        transition: all .3s;
+      }
+
+
+    }
+    &--aspect{
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+      &-size{
+
+        background-color: rgba($color-black,.03);
+      }
+      &-quantity{
+        background-color: rgba($color-black,.03);
+        display: flex;
+        justify-content: center;
+        &--minus{
+          margin: 0 1rem;
+          padding:0 .5rem;
+          &:hover{
+            background: rgba($color-black,.1);
+          }
+        }
+        &--amount{
+          margin: 0 1rem;
+          padding:0 .5rem;
+          &:hover{
+          }
+        }
+        &--plus{
+          margin: 0 1rem;
+          padding:0 .5rem;
+          &:hover{
+            background: rgba($color-black,.1);
+          }
+        }
+      }
+    }
+    &--cart{
+      margin-bottom: 2rem;
+       display: flex;
+       justify-content: center;
+       &-btn{
+         width: 20rem;
+         background-color: $color-black;
+         color: $color-white;
+       }
+    }
+    &--comment{
+      text-align: left;
+      margin:  0 8rem;
+      &-head{
+        font-family: cursive;
+        font-weight: bolder;
+      }
+      &-list{
+        margin-left: 2rem;
+        margin-top: 2rem;
+        font-size: 1.5rem;
+      }
+      &-item{
+         margin-bottom: .5rem;
+      }
+    }
+  }
+  @include respond(tab-port){
+    flex-flow: column;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+@include respond(phone){
+  .product{
+    &::-webkit-scrollbar{
+      display: none;
+    }
+    &__imageBox{
+      flex-grow: 1;
+      &--angle{
+        height: 40rem;
+        margin-bottom: 2rem;
+        overflow: scroll;
+        display: flex;
+        flex-wrap: nowrap;
+        &-item{
+           height: 100%;
+           width: 100%;
+           margin: 0 .1rem;
+           & img{
+             width: 41rem;
+           }
+        }
+        &-image{
+          display:none;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.productsTogglerLeft{
+   cursor: pointer;
+   position: absolute;
+   left: -6rem;
+   color: $color-black;
+   font-size: 5rem;
+   font-weight: bolder;
+   @include respond(phone){
+     left: -3rem;
+     font-size: 4rem;
+   }
+}
+.productsTogglerRight{
+   cursor: pointer;
+  position: absolute;
+  right: -6rem;
+  color: $color-black;
+  font-size: 5rem;
+  font-weight: bolder;
+  @include respond(phone){
+    right: -3rem;
+    font-size: 4rem;
+  }
+}
