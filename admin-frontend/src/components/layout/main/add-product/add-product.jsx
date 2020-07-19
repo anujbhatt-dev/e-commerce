@@ -145,6 +145,7 @@ this.setState({savingProduct:true})
                className="addProduct__form--name"
                placeholder="product price"
                type="text"/>
+               
                <label className="addProduct__form--imageLabel" htmlFor="productFormImage">
                 {
                   <i className="fa fa-camera" aria-hidden="true"></i>
