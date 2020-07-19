@@ -95,6 +95,20 @@ this.setState({savingProduct:true})
     });
     }
 
+    imageSavedHandler=()=>{
+      this.setState({
+        stage:0,
+        productForm:{
+          productName:"",
+          comment:"",
+          actualPrice:"",
+          productPrice:"",
+          image:"",
+          catagory:""
+        }
+      })
+    }
+
    render(){
 
      let header=(
@@ -163,7 +177,7 @@ this.setState({savingProduct:true})
       <img src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt=""/>
       
       {this.state.savedColors.map(color=>
-          <AddImages id={color.id} name={color.colorName}/>
+          <AddImages imageSaved={this.imageSavedHandler} id={color.id} name={color.colorName}/>
       )}
       </div>
      )

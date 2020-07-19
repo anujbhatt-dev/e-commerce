@@ -12,6 +12,7 @@ class AddColor extends Component {
     componentDidUpdate=()=>{
         if(this.state.addingColors){
             let productId=this.props.productId;
+            console.log(this.state.colors.length);
         axios.post("/v1/admin/product/addColors/"+productId,this.state.colors).
         then(res=>{
             console.log(res.data);
@@ -39,14 +40,7 @@ class AddColor extends Component {
         })
     }
 
-    onChangeHandler=(e)=>{
 
-    let newColors=[];
-    newColors.push(e.target.value);
-    this.setState({
-        colors:newColors, 
-    })
-  }
 
 
 
@@ -54,6 +48,7 @@ class AddColor extends Component {
         return (
             <div>
                 <input type="text" onChange={this.onChangeHandler}/>
+                <input type="text" onChange={this.onChangeHandler2}/>
                 <button onClick={this.submitHandler} >SUBMIT</button>
             </div>
         )
