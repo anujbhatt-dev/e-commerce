@@ -17,16 +17,19 @@ class AddImages extends Component {
     componentDidUpdate=()=>{
 
         let i=0;
-        if(this.state.addingImage)
+        if(this.state.addingImage){
 
         for ( i=0;i<this.state.images.length;i++){
             let formData = new FormData();
             formData.append("file",this.state.images[i]);
             axios.post("/v1/admin/product/addColorImage/"+this.props.id,formData).
-            then(        res=>{console.log(res.data)
+            then(       
+                
+                  res=>{console.log(res.data)
                        this.setState({addingImage:false})}).
                        catch(err=>{alert("err")})
         }
+    }
 
     }
 

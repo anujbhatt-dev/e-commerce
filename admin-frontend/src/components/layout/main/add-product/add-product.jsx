@@ -65,7 +65,6 @@ import AddImages from "./add-color/add-image/add_image"
     }
 
     colorsSaved=(colors)=>{
-      console.log("STAGE 22")
       this.setState({
         stage:2,
         savedColors:colors
@@ -197,7 +196,7 @@ this.setState({savingProduct:true})
        alignItems:"flex-start"
      }
 
-     if(this.state.stage==1)
+     if(this.state.stage===1)
      header=(
       <div className="">
          <input disabled="true" className="addProduct__form--name" value={this.state.savedProduct.productName}/>
@@ -205,7 +204,7 @@ this.setState({savingProduct:true})
         <AddColor productId={this.state.savedProduct.id} colorsSaved={this.colorsSaved}/>
       </div>
      )
-     else if(this.state.stage==2)
+     else if(this.state.stage===2)
      header=(<div  style={style}>
         <div>
           <input disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.productName}/>
@@ -214,7 +213,7 @@ this.setState({savingProduct:true})
       </div>
         <div  style={style2}>
             {this.state.savedColors.map(color=>
-                <AddImages imageSaved={this.imageSavedHandler} id={color.id} name={color.colorName}/>
+                <AddImages  id={color.id} name={color.colorName}/>
             )}
         </div>
       </div>
