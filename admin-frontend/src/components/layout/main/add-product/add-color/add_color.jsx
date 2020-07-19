@@ -5,7 +5,7 @@ class AddColor extends Component {
    
    
     state={
-        colors:[],
+        colors:["red","yellow"],
         addingColors:false,
     }
 
@@ -40,6 +40,10 @@ class AddColor extends Component {
         })
     }
 
+    // onChangeHandler=()=>{
+    //     newCo
+    // }
+
 
 
 
@@ -47,8 +51,8 @@ class AddColor extends Component {
     render() {
         return (
             <div>
-                <input type="text" onChange={this.onChangeHandler}/>
-                <input type="text" onChange={this.onChangeHandler2}/>
+                <input type="text" />
+                <input type="text" />
                 <button onClick={this.submitHandler} >SUBMIT</button>
             </div>
         )

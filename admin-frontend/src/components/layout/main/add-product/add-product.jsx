@@ -60,6 +60,7 @@ import AddImages from "./add-color/add-image/add_image"
     }
 
     colorsSaved=(colors)=>{
+      console.log("STAGE 22")
       this.setState({
         stage:2,
         savedColors:colors
