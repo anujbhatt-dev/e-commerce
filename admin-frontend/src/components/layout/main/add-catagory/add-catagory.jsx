@@ -21,7 +21,7 @@
        information:[...this.state.information],
      }
      if(this.state.catagorySaving){
-        axios.post("/v1/admin/catagory",newState).then(res=>{
+        axios.post("/v1/admin/category",newState).then(res=>{
           this.setState({
               name:"",
               gender:"M",
