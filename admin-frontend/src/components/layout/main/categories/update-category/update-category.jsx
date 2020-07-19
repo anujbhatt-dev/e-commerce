@@ -81,11 +81,16 @@ class UpdateCategory extends Component{
              alert("something went wrong the team......!!!!")
              }
            })
+           this.props.history.push("/addCategory",{index:this.props.location.state.index,id:this.state.id})
         }
       }
 
       deleteHandler=(e)=>{
-        this.setState({deleting:true})
+        if(window.confirm("are you sure?")){
+          this.setState({deleting:true})
+        }else{
+          return this.props.history.push("/categories");
+        }
         e.preventDefault();
       }
 
