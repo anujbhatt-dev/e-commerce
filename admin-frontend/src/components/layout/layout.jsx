@@ -19,9 +19,9 @@ import {Link} from "react-router-dom"
                     <ul className="nav__list">
                          <Link to="/orders"><li className="nav__list--item">orders</li></Link>
                          <Link to="/products"><li className="nav__list--item">Products</li></Link>
-                         <Link to="/catagories"><li className="nav__list--item">Catagories</li></Link>
+                         <Link to="/categories"><li className="nav__list--item">Categories</li></Link>
                          <Link to="/addProduct"><li className="nav__list--item">Add product</li></Link>
-                         <Link to="/addCatagory"><li className="nav__list--item">add Catagory</li></Link>
+                         <Link to="/addCategory"><li className="nav__list--item">add category</li></Link>
                          <Link to="/subscribe"><li className="nav__list--item">subscribe</li></Link>
                          <Link to="/clients"><li className="nav__list--item">clients</li></Link>
                     </ul>

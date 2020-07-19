@@ -10,7 +10,7 @@
          actualPrice:"",
          price:"",
          image:"",
-         catagory:""
+         category:""
        },
        productSaved:false,
        colors:[]

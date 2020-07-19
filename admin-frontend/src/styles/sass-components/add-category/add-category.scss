@@ -1,4 +1,4 @@
-.addCatagory{
+.addCategory{
   display: flex;
   width: 80%;
   padding: 5rem;
@@ -90,7 +90,7 @@
        }
      }
   }
-  &__savedCatagory{
+  &__savedCategory{
     padding: 5rem;
     background: rgba($color-grey,.002);
     &--name{
