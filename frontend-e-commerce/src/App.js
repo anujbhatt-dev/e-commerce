@@ -1,10 +1,10 @@
 import React from 'react';
 import "./App.scss"
-import Static from "./components/static/static"
+import Layout from "./components/layout/layout"
 
 const App=()=> {
   return (
-    < Static/>
+    <Layout />
   );
 }
 
