@@ -95,6 +95,20 @@ this.setState({savingProduct:true})
     });
     }
 
+    imageSavedHandler=()=>{
+      this.setState({
+        stage:0,
+        productForm:{
+          productName:"",
+          comment:"",
+          actualPrice:"",
+          productPrice:"",
+          image:"",
+          catagory:""
+        }
+      })
+    }
+
    render(){
 
      let header=(
@@ -131,6 +145,7 @@ this.setState({savingProduct:true})
                className="addProduct__form--name"
                placeholder="product price"
                type="text"/>
+               
                <label className="addProduct__form--imageLabel" htmlFor="productFormImage">
                 {
                   <i className="fa fa-camera" aria-hidden="true"></i>
@@ -163,7 +178,7 @@ this.setState({savingProduct:true})
       <img src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt=""/>
 
       {this.state.savedColors.map(color=>
-          <AddImages id={color.id} name={color.colorName}/>
+          <AddImages imageSaved={this.imageSavedHandler} id={color.id} name={color.colorName}/>
       )}
       </div>
      )
