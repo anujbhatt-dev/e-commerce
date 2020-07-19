@@ -13,7 +13,7 @@ import AddImages from "./add-color/add-image/add_image"
          actualPrice:"",
          productPrice:"",
          image:"",
-         catagory:""
+         category:""
        },
        stage:0,
        savingProduct:false,
@@ -21,6 +21,8 @@ import AddImages from "./add-color/add-image/add_image"
        savedColors:[],
        categories:[]
     }
+
+
 
 
     componentDidUpdate=()=>{
@@ -33,17 +35,19 @@ import AddImages from "./add-color/add-image/add_image"
         productPrice:this.state.productForm.productPrice,
        }
        const formData= new FormData();
+       console.log(this.state.productForm.category);
        formData.append("file",this.state.productForm.image);
-        axios.post("/v1/admin/product/addProduct/1",formData,{
+        axios.post("/v1/admin/product/addProduct/"+this.state.productForm.category,formData,{
           params:params
         })
         .then(res=>{
-                     this.setState({savingProduct:false,stage:1,savedProduct:res.data});                          
+                    console.log(res.data);
+                     this.setState({savingProduct:false,stage:1,savedProduct:res.data});
         }).
         catch(err=>{
           console.log(err)
           alert(err.response.data[0]);
-          this.setState({savingProduct:false});                          
+          this.setState({savingProduct:false});
 
         })
       }
@@ -52,11 +56,12 @@ import AddImages from "./add-color/add-image/add_image"
     componentDidMount=()=>{
     axios.get("/v1/admin/category").
     then(res=>{
+      console.log(res.data);
       this.setState({categories:res.data});
        }).
     catch(err=>{
       alert("error");
-    })  
+    })
     }
 
     colorsSaved=(colors)=>{
@@ -111,13 +116,27 @@ this.setState({savingProduct:true})
     }
 
    render(){
+     let categories = null;
+     if(this.state.categories.length!==0){
+       categories = <select
+       className="addCategory__form--select"
+       onChange={this.onChangeHandler}
+       value={this.state.productForm.category}
+       name="category"
+       id="gender">
+       <option className="addCategory__form--select-option">{ "select category"}</option>
+       {this.state.categories.map((category,i)=>{
+        return <option key={category.id} className="addCategory__form--select-option" value={category.id}>{ category.name+"---"+category.gender}</option>
+       })}
+       </select>
+     }
 
      let header=(
        <div className="addProduct">
           <form className="addProduct__form" onSubmit={this.onSubmitHandler}>
                <input
                name="productName"
-               required 
+               required
                onChange={this.onChangeHandler}
                value={this.state.productForm.productName}
                className="addProduct__form--name"
@@ -146,7 +165,7 @@ this.setState({savingProduct:true})
                className="addProduct__form--name"
                placeholder="product price"
                type="text"/>
-               
+               {categories}
                <label className="addProduct__form--imageLabel" htmlFor="productFormImage">
                 {
                   <i className="fa fa-camera" aria-hidden="true"></i>
@@ -164,25 +183,45 @@ this.setState({savingProduct:true})
        </div>
      )
 
+     let style={
+       width:"100%",
+       display:"flex"
+     }
+
+     let style2={
+       flexGrow:"1",
+       display:"flex",
+       padding:".5rem 1rem",
+       flexWrap:"wrap",
+       margin:".1rem",
+       alignItems:"flex-start"
+     }
+
      if(this.state.stage==1)
      header=(
-      <div>
-        name:{this.state.savedProduct.productName}
-        <img src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt=""/>
+      <div className="">
+         <input disabled="true" className="addProduct__form--name" value={this.state.savedProduct.productName}/>
+         <img className="stage1__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
         <AddColor productId={this.state.savedProduct.id} colorsSaved={this.colorsSaved}/>
       </div>
      )
      else if(this.state.stage==2)
-     header=(<div>
-      name:{this.state.savedProduct.productName}
-      ID:{this.state.savedProduct.id}
-      <img src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt=""/>
-      
-      {this.state.savedColors.map(color=>
-          <AddImages imageSaved={this.imageSavedHandler} id={color.id} name={color.colorName}/>
-      )}
+     header=(<div  style={style}>
+        <div>
+          <input disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.productName}/>
+          <input  disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.id}/>
+          <img className="stage1__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
+      </div>
+        <div  style={style2}>
+            {this.state.savedColors.map(color=>
+                <AddImages imageSaved={this.imageSavedHandler} id={color.id} name={color.colorName}/>
+            )}
+        </div>
       </div>
      )
+
+     if(this.state.categories.length===0)
+     header=<h2>You don't have any category saved</h2>
 
      return header
    }

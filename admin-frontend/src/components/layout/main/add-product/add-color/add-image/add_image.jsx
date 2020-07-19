@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
- 
+import Spinner from "../../../../../../UI/spinner/spinner"
+
 class AddImages extends Component {
 
 
@@ -9,7 +10,7 @@ class AddImages extends Component {
         images:[],
         addingImage:false,
         imageAdded:false,
-        
+
     }
 
 
@@ -17,7 +18,7 @@ class AddImages extends Component {
 
         let i=0;
         if(this.state.addingImage)
-        
+
         for ( i=0;i<this.state.images.length;i++){
             let formData = new FormData();
             formData.append("file",this.state.images[i]);
@@ -26,11 +27,11 @@ class AddImages extends Component {
                        this.setState({addingImage:false})}).
                        catch(err=>{alert("err")})
         }
-     
+
     }
 
 uploadHandler=(event)=>{
-  
+
     let images=[]
 
     for(let i=0; i<event.target.files.length;i++)
@@ -49,12 +50,21 @@ submitHandler=()=>{
 
 
     render() {
-        
+       let style={
+         margin:"1rem"
+       }
         return (
-            <div>
-                Color:{this.props.name}
-                <input type="file" multiple onChange={this.uploadHandler}/>
-               {this.state.addingImage?"Loading":(!this.state.imageAdded?<button onClick={this.submitHandler}>SUBMIT</button>:"Added")}
+            <div style={style}>
+               <form onSubmit={this.submitHandler}>
+                  <input className="addCategory__form--name" display="true" type="text" value={this.props.name}/>
+                  <label className="addProduct__form--imageLabel" htmlFor={this.props.name}>
+                   {
+                      <i className="fa fa-camera" aria-hidden="true"></i>
+                   }
+                  </label>
+                  <input required id={this.props.name} className="addProduct__form--image"  type="file" multiple onChange={this.uploadHandler}/>
+                 {this.state.addingImage?<Spinner/>:(!this.state.imageAdded?<button className="addCategory__form--btn" >SUBMIT</button>:"Added")}
+               </form>
             </div>
         )
     }

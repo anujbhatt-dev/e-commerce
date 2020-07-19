@@ -2,12 +2,44 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 class AddColor extends Component {
-   
-   
+
+
     state={
         colors:["red","yellow"],
         addingColors:false,
+        addColor:""
     }
+
+    onChangeHandler=(e)=>{
+       const name = e.target.name
+       const value = e.target.value
+       let prevState={...this.state};
+       prevState[name]=value;
+       this.setState({
+         ...prevState
+       })
+    }
+
+
+    removeColorHandler=(i)=>{
+       let newState= this.state
+       newState.colors.splice(i,1);
+       this.setState({
+          ...newState
+       })
+     }
+
+     addColorHandler=()=>{
+       let newState= this.state
+       if(newState.addColor.length!==0){
+         newState.colors.push(newState.addColor);
+         newState.addColor="";
+         this.setState({
+           ...newState
+         })
+       }
+     }
+
 
     componentDidUpdate=()=>{
         if(this.state.addingColors){
@@ -35,6 +67,7 @@ class AddColor extends Component {
 
 
     submitHandler=()=>{
+      console.log("add color");
         this.setState({
             addingColors:true,
         })
@@ -51,9 +84,32 @@ class AddColor extends Component {
     render() {
         return (
             <div>
-                <input type="text" />
-                <input type="text" />
-                <button onClick={this.submitHandler} >SUBMIT</button>
+                  <div className="addCategory__form--info">
+                          {this.state.colors.map((color,i)=>(
+                              <div key={i} className="addCategory__form--info-parent">
+                                    <input
+                                    type="text"
+                                    className="addCategory__form--info-input"
+                                    value={color}
+                                    disabled="true"/>
+                                    <i onClick={()=>this.removeColorHandler(i)} className="fa fa-remove addCategory__form--info-remover" aria-hidden="true"></i>
+                              </div>
+                          ))}
+                        <div>
+                          <div className="addCategory__form--info-parent">
+                              <input
+                              type="text"
+                              className="addCategory__form--info-input"
+                              placeholder="add color"
+                              name="addColor"
+                              value={this.state.addColor}
+                              onChange={this.onChangeHandler}
+                              />
+                            <i onClick={this.addColorHandler}  className="fa fa-plus addCategory__form--info-adder" aria-hidden="true"></i>
+                         </div>
+                      </div>
+                </div>
+                <input onClick={this.submitHandler} className="addCategory__form--btn" value="save" type="submit"/>
             </div>
         )
     }

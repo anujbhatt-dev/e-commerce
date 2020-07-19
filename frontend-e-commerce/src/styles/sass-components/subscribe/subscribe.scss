@@ -10,6 +10,10 @@
     border-bottom:5px solid $color-black;
     width: 35rem;
     transition: all .2s;
+    @include respond(tab-port){
+        height: 5rem;
+        width: 30rem;
+    }
     @include respond(phone){
       width: 20rem;
       height: 5rem;
