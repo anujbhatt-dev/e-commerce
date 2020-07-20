@@ -1,4 +1,5 @@
  import React, {Component} from "react"
+import axios from "axios"
 
 
  class Subscribe extends Component{
@@ -6,8 +7,59 @@
    state={
      link:"",
      subject:"",
-     body:""
+     body:"",
+     subscriptions:{},
+     sending:false,
    }
+
+   componentWillMount=()=>{
+ 
+    // axios.get("api/v1/admin/").
+    // then(res=>{
+    //   this.setState({
+    //     subscriptions:res.data,
+    //   })
+    // }).catch(err=>{
+    //   if(err.response && err.response.data)
+    //   alert(err.response.data[0]);
+    //   else
+    //     alert("contact the team");
+    // })
+   }
+
+   componentDidUpdate=()=>{
+
+    if(this.state.sending){
+      let params={
+        link:this.state.link,
+        subject:this.state.subject,
+        body:this.state.body
+      }
+      axios.get("/v1/admin/subscription/mail",{
+        params:params
+      }).then(res=>{
+        this.setState({
+          link:"",
+          subject:"",
+          body:"",
+          sending:false,
+        })
+        alert("Completed");
+      }).
+      catch(err=>{
+          if(err.response && err.response.data)
+          alert(err.response.data[0]);
+          else
+            alert("contact the team");
+        })
+
+     
+       }
+    }
+
+   
+
+
 
    onChangeHandler=(e)=>{
       const name= e.target.name
@@ -19,9 +71,11 @@
       })
    }
 
-   onSubmitHandler=(e)=>{
-      console.log(this.state);
-      e.preventDefault();
+   onSubmitHandler=()=>{
+//      console.log(this.state);
+this.setState({
+  sending:true,
+})
    }
 
    render(){
@@ -33,20 +87,20 @@
                <input required onChange={this.onChangeHandler} name="link" value={this.state.link} className="subscribe__box--name" type="text" placeholder="Link"/>
                <input required onChange={this.onChangeHandler} name="subject" value={this.state.subject} className="subscribe__box--name" type="text" placeholder="subject"/>
                <textarea required onChange={this.onChangeHandler} value={this.state.body} name="body" style={{height:"15rem"}} className="subscribe__box--name" placeholder="message"></textarea>
-               <input className="subscribe__box--btn" value="update" type="submit"/>
+              {this.state.sending?null: <input className="subscribe__box--btn" value="update" type="submit"/>}
              </form>
            </div>
            <table cellspacing="20px" className="subscribe__table">
                <thead>
                   <tr>
                      <th>email</th>
-                     <th>subscribe on</th>
+                     <th>subscribed on</th>
                   </tr>
                </thead>
                <tbody>
                    <tr>
-                      <th>emailemailemailemailemailemailemail@gmail.com</th>
-                      <th>email123</th>
+                      <th>user@gmail.com</th>
+                      <th>2020-07-21</th>
                    </tr>
                </tbody>
            </table>

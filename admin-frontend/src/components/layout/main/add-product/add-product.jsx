@@ -64,6 +64,7 @@ import AddImages from "./add-color/add-image/add_image"
     }
 
     colorsSaved=(colors)=>{
+      console.log("STAGE 22")
       this.setState({
         stage:2,
         savedColors:colors
@@ -203,6 +204,9 @@ this.setState({savingProduct:true})
         </div>
       </div>
      )
+
+     if(this.state.categories.length===0)
+     header=<h2>You don't have any category saved</h2>
 
      return header
    }

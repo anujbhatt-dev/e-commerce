@@ -5,7 +5,7 @@ class AddColor extends Component {
 
 
     state={
-        colors:[],
+        colors:["red","yellow"],
         addingColors:false,
         addColor:""
     }
@@ -72,6 +72,10 @@ class AddColor extends Component {
             addingColors:true,
         })
     }
+
+    // onChangeHandler=()=>{
+    //     newCo
+    // }
 
 
 
