@@ -103,6 +103,7 @@
        border: none;
        border-radius: 8px;
        border-bottom: 2px solid transparent;
+       margin-bottom: 5rem;
        &:focus,&:hover{
          outline: none;
          border-bottom: 2px solid $color-primary-blue;
@@ -136,23 +137,47 @@
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.stage1__image{
-  height: 40rem;
-  width:30rem;
-  border-radius: 8px;
-  margin-bottom: 2.5rem;
+.stage{
+  width:100%;
+  display:flex;
+  @include respond(phone){
+    flex-flow: column;
+    align-items: center;
+  }
+  &__image{
+    height: 40rem;
+    width:30rem;
+    border-radius: 8px;
+    margin-bottom: 2.5rem;
+  }
+  &__2{
+    flex-grow:1;
+    display:flex;
+    padding:.5rem 1rem;
+    flex-wrap:wrap;
+    margin:.1rem;
+    align-items:flex-start;
+    @include respond(phone){
+      flex-flow: column;
+      align-items: center;
+    }
+    &--item{
+       margin:1rem;
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //

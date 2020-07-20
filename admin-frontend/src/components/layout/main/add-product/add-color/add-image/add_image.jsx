@@ -50,11 +50,8 @@ submitHandler=()=>{
 
 
     render() {
-       let style={
-         margin:"1rem"
-       }
         return (
-            <div style={style}>
+            <div className="stage__2--item">
                <form onSubmit={this.submitHandler}>
                   <input className="addCategory__form--name" display="true" type="text" value={this.props.name}/>
                   <label className="addProduct__form--imageLabel" htmlFor={this.props.name}>

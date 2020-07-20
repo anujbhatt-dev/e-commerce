@@ -105,7 +105,7 @@ class AddColor extends Component {
                          </div>
                       </div>
                 </div>
-                <input onClick={this.submitHandler} className="addCategory__form--btn" value="save" type="submit"/>
+                <input onClick={this.submitHandler} className="addProduct__form--btn" value="save" type="submit"/>
             </div>
         )
     }
