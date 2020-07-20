@@ -13,7 +13,7 @@ import axios from "axios"
    }
 
    componentWillMount=()=>{
- 
+
     // axios.get("api/v1/admin/").
     // then(res=>{
     //   this.setState({
@@ -53,11 +53,11 @@ import axios from "axios"
             alert("contact the team");
         })
 
-     
+
        }
     }
 
-   
+
 
 
 

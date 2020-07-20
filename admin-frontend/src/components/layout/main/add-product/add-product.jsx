@@ -35,17 +35,16 @@ import AddImages from "./add-color/add-image/add_image"
         productPrice:this.state.productForm.productPrice,
        }
        const formData= new FormData();
-       console.log(this.state.productForm.category);
        formData.append("file",this.state.productForm.image);
         axios.post("/v1/admin/product/addProduct/"+this.state.productForm.category,formData,{
           params:params
         })
         .then(res=>{
-                    console.log(res.data);
+                    // console.log(res.data);
                      this.setState({savingProduct:false,stage:1,savedProduct:res.data});
         }).
         catch(err=>{
-          console.log(err)
+          // console.log(err)
           alert(err.response.data[0]);
           this.setState({savingProduct:false});
 
@@ -56,7 +55,7 @@ import AddImages from "./add-color/add-image/add_image"
     componentDidMount=()=>{
     axios.get("/v1/admin/category").
     then(res=>{
-      console.log(res.data);
+      // console.log(res.data);
       this.setState({categories:res.data});
        }).
     catch(err=>{
@@ -70,7 +69,7 @@ import AddImages from "./add-color/add-image/add_image"
         savedColors:colors
       })
 
-      console.log(this.state.savedColors);
+      // console.log(this.state.savedColors);
     }
 
 
@@ -85,7 +84,7 @@ import AddImages from "./add-color/add-image/add_image"
     }
 
     onSubmitHandler=(e)=>{
-       console.log(this.state);
+       // console.log(this.state);
        e.preventDefault();
 this.setState({savingProduct:true})
     }
@@ -182,36 +181,22 @@ this.setState({savingProduct:true})
        </div>
      )
 
-     let style={
-       width:"100%",
-       display:"flex"
-     }
-
-     let style2={
-       flexGrow:"1",
-       display:"flex",
-       padding:".5rem 1rem",
-       flexWrap:"wrap",
-       margin:".1rem",
-       alignItems:"flex-start"
-     }
-
-     if(this.state.stage===1)
+     if(this.state.stage==1)
      header=(
       <div className="">
          <input disabled="true" className="addProduct__form--name" value={this.state.savedProduct.productName}/>
-         <img className="stage1__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
+         <img className="stage__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
         <AddColor productId={this.state.savedProduct.id} colorsSaved={this.colorsSaved}/>
       </div>
      )
-     else if(this.state.stage===2)
-     header=(<div  style={style}>
+     else if(this.state.stage==2)
+     header=(<div className="stage">
         <div>
           <input disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.productName}/>
           <input  disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.id}/>
-          <img className="stage1__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
+          <img className="stage__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
       </div>
-        <div  style={style2}>
+        <div  className="stage__2">
             {this.state.savedColors.map(color=>
                 <AddImages  id={color.id} name={color.colorName}/>
             )}

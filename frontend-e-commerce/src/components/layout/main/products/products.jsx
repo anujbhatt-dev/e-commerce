@@ -4,9 +4,18 @@
  import sidhu2 from "../../../../assets/images/sidhu2.jpg"
  import thomas from "../../../../assets/images/thomas_for_ig.jpg"
  import final from "../../../../assets/images/final_template.jpg"
-
+import axios from "axios"
 
  class Products extends Component{
+
+   state={
+     products:[],
+
+   }
+
+   componentDidMount=()=>{
+      axios.get("/")
+   }
 
    render(){
 
@@ -17,15 +26,15 @@
            </div>
 
           <div  className="sort">
-          <div className="nav__list--item">Sort
+          {(this.props.selectedCategory.id!==-1)?<div className="nav__list--item">Sort
           <span className="dropdown">
-              <span className="dropdown__item">Featured</span>
               <span className="dropdown__item">Newest</span>
-              <span className="dropdown__item">Low to High</span>
-              <span className="dropdown__item">High to Low</span>
-              <span className="dropdown__item">Relavent</span>
-          </span></div>
-          <div className="sort__productCount">147 products</div>
+              <span className="dropdown__item">₹ Low to High</span>
+              <span className="dropdown__item">₹ High to Low</span>
+              <span className="dropdown__item">Most Views</span>
+              <span className="dropdown__item">Best Selling</span>
+          </span></div>:null}
+           <div className="sort__productCount">147 products</div>
           </div>
 
 
@@ -96,7 +105,15 @@
                        </div>
                     </div>
                 </div>
+            </div>
 
+
+            <div style={{display:"flex",justifyContent:"center"}}>
+                <div className="pagination">
+                     <span className="pagination__minus">-</span>
+                     <span className="pagination__pageNumber">1/3</span>
+                     <span className="pagination__plus">+</span>
+                </div>
             </div>
        </>
      )

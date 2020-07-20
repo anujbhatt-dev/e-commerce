@@ -49,3 +49,11 @@
     }
   }
 }
+@include respond(phone){
+  .categories{
+    align-self: center;
+    margin: 0 calc(100% - 0%);
+    &__box{
+    }
+  }
+}
