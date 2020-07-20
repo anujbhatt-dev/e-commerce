@@ -14,6 +14,7 @@ import Backdrop from "../../UI/backdrop/backdrop"
 class Static extends Component {
 
   state={
+    categories:[],
     show:false
   }
 
@@ -25,6 +26,8 @@ class Static extends Component {
        this.setState({show:true})
      }
   }
+
+
 
     render(){
         return(
