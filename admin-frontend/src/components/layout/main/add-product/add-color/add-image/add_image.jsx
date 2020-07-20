@@ -41,11 +41,12 @@ uploadHandler=(event)=>{
   })
 }
 
-submitHandler=()=>{
+submitHandler=(e)=>{
     this.setState({
         addingImage:true,
         imageAdded:true
     })
+    e.preventDefault();
 }
 
 
@@ -60,7 +61,7 @@ submitHandler=()=>{
                    }
                   </label>
                   <input required id={this.props.name} className="addProduct__form--image"  type="file" multiple onChange={this.uploadHandler}/>
-                 {this.state.addingImage?<Spinner/>:(!this.state.imageAdded?<button className="addCategory__form--btn" >SUBMIT</button>:"Added")}
+                 {this.state.addingImage?<Spinner/>:(!this.state.imageAdded?<button className="addCategory__form--btn" type="submit">SUBMIT</button>:"Added")}
                </form>
             </div>
         )

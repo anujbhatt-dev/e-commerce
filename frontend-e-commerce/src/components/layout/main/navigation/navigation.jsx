@@ -10,7 +10,6 @@ import axios from "axios"
 
    componentDidMount=()=>{
       axios.get("/v1/admin/category/").then(res=>{
-        console.log(res.data);
         this.setState({
           categories:[...res.data]
         })
