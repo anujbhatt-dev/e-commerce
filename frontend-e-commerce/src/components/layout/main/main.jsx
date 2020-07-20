@@ -4,20 +4,20 @@ import BigImage from "./big-image/big-image"
 import Products from "./products/products"
 
 
+
 class Main extends Component{
 
   state={
     selectedCategory:{
       id:-1,
-      name:"latest",
+      name:"Latest",
       gender:""
     },
-    sortBy:"sort",
+    sortBy:"sOrderByDate",
 
   }
 
    selectedCategoryHandler=(selectedCategory)=>{
-       console.log(selectedCategory);
        this.setState({
          selectedCategory:{...selectedCategory}
        })
@@ -30,7 +30,7 @@ class Main extends Component{
      })
    }
 
-  
+
 
   render(){
 
