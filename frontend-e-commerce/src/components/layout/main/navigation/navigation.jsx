@@ -31,15 +31,23 @@ import axios from "axios"
                <span className="dropdown">
                   {this.state.categories.map((category,i)=>{
                     if(category.gender==="MALE"){
-                      return <span key={category.id} className="dropdown__item">{category.name}</span>
+                      return <span onClick={()=>this.props.selectedCategoryHandler({
+                        id:category.id,
+                        name:category.name,
+                        gender:category.gender
+                      })} key={category.id} className="dropdown__item">{category.name}</span>
                     }
                   })}
                </span></span>
-               women = <span className="nav__list--item">Men
+               women = <span className="nav__list--item">Women
                      <span className="dropdown">
                         {this.state.categories.map((category,i)=>{
                           if(category.gender==="FEMALE"){
-                            return <span key={category.id} className="dropdown__item">{category.name}</span>
+                            return <span onClick={()=>this.props.selectedCategoryHandler({
+                              id:category.id,
+                              name:category.name,
+                              gender:category.gender
+                            })} key={category.id} className="dropdown__item">{category.name}</span>
                           }
                         })}
                      </span></span>
