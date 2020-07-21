@@ -14,7 +14,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
  class Products extends Component{
 
    state={
-     nomatch:false,
      productSize:"M",
      productQuantity:1,
      products:[],
@@ -112,46 +111,50 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
         if(err.response && err.response.data[0]){
           alert(err.response.data[0]);
         }else{
-          alert("something went wrong");
+          alert("something went wrong mount");
         }
       })
    }
 
    componentDidUpdate=(prevProps,prevState)=>{
-
      if(this.props.searchBy){
        axios.get("/v1/product/getProductsBySearch?search="+this.props.searchValue).then(res=>{
-             if(res.data.length!==0){
-               this.setState({
-                 products:[...res.data],
-                 maxIndex:Math.ceil(res.data[0].size/8)-1,
-                 loading:false
-               })
-             }else{
-               this.setState({
-                 nomatch:true
-               })
-             }
-            this.props.searchHandler("")
+               if(res.data.length!==0){
+                 this.setState({
+                   products:[...res.data],
+                   maxIndex:Math.ceil(res.data[0].size/8)-1,
+                   loading:false
+                 })
+               }
+               else{
+                 this.props.selectedCategoryHandler({
+                   id:-2,
+                   name:this.props.searchValue,
+                   gender:null
+                 })
+                  // alert("no match found")
+               }
+               this.props.searchHandler("")
           }).catch(err=>{
             this.setState({
               loading:false
+              })
+              this.props.selectedCategoryHandler({
+                id:-2,
+                name:this.props.searchValue,
+                gender:null
               })
               this.props.searchHandler("")
             if(err.response && err.response.data[0]){
               alert(err.response.data[0]);
             }else{
-              alert("something went wrong");
+              alert("something went wrong search");
             }
           })
      }
 
      if(this.state.loading){
-       if(this.state.nomatch){
-         this.setState({
-             nomatch:false
-           })
-       }
+
        console.log("loading");
        axios.get("/v1/product/getProduct"+this.props.sortBy+"/"+this.props.selectedCategory.id+"/"+this.state.selectedIndex).then(res=>{
           this.setState({
@@ -166,16 +169,16 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
             if(err.response && err.response.data[0]){
               alert(err.response.data[0]);
             }else{
-              alert("something went wrong");
+              alert("something went wrong loading");
             }
           })
         }
 
-         if(this.props.selectedCategory.id!==prevProps.selectedCategory.id){
+         if(this.props.selectedCategory.id!==prevProps.selectedCategory.id && this.props.selectedCategory.id!==-2){
            this.setState({loading:true})
          }
 
-         if(this.props.sortBy!==prevProps.sortBy){
+         if(this.props.sortBy!==prevProps.sortBy && this.props.selectedCategory.id!==-2){
            this.setState({loading:true})
          }
 
@@ -330,17 +333,16 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
          </Modal>
      }
 
-     if(this.state.nomatch){
-          return <div style={{fontSize:"2.5rem",fontWeight:"lighter",margin:"30vh"}} className="heading">No Match Found</div>
-
-     }
+    if(this.props.selectedCategory.id===-2){
+      return <div id="heading" className="heading"><div style={{margin:"20rem"}} className="heading__span">no match found</div></div>
+    }
 
      return (
        <>
            {modal}
            <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>
            <div id="heading" className="heading">
-                 <span className="heading__span">{this.props.selectedCategory.name} <sup style={{fontSize:"1rem",letterSpacing:"1px",marginLeft:"-1.5rem"}}>[{(this.props.selectedCategory.id!==-1)?this.props.selectedCategory.gender==="MALE"?"MEN":"WOMEN":"ALL"}]</sup></span>
+                 <span className="heading__span">{this.props.selectedCategory.name} <sup style={{fontSize:"1rem",letterSpacing:"1px",marginLeft:"-1.5rem"}}>{(this.props.selectedCategory.id!==-1 && this.props.selectedCategory.id!==-2)?((this.props.selectedCategory.gender==="MALE")?"[MEN]":"[WOMEN]"):null}</sup></span>
            </div>
 
           <div  className="sort">

@@ -22,12 +22,14 @@ import axios from "axios"
         this.props.search(this.state.search)
         this.setState({search:""})
         document.getElementById("searchCheck").checked = false
+        // document.getElementById("heading").scrollIntoView()
       }
     }
 
     onClickHandler=()=>{
       this.props.search(this.state.search)
       this.setState({search:""})
+      document.getElementById("heading").scrollIntoView()
     }
 
    componentDidMount=()=>{
