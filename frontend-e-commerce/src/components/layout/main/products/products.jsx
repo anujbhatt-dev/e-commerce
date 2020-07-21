@@ -14,6 +14,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
  class Products extends Component{
 
    state={
+     nomatch:false,
      productSize:"M",
      productQuantity:1,
      products:[],
@@ -22,14 +23,25 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      loading:false,
      show:false,
      caller:false,
-     modalProductDetails:{
-       colors:[{images:[{}]}],
+     modalProductDetails:
+     {
+       colors:[{
+         images:[{
+           image:null
+         }]
+       }],
        category:{
          information:[]
        }
-     },
-     selectedProductId:-1
+     }
+     ,
+     selectedProductId:-1,
+     indexOfSelectedProduct:-1,
+     selectedImageIndex:0
    }
+
+
+
 
     loadingHandler=()=>{
       this.setState({loading:true})
@@ -37,21 +49,31 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
 
 
 
-    modalToggleHandler=(id,id2=false)=>{
-      alert(id)
-      if(id2){
-        if(id===-1)
-          return ;
-        this.setState({caller:true,selectedProductId:id})
-          return ;
-      }
+    modalToggleHandler=(id,name)=>{
+       const indexOfSelectedProduct= this.state.products.findIndex(n=>n.productName===name);
        if(this.state.show){
-         this.setState({show:false})
+         this.setState({
+           show:false,
+           selectedProductId:-1,
+           indexOfSelectedProduct:-1,
+           modalProductDetails:
+           {
+             colors:[{
+               images:[{
+                 image:null
+               }]
+             }],
+             category:{
+               information:[]
+             }
+           }
+         })
        }else{
          this.setState({
+           caller:true,
            show:true,
            selectedProductId:id,
-           caller:true
+           indexOfSelectedProduct:indexOfSelectedProduct
          })
        }
     }
@@ -66,7 +88,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
 
    onChangeHandler=(name)=>{
       const index = this.state.selectedIndex
-      console.log(name,index);
       if(name==="minus"){
         if(index!==0){
           this.setState({selectedIndex:index-1})
@@ -79,7 +100,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
           this.loadingHandler()
         }
       }
-      console.log(this.state);
    }
 
    componentDidMount=()=>{
@@ -97,19 +117,42 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
       })
    }
 
-    // shouldComponentUpdate=(nextProps,nextState)=>{
-    //   if(this.props.selectedCategory.id===-1){
-    //     return true;
-    //   }
-    //    if(nextProps.selectedCategory.id===this.props.selectedCategory.id){
-    //      return false;
-    //    }
-    //    return true;
-    // }
-
-
    componentDidUpdate=(prevProps,prevState)=>{
+
+     if(this.props.searchBy){
+       axios.get("/v1/product/getProductsBySearch?search="+this.props.searchValue).then(res=>{
+             if(res.data.length!==0){
+               this.setState({
+                 products:[...res.data],
+                 maxIndex:Math.ceil(res.data[0].size/8)-1,
+                 loading:false
+               })
+             }else{
+               this.setState({
+                 nomatch:true
+               })
+             }
+            this.props.searchHandler("")
+          }).catch(err=>{
+            this.setState({
+              loading:false
+              })
+              this.props.searchHandler("")
+            if(err.response && err.response.data[0]){
+              alert(err.response.data[0]);
+            }else{
+              alert("something went wrong");
+            }
+          })
+     }
+
      if(this.state.loading){
+       if(this.state.nomatch){
+         this.setState({
+             nomatch:false
+           })
+       }
+       console.log("loading");
        axios.get("/v1/product/getProduct"+this.props.sortBy+"/"+this.props.selectedCategory.id+"/"+this.state.selectedIndex).then(res=>{
           this.setState({
               products:[...res.data],
@@ -128,49 +171,81 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
           })
         }
 
-     if(this.props.selectedCategory.id!==prevProps.selectedCategory.id){
-       this.setState({loading:true})
-     }
-
-     if(this.props.sortBy!==prevProps.sortBy){
-       this.setState({loading:true})
-     }
-
-     if(this.state.caller){
-       console.log("in modal");
-       axios.get("/v1/product/getProduct/"+this.state.selectedProductId).then(res=>{
-            this.setState({
-              modalProductDetails:{...res.data},
-              caller:false
-            })
-            console.log(res.data);
-       }).catch(err=>{
-         this.setState({
-           caller:false
-           })
-         if(err.response && err.response.data[0]){
-           alert(err.response.data[0]);
-         }else{
-           alert("something went wrong....!!!!");
+         if(this.props.selectedCategory.id!==prevProps.selectedCategory.id){
+           this.setState({loading:true})
          }
+
+         if(this.props.sortBy!==prevProps.sortBy){
+           this.setState({loading:true})
+         }
+
+
+         if(this.state.caller){
+           axios.get("/v1/product/getProduct/"+this.state.selectedProductId).then(res=>{
+                this.setState({
+                  modalProductDetails:{...res.data},
+                  caller:false,
+                })
+          }).catch(err=>{
+             this.setState({
+               caller:false
+               })
+             if(err.response && err.response.data[0]){
+               alert(err.response.data[0]);
+             }else{
+               alert("something went wrong....!!!!");
+             }
+           })
+         }
+
+
+
+}
+
+   arrowHandler=(side)=>{
+     let index = null
+     let id = null
+     if(side==="left"){
+       index =this.state.indexOfSelectedProduct-1
+       if(index===-1)
+       index=this.state.products.length-1
+       id = this.state.products[index].id
+       this.setState({
+         selectedProductId:id,
+         caller:true,
+         indexOfSelectedProduct:index
        })
      }
-
-
-
+     if(side==="right"){
+       index =this.state.indexOfSelectedProduct+1
+       if(index===this.state.products.length)
+       index=0
+       id = this.state.products[index].id
+       this.setState({
+         selectedProductId:id,
+         caller:true,
+         indexOfSelectedProduct:index
+       })
+     }
    }
+
+    imageHandler=(color,i)=>{
+       console.log(color);
+       console.log(i);
+       this.setState({selectedImageIndex:i})
+    }
+
 
    render(){
      // if(this.state.loading)
      //    return <div className="feature"><div className="card"><Spinner /></div></div>
 
-
      let products= null;
+
      if(this.state.products.length!==0){
-       console.log(this.state);
        products = <div className="feature">
                       {this.state.products.map((product,i)=>(
-                        this.state.loading?<Spinner/>:<div key={product.id} onClick={()=>this.modalToggleHandler(product.id)} className="card">
+                        this.state.loading?<Spinner/>:<div key={product.id} onClick={()=>this.modalToggleHandler(product.id,product.productName)} className="card">
                             <img className="card__image" src={'data:image/png;base64,'+product.defaultImage} alt="thomas"/>
                             <div className="card__details">
                                <div className="card__details-name">
@@ -189,15 +264,19 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      }
 
      let modal = null;
-     if(this.state.modalProductDetails.length!==0){
+     // if(Object.keys(this.state.modalProductDetails).length!==0 && this.state.modalProductDetails.colors.length!==0  && Object.keys(this.state.modalProductDetails.colors[0]).length!==0   && this.state.modalProductDetails.colors[0].images.length!==0   && Object.keys(this.state.modalProductDetails.colors[0].images[0]).length!==0 ){
+        if(this.state.modalProductDetails.colors[0].images[0].image!==null){
+          console.log(this.state.modalProductDetails);
          modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
-               <span onClick={()=>this.modalToggleHandler(this.state.selectedProductId-1,true)} className="productsTogglerLeft"> {"<"} </span>
+               <button onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
                <div className="product">
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
-                          <li className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+this.state.modalProductDetails.image} alt="angle-1"/></li>
+                           {this.state.modalProductDetails.colors[this.state.selectedImageIndex].images.map((image,i)=>(
+                             <li className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
+                           ))}
                        </ul>
-                       <div className="product__imageBox--angle-image"><img src={'data:image/png;base64,'+this.state.modalProductDetails.image} alt="selected image"/></div>
+                       <div className="product__imageBox--angle-image"><img src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image} alt="selected image"/></div>
                    </div>
                    <div className="product__details">
                       <div className="product__details--name">
@@ -210,8 +289,8 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </div>
                       <div className="product__details--similar">
                         {this.state.modalProductDetails.colors.map((color,i)=>(
-                          <div onClick={()=>this.modalToggleHandler(color.images[i].id,true)} key={color.id} className="product__details--similar-item">
-                              <img src={'data:image/png;base64,'+color.images[i].image} alt="image"/>
+                          <div onClick={()=>this.imageHandler(color,i)} key={color.id} className="product__details--similar-item">
+                              <img src={'data:image/png;base64,'+color.images[i].image}alt="image"/>
                               <div className="product__details--similar-color">{color.colorName}</div>
                           </div>
                         ))}
@@ -247,15 +326,20 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </div>
                    </div>
                </div>
-               <span onClick={()=>this.modalToggleHandler(this.state.selectedProductId+1,true)} className="productsTogglerRight">{">"}</span>
+               <button onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>
          </Modal>
+     }
+
+     if(this.state.nomatch){
+          return <div style={{fontSize:"2.5rem",fontWeight:"lighter",margin:"30vh"}} className="heading">No Match Found</div>
+
      }
 
      return (
        <>
            {modal}
            <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>
-           <div className="heading">
+           <div id="heading" className="heading">
                  <span className="heading__span">{this.props.selectedCategory.name} <sup style={{fontSize:"1rem",letterSpacing:"1px",marginLeft:"-1.5rem"}}>[{(this.props.selectedCategory.id!==-1)?this.props.selectedCategory.gender==="MALE"?"MEN":"WOMEN":"ALL"}]</sup></span>
            </div>
 
@@ -272,74 +356,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
           </div>
 
           {products}
-          {/*<div className="feature">
 
-                <div onClick={this.modalToggleHandler} className="card">
-                    <img className="card__image" src={sidhu} alt="thomas"/>
-                    <div className="card__details">
-                       <div className="card__details-name">
-                            Sidhu T-shirt
-                       </div>
-                       <hr className="card__details-hr"/>
-                       <div className="card__details-priceBtn">
-                            <div className="card__details-price">₹ 4500</div>
-                            <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
-                       </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <img className="card__image" src={thomas} alt="thomas"/>
-                    <div className="card__details">
-                       <div className="card__details-name">
-                            Sidhu T-shirt
-                       </div>
-                       <hr className="card__details-hr"/>
-                       <div className="card__details-priceBtn">
-                            <div className="card__details-price">₹ 6500</div>
-                            <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
-                       </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <img className="card__image" src={dwight} alt="thomas"/>
-                    <div className="card__details">
-                       <div className="card__details-name">
-                            Sidhu T-shirt
-                       </div>
-                       <hr className="card__details-hr"/>
-                       <div className="card__details-priceBtn">
-                            <div className="card__details-price">₹ 1500</div>
-                            <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
-                       </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <img className="card__image" src={final} alt="thomas"/>
-                    <div className="card__details">
-                       <div className="card__details-name">
-                            Sidhu T-shirt
-                       </div>
-                       <hr className="card__details-hr"/>
-                       <div className="card__details-priceBtn">
-                            <div className="card__details-price">₹ 8500</div>
-                            <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
-                       </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <img className="card__image" src={sidhu2} alt="thomas"/>
-                    <div className="card__details">
-                       <div className="card__details-name">
-                            Sidhu T-shirt
-                       </div>
-                       <hr className="card__details-hr"/>
-                       <div className="card__details-priceBtn">
-                            <div className="card__details-price">₹ 5500</div>
-                            <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
-                       </div>
-                    </div>
-                </div>
-            </div>*/}
 
 
             <div style={{display:"flex",justifyContent:"center"}}>

@@ -22,7 +22,7 @@
       font-size: 1.5rem;
       text-transform: uppercase;
       // border-bottom: 3px solid rgba($color-primary-blue,.8);
-      &:hover,&:active{
+      &:hover,&:active,&::-webkit-selected{
          color: $color-black;
          background-image: linear-gradient(to bottom,$color-white 0%,$color-white 95%,$color-primary-blue 5%);
       }
