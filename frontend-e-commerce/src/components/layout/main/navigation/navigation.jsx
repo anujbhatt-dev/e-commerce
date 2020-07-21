@@ -5,7 +5,23 @@ import axios from "axios"
  class Navigation extends Component{
 
     state={
-      categories:[]
+      categories:[],
+      search:""
+    }
+
+    onChangeHandler=(e)=>{
+     let value = e.target.value
+         this.setState({
+           search:value
+         })
+    }
+
+    onKeyPressHandler=(e)=>{
+      console.log("keypress" , e.key);
+      if(e.key==="Enter"){
+        this.props.search(this.state.search)
+        this.setState({search:""})
+      }
     }
 
    componentDidMount=()=>{
@@ -23,10 +39,11 @@ import axios from "axios"
    }
 
    render(){
+     let others=null;
      let men=null;
      let women=null;
      if(this.state.categories.length!==0){
-         men = <span className="nav__list--item">Men
+         men = <span  className="nav__list--item">Men
                <span className="dropdown">
                   {this.state.categories.map((category,i)=>{
                     if(category.gender==="MALE"){
@@ -38,7 +55,7 @@ import axios from "axios"
                     }
                   })}
                </span></span>
-               women = <span className="nav__list--item">Women
+               women = <span href="#heading" className="nav__list--item">Women
                      <span className="dropdown">
                         {this.state.categories.map((category,i)=>{
                           if(category.gender==="FEMALE"){
@@ -50,6 +67,18 @@ import axios from "axios"
                           }
                         })}
                      </span></span>
+                    others = <span href="#heading" className="nav__list--item">Women
+                           <span className="dropdown">
+                              {this.state.categories.map((category,i)=>{
+                                if(category.gender==="UNISEX"){
+                                  return <span onClick={()=>this.props.selectedCategoryHandler({
+                                    id:category.id,
+                                    name:category.name,
+                                    gender:category.gender
+                                  })} key={category.id} className="dropdown__item">{category.name}</span>
+                                }
+                              })}
+                           </span></span>
      }
 
      return (
@@ -58,11 +87,12 @@ import axios from "axios"
           <div className="nav__list">
               {men}
               {women}
+              {others}
               <span className="nav__list--item  nav__list--item-modifier">Who are we?</span>
           </div>
           <div className="search">
              <input className="search__checkbox" id="search" type="checkbox"/>
-             <input placeholder="Search" className="search__input" type="text"/>
+             <input name="search" onChange={this.onChangeHandler} value={this.state.search} onKeyPress={this.onKeyPressHandler} placeholder="Search" className="search__input" type="text"/>
              <label className="search__label" htmlFor="search"><i className="search__icon fa fa-search " aria-hidden="true"></i></label>
           </div>
        </nav>

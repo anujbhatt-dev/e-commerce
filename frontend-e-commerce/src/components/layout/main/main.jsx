@@ -8,19 +8,39 @@ import Products from "./products/products"
 class Main extends Component{
 
   state={
+    searchValue:"",
+    searchBy:false,
     selectedCategory:{
       id:-1,
       name:"Latest",
       gender:""
     },
-    sortBy:"sOrderByDate",
+    sortBy:"sOrderByDate"
 
+  }
+
+  componentDidUpdate=()=>{
+    console.log(this.state);
   }
 
    selectedCategoryHandler=(selectedCategory)=>{
        this.setState({
-         selectedCategory:{...selectedCategory}
+         selectedCategory:selectedCategory
        })
+   }
+
+   searchHandler=(search)=>{
+     if(search!==""){
+       this.setState({
+         searchValue:search,
+         searchBy:true
+       })
+     }else{
+       this.setState({
+         searchValue:"",
+         searchBy:false
+       })
+     }
    }
 
    sortByHandler=(sortBy)=>{
@@ -36,9 +56,15 @@ class Main extends Component{
 
     return (
        <>
-         <Navigation  selectedCategoryHandler={this.selectedCategoryHandler}/>
+         <Navigation search={this.searchHandler} selectedCategoryHandler={this.selectedCategoryHandler}/>
          <BigImage/>
-         <Products sortBy={this.state.sortBy} selectedCategory={this.state.selectedCategory} sortByHandler={this.sortByHandler}/>
+         <Products
+         searchBy={this.state.searchBy}
+         searchHandler={this.searchHandler}
+         searchValue={this.state.searchValue}
+         sortBy={this.state.sortBy}
+         selectedCategory={this.state.selectedCategory}
+         sortByHandler={this.sortByHandler}/>
        </>
     )
   }
