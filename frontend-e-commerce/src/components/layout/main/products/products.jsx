@@ -14,6 +14,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
  class Products extends Component{
 
    state={
+     nomatch:false,
      productSize:"M",
      productQuantity:1,
      products:[],
@@ -116,9 +117,42 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
       })
    }
 
-
    componentDidUpdate=(prevProps,prevState)=>{
+
+     if(this.props.searchBy){
+       axios.get("/v1/product/getProductsBySearch?search="+this.props.searchValue).then(res=>{
+             if(res.data.length!==0){
+               this.setState({
+                 products:[...res.data],
+                 maxIndex:Math.ceil(res.data[0].size/8)-1,
+                 loading:false
+               })
+             }else{
+               this.setState({
+                 nomatch:true
+               })
+             }
+            this.props.searchHandler("")
+          }).catch(err=>{
+            this.setState({
+              loading:false
+              })
+              this.props.searchHandler("")
+            if(err.response && err.response.data[0]){
+              alert(err.response.data[0]);
+            }else{
+              alert("something went wrong");
+            }
+          })
+     }
+
      if(this.state.loading){
+       if(this.state.nomatch){
+         this.setState({
+             nomatch:false
+           })
+       }
+       console.log("loading");
        axios.get("/v1/product/getProduct"+this.props.sortBy+"/"+this.props.selectedCategory.id+"/"+this.state.selectedIndex).then(res=>{
           this.setState({
               products:[...res.data],
@@ -145,9 +179,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
            this.setState({loading:true})
          }
 
-         if(this.props.searchValue!==""){
-
-         }
 
          if(this.state.caller){
            axios.get("/v1/product/getProduct/"+this.state.selectedProductId).then(res=>{
@@ -209,8 +240,8 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      // if(this.state.loading)
      //    return <div className="feature"><div className="card"><Spinner /></div></div>
 
-
      let products= null;
+
      if(this.state.products.length!==0){
        products = <div className="feature">
                       {this.state.products.map((product,i)=>(
@@ -297,6 +328,11 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                </div>
                <button onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>
          </Modal>
+     }
+
+     if(this.state.nomatch){
+          return <div style={{fontSize:"2.5rem",fontWeight:"lighter",margin:"30vh"}} className="heading">No Match Found</div>
+
      }
 
      return (

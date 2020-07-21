@@ -21,7 +21,13 @@ import axios from "axios"
       if(e.key==="Enter"){
         this.props.search(this.state.search)
         this.setState({search:""})
+        document.getElementById("searchCheck").checked = false
       }
+    }
+
+    onClickHandler=()=>{
+      this.props.search(this.state.search)
+      this.setState({search:""})
     }
 
    componentDidMount=()=>{
@@ -67,7 +73,7 @@ import axios from "axios"
                           }
                         })}
                      </span></span>
-                    others = <span href="#heading" className="nav__list--item">Women
+                    others = <span href="#heading" className="nav__list--item">other
                            <span className="dropdown">
                               {this.state.categories.map((category,i)=>{
                                 if(category.gender==="UNISEX"){
@@ -91,9 +97,9 @@ import axios from "axios"
               <span className="nav__list--item  nav__list--item-modifier">Who are we?</span>
           </div>
           <div className="search">
-             <input className="search__checkbox" id="search" type="checkbox"/>
+             <input className="search__checkbox" id="searchCheck" type="checkbox"/>
              <input name="search" onChange={this.onChangeHandler} value={this.state.search} onKeyPress={this.onKeyPressHandler} placeholder="Search" className="search__input" type="text"/>
-             <label className="search__label" htmlFor="search"><i className="search__icon fa fa-search " aria-hidden="true"></i></label>
+             <label onClick={this.onClickHandler} className="search__label" htmlFor="searchCheck"><i className="search__icon fa fa-search " aria-hidden="true"></i></label>
           </div>
        </nav>
      )

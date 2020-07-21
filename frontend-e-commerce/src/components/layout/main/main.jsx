@@ -8,6 +8,7 @@ import Products from "./products/products"
 class Main extends Component{
 
   state={
+    
     searchValue:"",
     searchBy:false,
     selectedCategory:{
