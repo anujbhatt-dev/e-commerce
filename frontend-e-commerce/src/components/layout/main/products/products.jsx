@@ -14,6 +14,8 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
  class Products extends Component{
 
    state={
+     selectedAngleOfTheImage:0,
+     nomatch:false,
      productSize:"M",
      productQuantity:1,
      products:[],
@@ -123,16 +125,19 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                  this.setState({
                    products:[...res.data],
                    maxIndex:Math.ceil(res.data[0].size/8)-1,
-                   loading:false
+                   loading:false,
+                   nomatch:false
                  })
                }
                else{
+                 this.setState({
+                   nomatch:true
+                 })
                  this.props.selectedCategoryHandler({
                    id:-2,
                    name:this.props.searchValue,
                    gender:null
                  })
-                  // alert("no match found")
                }
                this.props.searchHandler("")
           }).catch(err=>{
@@ -154,8 +159,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      }
 
      if(this.state.loading){
-
-       console.log("loading");
        axios.get("/v1/product/getProduct"+this.props.sortBy+"/"+this.props.selectedCategory.id+"/"+this.state.selectedIndex).then(res=>{
           this.setState({
               products:[...res.data],
@@ -174,8 +177,9 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
           })
         }
 
-         if(this.props.selectedCategory.id!==prevProps.selectedCategory.id && this.props.selectedCategory.id!==-2){
-           this.setState({loading:true})
+         if((this.props.selectedCategory.id!==prevProps.selectedCategory.id && this.props.selectedCategory.id!==-2)){
+
+           this.setState({loading:true,nomatch:false})
          }
 
          if(this.props.sortBy!==prevProps.sortBy && this.props.selectedCategory.id!==-2){
@@ -232,10 +236,12 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      }
    }
 
-    imageHandler=(color,i)=>{
-       console.log(color);
-       console.log(i);
-       this.setState({selectedImageIndex:i})
+    imageHandler=(i)=>{
+       this.setState({selectedImageIndex:i,selectedAngleOfTheImage:0})
+    }
+
+    selectedAngleOfTheImageHandler=(i)=>{
+       this.setState({selectedAngleOfTheImage:i})
     }
 
 
@@ -256,7 +262,10 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                                </div>
                                <hr className="card__details-hr"/>
                                <div className="card__details-priceBtn">
-                                    <div className="card__details-price">₹{product.productPrice+" "} <span style={{textDecorationLine:"line-through"}}> ₹{product.actualPrice}</span> </div>
+                                  {product.productPrice!==product.actualPrice?
+                                    <div className="card__details-price">₹{product.productPrice+" "} <span style={{textDecorationLine:"line-through"}}> ₹{product.actualPrice}</span> </div>:
+                                    <div className="card__details-price">₹{product.productPrice+" "}</div> 
+                                  }
                                     <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
                                </div>
                             </div>
@@ -269,30 +278,32 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      let modal = null;
      // if(Object.keys(this.state.modalProductDetails).length!==0 && this.state.modalProductDetails.colors.length!==0  && Object.keys(this.state.modalProductDetails.colors[0]).length!==0   && this.state.modalProductDetails.colors[0].images.length!==0   && Object.keys(this.state.modalProductDetails.colors[0].images[0]).length!==0 ){
         if(this.state.modalProductDetails.colors[0].images[0].image!==null){
-          console.log(this.state.modalProductDetails);
          modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
                <button onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
                <div className="product">
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
                            {this.state.modalProductDetails.colors[this.state.selectedImageIndex].images.map((image,i)=>(
-                             <li className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
+                             <li onClick={()=>{this.selectedAngleOfTheImageHandler(i)}}  className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
                            ))}
                        </ul>
-                       <div className="product__imageBox--angle-image"><img src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image} alt="selected image"/></div>
+                       <div className="product__imageBox--angle-image"><img src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected image"/></div>
                    </div>
                    <div className="product__details">
                       <div className="product__details--name">
                           {this.state.modalProductDetails.productName}
                       </div>
                       <div className="product__details--price">
-                          <span className="product__details--price-actualPrice">₹ {this.state.modalProductDetails.actualPrice}</span>
+                          {(this.state.modalProductDetails.actualPrice!==this.state.modalProductDetails.productPrice)?
+                          [<span className="product__details--price-actualPrice">₹ {this.state.modalProductDetails.actualPrice}</span>,
+                          <span className="product__details--price-salePrice">₹ {this.state.modalProductDetails.productPrice}</span>,
+                          <span className="product__details--price-savePrice"> Save ₹ {this.state.modalProductDetails.actualPrice-this.state.modalProductDetails.productPrice}</span>]:
                           <span className="product__details--price-salePrice">₹ {this.state.modalProductDetails.productPrice}</span>
-                          <span className="product__details--price-savePrice"> Save ₹ {this.state.modalProductDetails.actualPrice-this.state.modalProductDetails.productPrice}</span>
+                        }
                       </div>
                       <div className="product__details--similar">
                         {this.state.modalProductDetails.colors.map((color,i)=>(
-                          <div onClick={()=>this.imageHandler(color,i)} key={color.id} className="product__details--similar-item">
+                          <div onClick={()=>this.imageHandler(i)} key={color.id} className="product__details--similar-item">
                               <img src={'data:image/png;base64,'+color.images[i].image}alt="image"/>
                               <div className="product__details--similar-color">{color.colorName}</div>
                           </div>
@@ -333,7 +344,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
          </Modal>
      }
 
-    if(this.props.selectedCategory.id===-2){
+    if(this.state.nomatch){
       return <div id="heading" className="heading"><div style={{margin:"20rem"}} className="heading__span">no match found</div></div>
     }
 

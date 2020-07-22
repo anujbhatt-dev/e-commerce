@@ -20,9 +20,9 @@ class Main extends Component{
 
   }
 
-  componentDidUpdate=()=>{
-    console.log(this.state);
-  }
+  // componentDidUpdate=()=>{
+  //
+  // }
 
    selectedCategoryHandler=(selectedCategory)=>{
        this.setState({
