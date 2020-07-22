@@ -61,6 +61,7 @@ class Main extends Component{
          selectedCategoryHandler={this.selectedCategoryHandler}/>
          <BigImage/>
          <Products
+         cartHandler={this.props.cartHandler}
          selectedCategoryHandler={this.selectedCategoryHandler}
          searchBy={this.state.searchBy}
          searchHandler={this.searchHandler}

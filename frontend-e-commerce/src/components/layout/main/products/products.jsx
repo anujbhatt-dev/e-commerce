@@ -54,6 +54,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
        const indexOfSelectedProduct= this.state.products.findIndex(n=>n.productName===name);
        if(this.state.show){
          this.setState({
+           productQuantity:1,
            show:false,
            selectedProductId:-1,
            indexOfSelectedProduct:-1,
@@ -74,16 +75,23 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
            caller:true,
            show:true,
            selectedProductId:id,
-           indexOfSelectedProduct:indexOfSelectedProduct
+           indexOfSelectedProduct:indexOfSelectedProduct,
+           productQuantity:1
          })
        }
     }
 
 
    quantityHandler=(count)=>{
-       this.setState({
+      if(count>=1){
+        this.setState({
           productQuantity:count
-       })
+        })
+      }else{
+        this.setState({
+          productQuantity:1
+        })
+      }
    }
 
 
@@ -133,17 +141,19 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                  this.setState({
                    nomatch:true
                  })
-                 this.props.selectedCategoryHandler({
-                   id:-2,
-                   name:this.props.searchValue,
-                   gender:null
-                 })
+                 console.log(this.props.searchValue)
                }
+               this.props.selectedCategoryHandler({
+                 id:-2,
+                 name:this.props.searchValue,
+                 gender:null
+               })
                this.props.searchHandler("")
           }).catch(err=>{
             this.setState({
               loading:false
               })
+              console.log(this.props.searchValue)
               this.props.selectedCategoryHandler({
                 id:-2,
                 name:this.props.searchValue,
@@ -183,7 +193,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
          }
 
          if(this.props.sortBy!==prevProps.sortBy && this.props.selectedCategory.id!==-2){
-           this.setState({loading:true})
+           this.setState({loading:true,nomatch:false})
          }
 
 
@@ -220,7 +230,8 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
        this.setState({
          selectedProductId:id,
          caller:true,
-         indexOfSelectedProduct:index
+         indexOfSelectedProduct:index,
+         productQuantity:1
        })
      }
      if(side==="right"){
@@ -231,7 +242,8 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
        this.setState({
          selectedProductId:id,
          caller:true,
-         indexOfSelectedProduct:index
+         indexOfSelectedProduct:index,
+         productQuantity:1
        })
      }
    }
@@ -264,7 +276,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                                <div className="card__details-priceBtn">
                                   {product.productPrice!==product.actualPrice?
                                     <div className="card__details-price">₹{product.productPrice+" "} <span style={{textDecorationLine:"line-through"}}> ₹{product.actualPrice}</span> </div>:
-                                    <div className="card__details-price">₹{product.productPrice+" "}</div> 
+                                    <div className="card__details-price">₹{product.productPrice+" "}</div>
                                   }
                                     <i className="fa fa-shopping-cart card__details-cart" aria-hidden="true"></i>
                                </div>
@@ -328,7 +340,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </span></div>
                       </div>
                       <div className="product__details--cart">
-                          <div className="nav__list--item product__details--cart-btn">Add to cart</div>
+                          <div onClick={()=>this.props.cartHandler({name:"hello"})}  className="nav__list--item product__details--cart-btn">Add to cart</div>
                       </div>
                       <div className="product__details--comment">
                           <div className="product__details--comment-head">{this.state.modalProductDetails.comment}</div>

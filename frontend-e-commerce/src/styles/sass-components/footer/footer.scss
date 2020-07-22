@@ -21,8 +21,9 @@
   }
   @include respond(tab-port){
     &__image{
-      height: 20rem;
-      width: 20rem;
+      display: none;
+      height: 10rem;
+      width: 10rem;
     }
   }
   @include respond(phone){
@@ -30,13 +31,12 @@
      &__ul{
 
        &-li{
-         font-size: 3rem;
          margin-left: 2rem;
        }
      }
      &__image{
-       height: 20rem;
-       width: 20rem;
+       height: 10rem;
+       width: 10rem;
      }
   }
 

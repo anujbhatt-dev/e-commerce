@@ -45,7 +45,7 @@ import Spinner from "../../../../UI/spinner/spinner"
         promos.push(newState)
         this.setState({
           name:"",
-          access:"public",
+          access:"PUBLIC",
           value:"",
           expiryDate:"",
           sending:false,
@@ -76,7 +76,7 @@ import Spinner from "../../../../UI/spinner/spinner"
              deletingPromoID:-1,
              deletingPromoIndex:-1,
              promos:promos
-           }) 
+           })
          }).
          catch(err=>{
            this.setState({
@@ -156,6 +156,7 @@ import Spinner from "../../../../UI/spinner/spinner"
                value={this.state.access}
                name="access"
                id="value">
+                 <option className="addCategory__form--select-option" >SELECT ACCESS TYPE</option>
                  <option default className="addCategory__form--select-option" value="PUBLIC">PUBLIC</option>
                  <option className="addCategory__form--select-option" value="PRIVATE">PRIVATE</option>
                </select>
