@@ -203,6 +203,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                   modalProductDetails:{...res.data},
                   caller:false,
                 })
+                console.log(this.state.modalProductDetails);
           }).catch(err=>{
              this.setState({
                caller:false
@@ -340,7 +341,14 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </span></div>
                       </div>
                       <div className="product__details--cart">
-                          <div onClick={()=>this.props.cartHandler({name:"hello"})}  className="nav__list--item product__details--cart-btn">Add to cart</div>
+                          <div onClick={()=>this.props.cartHandler({
+                            name:this.state.modalProductDetails.productName,
+                            quantity:this.state.productQuantity,
+                            size:this.state.productSize,
+                            selectedProductId:this.state.selectedProductId,
+                            seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
+                            seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id
+                          })}  className="nav__list--item product__details--cart-btn">Add to cart</div>
                       </div>
                       <div className="product__details--comment">
                           <div className="product__details--comment-head">{this.state.modalProductDetails.comment}</div>

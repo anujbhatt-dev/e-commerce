@@ -1,5 +1,6 @@
  import React, {Component} from "react"
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 
  class Products extends Component{
@@ -44,7 +45,12 @@ import axios from "axios";
                 <div className="products__box--image">
                     <img src={'data:image/png;base64,'+product.defaultImage} alt=""/>
                 </div>
-                <button className="products__box--btn">update</button>
+                <Link to={{
+                  pathname:"/updateProduct",
+                  state:{
+                    id:product.id
+                  }
+                }}><button className="products__box--btn">update</button></Link>
              </div>
            ))}
        </div>
