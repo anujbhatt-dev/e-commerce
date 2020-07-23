@@ -8,7 +8,7 @@ import Products from "./products/products"
 class Main extends Component{
 
   state={
-    
+
     searchValue:"",
     searchBy:false,
     selectedCategory:{
@@ -20,14 +20,15 @@ class Main extends Component{
 
   }
 
-  componentDidUpdate=()=>{
-    console.log(this.state);
-  }
+  // componentDidUpdate=()=>{
+  //
+  // }
 
    selectedCategoryHandler=(selectedCategory)=>{
        this.setState({
          selectedCategory:selectedCategory
        })
+       document.getElementById("heading").scrollIntoView()
    }
 
    searchHandler=(search)=>{
@@ -38,7 +39,6 @@ class Main extends Component{
        })
      }else{
        this.setState({
-         searchValue:"",
          searchBy:false
        })
      }
@@ -57,9 +57,11 @@ class Main extends Component{
 
     return (
        <>
-         <Navigation search={this.searchHandler} selectedCategoryHandler={this.selectedCategoryHandler}/>
+         <Navigation search={this.searchHandler}
+         selectedCategoryHandler={this.selectedCategoryHandler}/>
          <BigImage/>
          <Products
+         selectedCategoryHandler={this.selectedCategoryHandler}
          searchBy={this.state.searchBy}
          searchHandler={this.searchHandler}
          searchValue={this.state.searchValue}

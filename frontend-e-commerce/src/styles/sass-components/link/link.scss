@@ -1,5 +1,7 @@
 .links{
-   direction: rtl;
+   // direction: rtl;
+   display: flex;
+   justify-content: flex-end;
   &__list{
     display: flex;
     list-style: none;

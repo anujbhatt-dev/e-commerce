@@ -7,7 +7,11 @@ import validator from "validator"
 
    state={
      subscribing:false,
-     email:""
+     email:"",
+     comment:"",
+     image:"",
+     customEmail:"",
+     custom:false
    }
 
    componentDidUpdate=()=>{
@@ -29,11 +33,39 @@ import validator from "validator"
          }
        })
      }
+
+     if(this.state.custom){
+       const formData= new FormData();
+       formData.append("file",this.state.image);
+       const params={
+         email:this.state.customEmail,
+         comment:this.state.comment
+       }
+       console.log(this.state);
+       axios.post("/v1/design/",formData,{
+          params:params
+       }).then(res=>{
+         alert("successfully submitted")
+         this.setState({custom:false})
+       }).catch(err=>{
+         // alert(err.response.data[0]);
+          this.setState({custom:false})
+       })
+     }
    }
 
    subscribeHandler=(e)=>{
      if(validator.isEmail(this.state.email))
       this.setState({subscribing:true})
+     else
+      alert("enter a valid email")
+    e.preventDefault();
+   }
+
+   customHandler=(e)=>{
+     console.log("in custom");
+     if(validator.isEmail(this.state.customEmail))
+      this.setState({custom:true})
      else
       alert("enter a valid email")
     e.preventDefault();
@@ -50,6 +82,17 @@ import validator from "validator"
       })
    }
 
+   imageUploadHandler=(e)=>{
+       let newState={... this.state.productForm};
+       newState.image = e.target.files[0];
+       this.setState({
+           ...newState
+      }
+    )
+   }
+
+
+
    render(){
 
      return (
@@ -63,7 +106,16 @@ import validator from "validator"
                       </form>
                     </div>
                  </li>
-                 <li className="footer__ul-li">bla bla</li>
+                 <li className="footer__ul-li">
+                    <h1 className="customDesign__head">Form Customised Product</h1>
+                    <form onSubmit={this.customHandler} className="customDesign">
+                       <input required onChange={this.onChangeHandler} value={this.state.customEmail} name="customEmail" placeholder="enter your email" data-tip="enter your email" className="subscribe__input" type="email"/>
+                       <textarea required onChange={this.onChangeHandler} className="customDesign__description subscribe__input" name="comment" value={this.state.comment} data-tip="enter comment" placeholder="description"></textarea>
+                       <input required onChange={this.imageUploadHandler} id="customDesign__image" className="customDesign__image" name="image" type="file"/>
+                       <label className="customDesign__imageLabel"  htmlFor="customDesign__image"  data-tip="upload a file here"><i class="fa fa-camera" aria-hidden="true"></i>{" "} uplaod a image</label>
+                       <button data-tip="subscribe" className="subscribe__btn customDesign__btn" type="submit">submit</button>
+                    </form>
+                 </li>
                  <li className="footer__ul-li">bla</li>
               </ul>
              <img className="footer__image" src={go} alt=""/>

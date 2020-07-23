@@ -6,6 +6,7 @@ import AddProduct from "./add-product/add-product"
 import AddCategory from "./add-category/add-category"
 import UpdateCategory from "./categories/update-category/update-category"
 import Subscribe from "./subscribe/subscribe"
+import Promo from "./promo/promo"
 import Clients from "./clients/clients"
 
 import {Route , Switch} from "react-router-dom"
@@ -24,6 +25,7 @@ import {Route , Switch} from "react-router-dom"
                   <Route exact path="/addCategory" component={AddCategory}/>
                   <Route exact path="/updateCategory" component={UpdateCategory}/>
                   <Route exact path="/subscribe" component={Subscribe}/>
+                  <Route exact path="/promo" component={Promo}/>
                   <Route exact path="/clients" component={Clients}/>
               </Switch>
          </div>

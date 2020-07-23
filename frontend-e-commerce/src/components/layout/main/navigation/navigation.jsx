@@ -17,17 +17,18 @@ import axios from "axios"
     }
 
     onKeyPressHandler=(e)=>{
-      console.log("keypress" , e.key);
       if(e.key==="Enter"){
         this.props.search(this.state.search)
         this.setState({search:""})
         document.getElementById("searchCheck").checked = false
+        document.getElementById("heading").scrollIntoView()
       }
     }
 
     onClickHandler=()=>{
       this.props.search(this.state.search)
       this.setState({search:""})
+      // document.getElementById("heading").scrollIntoView()
     }
 
    componentDidMount=()=>{
@@ -94,7 +95,7 @@ import axios from "axios"
               {men}
               {women}
               {others}
-              <span className="nav__list--item  nav__list--item-modifier">Who are we?</span>
+
           </div>
           <div className="search">
              <input className="search__checkbox" id="searchCheck" type="checkbox"/>
