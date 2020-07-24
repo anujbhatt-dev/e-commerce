@@ -1,0 +1,92 @@
+.user{
+  // width: 10rem;
+  // background: $color-primary-blue;
+  // padding: 5rem;
+  // letter-spacing: 2px;
+  color: $color-white;
+  &__input{
+    padding-left: 1rem;
+    color: $color-black;
+    letter-spacing: 2px;
+    display: block;
+    border: none;
+    height: 2.8rem;
+    width: 30rem;
+    margin-bottom: 1rem;
+    &::placeholder{
+      color:$color-black;
+    }
+    &:focus{
+      outline: none;
+    }
+  }
+  &__register{
+    letter-spacing: 2px;
+    border: 1px solid $color-black;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    background: rgba($color-black,.9);
+    & h3{
+      margin-bottom: 1rem;
+    }
+    &--btn{
+      // letter-spacing: 2px;
+      cursor: pointer;
+      width:10rem;
+      height: 3rem;
+      border: none;
+      background: $color-Spring-green;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+  &__login{
+    background: rgba($color-black,.9);
+    padding: 2rem;
+    border: 1px solid $color-black;
+    margin-bottom: 1rem;
+    & h3{
+      margin-bottom: 1rem;
+    }
+    &--btn{
+      background: $color-primary-blue;
+      cursor: pointer;
+      // letter-spacing: 2px;
+      width:10rem;
+      height: 3rem;
+      border: none;
+      &:focus{
+        outline: none;
+      }
+    }
+  }
+  & hr{
+    border: none;
+    border-bottom: 5px dotted $color-black;
+    margin: 1rem auto;
+    width: 10%;
+
+  }
+  &__google{
+    font-size: 1.5rem;
+    margin: 1rem 2rem;
+    cursor: pointer;
+    width: 90%;
+    height: 4rem;
+    background: $color-black;
+    color: $color-white;
+    transition: all .3s;
+    border: none;
+    &:hover{
+      background: $color-white;
+      color: $color-black;
+    }
+    &:focus{
+      outline: none;
+    }
+  }
+  &__nodal{
+    background: $color-black;
+  }
+}

@@ -57,3 +57,11 @@
     left:80%;
   }
 }
+
+.profile{
+  top:28.5%;
+  @include respond(phone){
+    left:70%;
+    top:88%;
+  }
+}

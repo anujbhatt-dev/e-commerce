@@ -237,6 +237,14 @@
      left: -3rem;
      font-size: 4rem;
    }
+   background: transparent;
+   border: none;
+   &:active{
+     transform: translateY(3px);
+   }
+   &:focus{
+     outline: none;
+   }
 }
 .productsTogglerRight{
    cursor: pointer;
@@ -248,5 +256,13 @@
   @include respond(phone){
     right: -3rem;
     font-size: 4rem;
+  }
+  background: transparent;
+  border: none;
+  &:active{
+    transform: translateY(3px);
+  }
+  &:focus{
+    outline: none;
   }
 }

@@ -24,6 +24,20 @@ import {Link} from "react-router-dom";
    })
 }
 
+productDeleteHandler=(id)=>{
+  if(window.confirm("are you sure?")===true){
+    axios.delete("/v1/admin/product/deleteProduct/"+id).then(res=>{
+      this.props.history.push("/products")
+    }).catch(err=>{
+      if(err.response && err.response.data)
+      alert(err.response.data[0])
+      else
+      alert("something went wrong the team......!!!!")
+    })
+  }
+  return ;
+}
+
 
    render(){
      let products=null;
@@ -50,7 +64,9 @@ import {Link} from "react-router-dom";
                   state:{
                     id:product.id
                   }
-                }}><button className="products__box--btn">update</button></Link>
+                }}>
+                <button onClick={()=>this.productDeleteHandler(product.id)} type="submit" className="products__box--btn updateProduct__delete--btn">delete</button>
+                <button className="products__box--btn">update</button></Link>
              </div>
            ))}
        </div>
