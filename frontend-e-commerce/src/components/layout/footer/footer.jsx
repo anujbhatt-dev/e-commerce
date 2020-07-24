@@ -46,7 +46,7 @@ import validator from "validator"
           params:params
        }).then(res=>{
          alert("successfully submitted")
-         this.setState({custom:false})
+         this.setState({custom:false,customEmail:"",comment:"",image:''})
        }).catch(err=>{
          // alert(err.response.data[0]);
           this.setState({custom:false})

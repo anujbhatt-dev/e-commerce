@@ -6,7 +6,7 @@
    render(){
 
      return (
-       <div className="cart">
+       <div onClick={this.props.clicked} className="cart">
             <span className="cart__count">{this.props.count}</span>
             <label onClick={this.modalToggleHandler} htmlFor="cart__checkbox" className="cart__label"><i className="fa fa-shopping-bag cart__icon" aria-hidden="true"></i></label>
         </div>

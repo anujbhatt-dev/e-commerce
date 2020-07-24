@@ -5,7 +5,7 @@ class AddColor extends Component {
 
 
     state={
-        colors:["red","yellow"],
+        colors:[],
         addingColors:false,
         addColor:""
     }

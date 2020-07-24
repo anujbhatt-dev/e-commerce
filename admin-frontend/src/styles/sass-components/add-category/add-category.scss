@@ -4,6 +4,7 @@
   padding: 5rem;
   justify-content: space-around;
   &__form{
+     overflow-x: auto;
      padding: 5rem;
      background: rgba($color-grey,.1);
      border-radius: 1rem;
