@@ -14,6 +14,7 @@ import Checkout from "./checkout/checkout"
 import MyOrder from "./my-order/my-order"
 import ReactToolip from "react-tooltip"
 import {withRouter} from "react-router-dom"
+import ForgotPassword from "./forgot-password/forgot-password"
 
  class Layout extends Component{
 
@@ -311,6 +312,9 @@ import {withRouter} from "react-router-dom"
                </Route>
                <Route exact path="/myOrder">
                     <MyOrder/>
+               </Route>
+               <Route  path="/forgotPassword/{id}">
+                    <ForgotPassword/>
                </Route>
            </Switch>
            <Footer/>
