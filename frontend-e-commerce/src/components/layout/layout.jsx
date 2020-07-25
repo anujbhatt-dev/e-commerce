@@ -203,20 +203,17 @@ import {withRouter} from "react-router-dom"
      let modalLogin=null;
      if(this.state.cart.length!==0){
        modal = this.props.authenticated?[<Modal clicked={this.modalToggleHandler} show={this.state.show}><div className="modalCart">
-                     <div className="modalCart__box">
-                         <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.seletedColorImage} alt=""/>
-                         <div className="modalCart__box--col1">
-                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
-                             <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
-                             <div className="modalCart__box--item modalCart__box--color">{product.seletedColorName}</div>
-                             <div onClick={()=>this.deleteProductFromCartHandler(product.selectedProductId,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
-                         </div>
-                         <div className="modalCart__box--col2">
-                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>
-                             <div className="modalCart__box--item modalCart__box--quantity"><span onClick={()=>this.quantityHandler("minus",i)}>-</span>{product.quantity}<span  onClick={()=>this.quantityHandler("plus",i)}>+</span></div>
-                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice * product.quantity} {" <= Total"} </div>
-                         </div>
-                     </div>
+       <div className="modalCart__box">
+           <div className="modalCart__box--item"></div>
+           <div className="modalCart__box--col1">
+               Products
+           </div>
+           <div className="modalCart__box--col2">
+               <div className="modalCart__box--item modalCart__box--productPrice">Price</div>
+               <div className="modalCart__box--item modalCart__box--quantity">Quantity</div>
+               <div className="modalCart__box--item modalCart__box--productPrice">Total Price</div>
+           </div>
+       </div>
                   {this.state.cart.map((product,i)=>(
                     <div className="modalCart__box">
                         <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.seletedColorImage} alt=""/>
