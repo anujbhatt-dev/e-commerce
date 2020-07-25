@@ -130,7 +130,7 @@ import UpdateColor from "./update-color/update-color"
    colorDeleteHandler=(id,i)=>{
      if(this.state.product.colors.length!==1){
           axios.delete("/v1/admin/product/deleteColor/"+id).then(res=>{
-            alert("image is deleted successfully")
+            alert("color is deleted successfully")
             let newProduct= {...this.state.product}
             console.log(newProduct);
             newProduct.colors.splice(i,1);

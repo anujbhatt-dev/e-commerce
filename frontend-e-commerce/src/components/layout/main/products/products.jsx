@@ -257,6 +257,24 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
        this.setState({selectedAngleOfTheImage:i})
     }
 
+    addCartHandler=()=>{
+      let show = this.props.cartHandler({
+        name:this.state.modalProductDetails.productName,
+        quantity:this.state.productQuantity,
+        size:this.state.productSize,
+        selectedProductId:this.state.selectedProductId,
+        seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
+        seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id})
+      if(!show){
+        this.setState({show:false})
+      }
+      if(show){
+        let newModalProductDetails = {...this.state.modalProductDetails}
+        newModalProductDetails.disabled = true;
+        this.setState({modalProductDetails:{...newModalProductDetails}})
+      }
+    }
+
 
    render(){
      // if(this.state.loading)
@@ -292,7 +310,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      // if(Object.keys(this.state.modalProductDetails).length!==0 && this.state.modalProductDetails.colors.length!==0  && Object.keys(this.state.modalProductDetails.colors[0]).length!==0   && this.state.modalProductDetails.colors[0].images.length!==0   && Object.keys(this.state.modalProductDetails.colors[0].images[0]).length!==0 ){
         if(this.state.modalProductDetails.colors[0].images[0].image!==null){
          modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
-               <button onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
+               <button  onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
                <div className="product">
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
@@ -341,14 +359,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </span></div>
                       </div>
                       <div className="product__details--cart">
-                          <div onClick={()=>this.props.cartHandler({
-                            name:this.state.modalProductDetails.productName,
-                            quantity:this.state.productQuantity,
-                            size:this.state.productSize,
-                            selectedProductId:this.state.selectedProductId,
-                            seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
-                            seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id
-                          })}  className="nav__list--item product__details--cart-btn">Add to cart</div>
+                          <button onClick={this.addCartHandler} className="nav__list--item product__details--cart-btn">Add to cart</button>
                       </div>
                       <div className="product__details--comment">
                           <div className="product__details--comment-head">{this.state.modalProductDetails.comment}</div>
@@ -360,7 +371,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </div>
                    </div>
                </div>
-               <button onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>
+               <button  onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>
          </Modal>
      }
 
