@@ -17,7 +17,7 @@ class AddImages extends Component {
     componentDidUpdate=()=>{
 
         let i=0;
-        if(this.state.addingImage)
+        if(this.state.addingImage){
 
         for ( i=0;i<this.state.images.length;i++){
             let formData = new FormData();
@@ -27,6 +27,7 @@ class AddImages extends Component {
                        this.setState({addingImage:false})})
                        .catch(err=>{alert("err")})
         }
+    }
 
     }
 

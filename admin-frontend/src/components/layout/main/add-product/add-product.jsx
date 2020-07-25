@@ -64,7 +64,6 @@ import AddImages from "./add-color/add-image/add_image"
     }
 
     colorsSaved=(colors)=>{
-      console.log("STAGE 22")
       this.setState({
         stage:2,
         savedColors:colors
@@ -199,7 +198,7 @@ this.setState({savingProduct:true})
       </div>
         <div  className="stage__2">
             {this.state.savedColors.map(color=>
-                <AddImages imageSaved={this.imageSavedHandler} id={color.id} name={color.colorName}/>
+                <AddImages  id={color.id} name={color.colorName}/>
             )}
         </div>
       </div>
