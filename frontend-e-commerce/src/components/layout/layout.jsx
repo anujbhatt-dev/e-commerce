@@ -5,16 +5,101 @@ import Main from "./main/main"
 import Cart from "./main/cart/cart"
 import Profile from "./main/profile/profile"
 import Modal from "../../UI/modal/modal"
+import Modal2 from "../../UI/modal2/modal2"
+import axios from "axios"
 import Backdrop from "../../UI/backdrop/backdrop"
+import Backdrop2 from "../../UI/backdrop2/backdrop2"
+import {Route,Switch, Link} from  "react-router-dom"
+import Checkout from "./checkout/checkout"
+import MyOrder from "./my-order/my-order"
+import ReactToolip from "react-tooltip"
+import {withRouter} from "react-router-dom"
 
  class Layout extends Component{
 
    state={
      cart:[],
      show:false,
-     caller:true,
-     authenticated:true,
-     profile:false
+     userDetail:{},
+     profile:false,
+     register:{
+       firstName:"",
+       lastName:"",
+       email:"",
+       password:"",
+       confirmPassword:""
+     },
+     login:{
+       email:"",
+       password:"",
+     },
+     loading:false
+  }
+
+
+   registerSubmitHandler=(e)=>{
+     if(this.state.register.password===this.state.register.confirmPassword){
+       axios.post("/v1/client/register",this.state.register).then(res=>{
+         console.log(res.data);
+         this.setState({
+           // authenticated:true,
+           register:{
+             firstName:"",
+             lastName:"",
+             email:"",
+             password:"",
+             confirmPassword:""
+           },
+           show:false,
+           profile:false,
+           userDetail:{...res.data}
+         })
+       }).catch(err=>{
+         if(err.response && err.response.data[0]){
+           alert(err.response.data[0]);
+         }else{
+           alert("something went wrong search");
+         }
+       })
+     }else{
+       alert("password should match")
+     }
+     e.preventDefault();
+   }
+
+   logInSubmitHandler=(e)=>{
+     axios.post("/v1/client/authenticate",this.state.login).then(res=>{
+        console.log(res.data);
+        this.setState({
+          // authenticated:true,
+          login:{
+            email:"",
+            password:"",
+          },
+          show:false,
+          profile:false,
+          userDetail:{...res.data}
+        })
+     }).catch(err=>{
+       if(err.response && err.response.data[0]){
+         alert(err.response.data[0]);
+       }else{
+         alert("something went wrong search");
+       }
+     })
+     e.preventDefault();
+   }
+
+   logInChangeHandler=(e)=>{
+       let newLogin = {...this.state.login}
+       newLogin[e.target.name]= e.target.value
+       this.setState({login:{...newLogin}})
+   }
+
+   registerChangeHandler=(e)=>{
+     let newRegister = {...this.state.register}
+     newRegister[e.target.name]= e.target.value
+     this.setState({register:{...newRegister}})
    }
 
    modalToggleHandler=()=>{
@@ -36,91 +121,204 @@ import Backdrop from "../../UI/backdrop/backdrop"
    }
 
    cartHandler=(e)=>{
-       if(!this.state.authenticated){
+       if(!this.props.authenticated){
            this.setState({profile:true})
            return false
        }
       const newCartState=[...this.state.cart]
       newCartState.push(e)
-      this.setState({cart:[...newCartState]})
-      
+      this.setState({cart:[...newCartState],
+                     loading:true
+                   })
    }
 
+   componentDidUpdate=(prevProps,prevState)=>{
+     if(this.state.loading){
+       axios.post("/v1/client/cart/"+this.state.cart[this.state.cart.length-1].selectedProductId).then(res=>{
+         alert("done added")
+         this.setState({loading:false})
+       }).catch(err=>{
+          this.setState({loading:false})
+          if(err.response && err.response.data[0]){
+            alert(err.response.data[0]);
+          }else{
+            alert("something went wrong....!!!!");
+          }
+       })
+     }
+     // if(this.props.authenticated && (prevState.cart.length===0)){
+     //   axios.get("/v1/client/cart/test").then(res=>{
+     //     alert("cart filled")
+     //     this.setState({cart:[...res.data]})
+     //   }).catch(err=>{
+     //      if(err.response && err.response.data[0]){
+     //        alert(err.response.data[0]);
+     //      }else{
+     //        alert("something went wrong....!!!!");
+     //      }
+     //   })
+     // }
+   }
+
+   deleteProductFromCartHandler=(id,i)=>{
+     alert("in delete")
+      axios.delete("/v1/client/cart/"+id).then(res=>{
+        alert("deleted")
+        let newCart = [...this.state.cart]
+        newCart.splice(i,1);
+        this.setState({cart:[...newCart]})
+      }).catch(err=>{
+        if(err.response && err.response.data[0]){
+          alert(err.response.data[0]);
+        }else{
+          alert("something went wrong....!!!!");
+        }
+      })
+   }
+
+
+   quantityHandler=(operation,i)=>{
+     let newCart = [...this.state.cart]
+     if(operation==="minus" && this.state.cart[i].quantity>1){
+       newCart[i].quantity=newCart[i].quantity-1
+       this.setState({
+          cart:[...newCart]
+       })
+     }else if(operation==="plus"){
+       newCart[i].quantity=newCart[i].quantity+1
+       this.setState({
+          cart:[...newCart]
+       })
+     }
+   }
+
+   checkoutHandler=()=>{
+      this.setState({show:false})
+      this.props.history.push("/checkout")
+   }
 
    render(){
 
      let modal=null;
      let modalLogin=null;
      if(this.state.cart.length!==0){
-       modal = this.state.authenticated?[<Modal clicked={this.modalToggleHandler} show={this.state.show}><div className="modalCart">
+       modal = this.props.authenticated?[<Modal clicked={this.modalToggleHandler} show={this.state.show}><div className="modalCart">
+                     <div className="modalCart__box">
+                         <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.seletedColorImage} alt=""/>
+                         <div className="modalCart__box--col1">
+                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
+                             <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
+                             <div className="modalCart__box--item modalCart__box--color">{product.seletedColorName}</div>
+                             <div onClick={()=>this.deleteProductFromCartHandler(product.selectedProductId,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
+                         </div>
+                         <div className="modalCart__box--col2">
+                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>
+                             <div className="modalCart__box--item modalCart__box--quantity"><span onClick={()=>this.quantityHandler("minus",i)}>-</span>{product.quantity}<span  onClick={()=>this.quantityHandler("plus",i)}>+</span></div>
+                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice * product.quantity} {" <= Total"} </div>
+                         </div>
+                     </div>
                   {this.state.cart.map((product,i)=>(
                     <div className="modalCart__box">
-                        <div className="modalCart__box--item">Name: {product.name}</div>
-                        <div className="modalCart__box--item">Size: {product.size}</div>
-                        <div className="modalCart__box--item">Quantity: {product.quantity}</div>
-                        <div className="modalCart__box--item">color: {product.seletedColorName}</div>
-                        <div className="modalCart__box--item">delete</div>
-                        <div className="modalCart__box--item">order now</div>
+                        <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.seletedColorImage} alt=""/>
+                        <div className="modalCart__box--col1">
+                            <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
+                            <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
+                            <div className="modalCart__box--item modalCart__box--color">{product.seletedColorName}</div>
+                            <div onClick={()=>this.deleteProductFromCartHandler(product.selectedProductId,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
+                        </div>
+                        <div className="modalCart__box--col2">
+                            <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>
+                            <div className="modalCart__box--item modalCart__box--quantity"><span onClick={()=>this.quantityHandler("minus",i)}>-</span>{product.quantity}<span  onClick={()=>this.quantityHandler("plus",i)}>+</span></div>
+                            <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice * product.quantity} {" <= Total"} </div>
+                        </div>
                     </div>
                   ))}
+                  <div className="modalCart__box2">
+                    <h5 className="modalCart__box2--h5">Grand Total{" "}{" "}{" "}{" "}{" "}{" "}{" "}{this.state.cart.map(product=>(product.quantity*product.productPrice)).reduce((acc,value)=>acc+value)}</h5>
+                    <div onClick={this.checkoutHandler} className="modalCart__box2--checkout nav__list--item product__details--cart-btn">checkout</div>
+                  </div>
                </div></Modal>,<Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>]
                :[<Modal clicked={this.modalToggleHandler} show={this.state.show}>
                                <div className="user">
-                                   <button className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </button>
+                                   <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </a>
                                    <hr/>
                                    <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                         <h3>logIn</h3>
-                                        <input required placeholder="email or username" className="user__input" name="email" type="text"/>
-                                        <input required placeholder="password" className="user__input" name="password" type="text"/>
+                                        <input value={this.state.login.email} onChange={this.logInChangeHandler} required placeholder="email or username" className="user__input" name="email" type="text"/>
+                                        <input value={this.state.login.password} onChange={this.logInChangeHandler} required placeholder="password" className="user__input" name="password" type="password"/>
                                         <button className="user__login--btn" type="submit">login</button>
                                    </form>
                                    <hr/>
                                    <form className="user__register" onSubmit={this.registerSubmitHandler}>
                                         <h3>Register</h3>
-                                        <input required placeholder="username" className="user__input" name="username" data-tip="enter a username" type="text"/>
-                                        <input required placeholder="email" className="user__input" name="email" type="text"/>
-                                        <input required placeholder="password" className="user__input" name="password" type="text"/>
-                                        <input required placeholder="confirm password" className="user__input" name="confirmPassword" type="text"/>
+                                        <input  value={this.state.register.firstName} onChange={this.registerChangeHandler} required placeholder="firstName" className="user__input" name="firstName" data-tip="enter a your first name" type="text"/>
+                                        <input value={this.state.register.lastName} onChange={this.registerChangeHandler} required placeholder="lastName" className="user__input" name="lastName" data-tip="enter a your last name" type="text"/>
+                                        <input value={this.state.register.email} onChange={this.registerChangeHandler} required placeholder="email" className="user__input" name="email" type="text"/>
+                                        <input value={this.state.register.password} onChange={this.registerChangeHandler} required placeholder="password" className="user__input" name="password" type="password"/>
+                                        <input value={this.state.register.confirmPassword} onChange={this.registerChangeHandler} required placeholder="confirm password" className="user__input" name="confirmPassword" type="password"/>
                                        <button className="user__register--btn" type="submit">sighup</button>
                                    </form>
                                </div>
                           </Modal>, <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>]
      }
-      modalLogin = [<Modal clicked={this.modalProfileHandler} show={this.state.profile}>
-                      <div className="user">
-                          <button className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </button>
-                          <hr/>
-                          <form className="user__login" onSubmit={this.logInSubmitHandler}>
-                               <h3>logIn</h3>
-                               <input required placeholder="email or username" className="user__input" name="email" type="text"/>
-                               <input required placeholder="password" className="user__input" name="password" type="text"/>
-                               <button className="user__login--btn" type="submit">login</button>
-                          </form>
-                          <hr/>
-                          <form className="user__register" onSubmit={this.registerSubmitHandler}>
-                               <h3>Register</h3>
-                               <input required placeholder="username" className="user__input" name="username" data-tip="enter a username" type="text"/>
-                               <input required placeholder="email" className="user__input" name="email" type="text"/>
-                               <input required placeholder="password" className="user__input" name="password" type="text"/>
-                               <input required placeholder="confirm password" className="user__input" name="confirmPassword" type="text"/>
-                              <button className="user__register--btn" type="submit">sighup</button>
-                          </form>
-                      </div>
-                 </Modal>,<Backdrop clicked={this.modalProfileHandler} show={this.state.profile}/>]
+     if(!this.props.authenticated){
+       modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
+                        <div className="user">
+                            <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </a>
+                            <hr/>
+                            <form className="user__login" onSubmit={this.logInSubmitHandler}>
+                                 <h3>logIn</h3>
+                                 <input onChange={this.logInChangeHandler}  value={this.state.login.email} required placeholder="email" className="user__input" name="email" type="text"/>
+                                 <input onChange={this.logInChangeHandler}  value={this.state.login.password} required placeholder="password" className="user__input" name="password" type="password"/>
+                                 <button className="user__login--btn" type="submit">login</button>
+                            </form>
+                            <hr/>
+                            <form className="user__register" onSubmit={this.registerSubmitHandler}>
+                                 <h3>Register</h3>
+                                 <input value={this.state.register.firstName} onChange={this.registerChangeHandler} required placeholder="firstName" className="user__input" name="firstName" data-tip="enter a your first name" type="text"/>
+                                 <input value={this.state.register.lastName} onChange={this.registerChangeHandler} required placeholder="lastName" className="user__input" name="lastName" data-tip="enter a your last name" type="text"/>
+                                 <input value={this.state.register.email} onChange={this.registerChangeHandler} required placeholder="email" className="user__input" name="email" type="text"/>
+                                 <input value={this.state.register.password} onChange={this.registerChangeHandler} required placeholder="password" className="user__input" name="password" type="password"/>
+                                 <input value={this.state.register.confirmPassword} onChange={this.registerChangeHandler} required placeholder="confirm password" className="user__input" name="confirmPassword" type="password"/>
+                                <button className="user__register--btn" type="submit">sighup</button>
+                            </form>
+                        </div>
+                   </Modal2>,<Backdrop2 clicked={this.modalProfileHandler} show={this.state.profile}/>]
+     }else{
+       modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
+                        <div className="userDetail">
+                            <div>{this.state.userDetail.firstName+" "+this.state.userDetail.lastName}</div>
+                            <div>{this.state.userDetail.email}</div>
+                            <div>logout</div>
+                        </div>
+                   </Modal2>,<Backdrop2 clicked={this.modalProfileHandler} show={this.state.profile}/>]
+     }
+
 
      return (
         <>
            {modal}
            {modalLogin}
-           <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>
-           <Profile clicked={this.modalProfileHandler}/>
            <SocialMedia />
-           <Main cartHandler={this.cartHandler} />
+           <Switch>
+               <Route exact path="/">
+               <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>
+               <Profile authenticated={this.props.authenticated} clicked={this.modalProfileHandler}/>
+                  <Main cart={this.state.cart} cartHandler={this.cartHandler} />
+               </Route>
+               <Route exact path="/checkout">
+                  <Checkout authenticated={this.props.authenticated} cart={this.state.cart}/>
+               </Route>
+               <Route exact path="/myOrder">
+                    <MyOrder/>
+               </Route>
+           </Switch>
            <Footer/>
+           <Link to="myOrder">MYORDER</Link>
         </>
      )
    }
  }
 
 
-export default Layout;
+export default withRouter(Layout);

@@ -258,20 +258,35 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
     }
 
     addCartHandler=()=>{
-      let show = this.props.cartHandler({
-        name:this.state.modalProductDetails.productName,
-        quantity:this.state.productQuantity,
-        size:this.state.productSize,
-        selectedProductId:this.state.selectedProductId,
-        seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
-        seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id})
-      if(!show){
-        this.setState({show:false})
+      console.log(this.props.cart);
+      let flag=0;
+      for(let i = 0;i<this.props.cart.length;i++){
+        if(this.props.cart[i].selectedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id){
+          flag=1;
+        }
       }
-      if(show){
-        let newModalProductDetails = {...this.state.modalProductDetails}
-        newModalProductDetails.disabled = true;
-        this.setState({modalProductDetails:{...newModalProductDetails}})
+      if(flag===0){
+        let show = this.props.cartHandler({
+          productName:this.state.modalProductDetails.productName,
+          productPrice:this.state.modalProductDetails.productPrice,
+          quantity:this.state.productQuantity,
+          size:this.state.productSize,
+          selectedProductId:this.state.selectedProductId,
+          seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
+          seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id,
+          seletedColorImage:this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image})
+          // if(!show){
+          //   this.setState({show:false})
+          // }
+          if(show){
+            //   let newModalProductDetails = {...this.state.modalProductDetails}
+            //   newModalProductDetails.disabled = true;
+            //   this.setState({modalProductDetails:{...newModalProductDetails}})
+            this.setState({show:true})
+          }
+      }
+      if(flag===1){
+        alert('already added to the cart')
       }
     }
 
@@ -359,7 +374,12 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </span></div>
                       </div>
                       <div className="product__details--cart">
-                          <button onClick={this.addCartHandler} className="nav__list--item product__details--cart-btn">Add to cart</button>
+
+                    { this.props.cart.findIndex(item=>(item.seletedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id)&& (item.size===this.state.productSize))===-1
+                      ?<div onClick={this.addCartHandler} className="nav__list--item product__details--cart-btn">Add to cart</div>
+                      :<div className="nav__list--item product__details--cart-btn">ADDED</div>
+                    }
+
                       </div>
                       <div className="product__details--comment">
                           <div className="product__details--comment-head">{this.state.modalProductDetails.comment}</div>
