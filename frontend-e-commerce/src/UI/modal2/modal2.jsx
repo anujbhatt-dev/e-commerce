@@ -7,7 +7,6 @@
 
 
    render(){
-     console.log("in modal");
      let modal=null
      if(this.props.show){
        modal=<div
