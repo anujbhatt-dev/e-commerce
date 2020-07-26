@@ -56,7 +56,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
          this.setState({
            productQuantity:1,
            show:false,
-           selectedProductId:-1,
+           // selectedProductId:-1,
            indexOfSelectedProduct:-1,
            modalProductDetails:
            {
@@ -396,7 +396,10 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      }
 
     if(this.state.nomatch){
-      return <div id="heading" className="heading"><div style={{margin:"20rem"}} className="heading__span">no match found</div></div>
+      return <div id="heading" className="noMatch">
+                 <div className="noMatch__text">0 Match found</div>
+                 <div  className="noMatch__suggestion">Please try a different search term</div>
+             </div>
     }
 
      return (

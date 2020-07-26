@@ -15,6 +15,7 @@ import MyOrder from "./my-order/my-order"
 import ReactToolip from "react-tooltip"
 import {withRouter} from "react-router-dom"
 import ForgotPassword from "./forgot-password/forgot-password"
+import Navigation from "./main/navigation/navigation"
 
  class Layout extends Component{
 
@@ -135,8 +136,13 @@ import ForgotPassword from "./forgot-password/forgot-password"
 
    componentDidUpdate=(prevProps,prevState)=>{
      if(this.state.loading){
-       axios.post("/v1/client/cart/"+this.state.cart[this.state.cart.length-1].selectedProductId).then(res=>{
-         alert("done added")
+        let cartItem = {
+          colorId:this.state.cart[this.state.cart.length-1].seletedColorId,
+          size:this.state.cart[this.state.cart.length-1].size,
+          quantity:this.state.cart[this.state.cart.length-1].quantity
+        }
+       axios.post("/v1/client/cart",cartItem).then(res=>{
+         alert("added to database")
          this.setState({loading:false})
        }).catch(err=>{
           this.setState({loading:false})
@@ -147,8 +153,9 @@ import ForgotPassword from "./forgot-password/forgot-password"
           }
        })
      }
+     
      // if(this.props.authenticated && (prevState.cart.length===0)){
-     //   axios.get("/v1/client/cart/test").then(res=>{
+     //   axios.get("/v1/client/cart/").then(res=>{
      //     alert("cart filled")
      //     this.setState({cart:[...res.data]})
      //   }).catch(err=>{
@@ -204,15 +211,14 @@ import ForgotPassword from "./forgot-password/forgot-password"
      let modalLogin=null;
      if(this.state.cart.length!==0){
        modal = this.props.authenticated?[<Modal clicked={this.modalToggleHandler} show={this.state.show}><div className="modalCart">
-       <div className="modalCart__box">
-           <div className="modalCart__box--item"></div>
+       <div className="modalCart__box modalCart__box--head">
            <div className="modalCart__box--col1">
                Products
            </div>
            <div className="modalCart__box--col2">
-               <div className="modalCart__box--item modalCart__box--productPrice">Price</div>
-               <div className="modalCart__box--item modalCart__box--quantity">Quantity</div>
-               <div className="modalCart__box--item modalCart__box--productPrice">Total Price</div>
+               <div className="modalCart__box--item">Price</div>
+               <div className="modalCart__box--item">Quantity</div>
+               <div className="modalCart__box--item">Total Price</div>
            </div>
        </div>
                   {this.state.cart.map((product,i)=>(
@@ -227,12 +233,12 @@ import ForgotPassword from "./forgot-password/forgot-password"
                         <div className="modalCart__box--col2">
                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>
                             <div className="modalCart__box--item modalCart__box--quantity"><span onClick={()=>this.quantityHandler("minus",i)}>-</span>{product.quantity}<span  onClick={()=>this.quantityHandler("plus",i)}>+</span></div>
-                            <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice * product.quantity} {" <= Total"} </div>
+                            <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice * product.quantity}</div>
                         </div>
                     </div>
                   ))}
                   <div className="modalCart__box2">
-                    <h5 className="modalCart__box2--h5">Grand Total{" "}{" "}{" "}{" "}{" "}{" "}{" "}{this.state.cart.map(product=>(product.quantity*product.productPrice)).reduce((acc,value)=>acc+value)}</h5>
+                    <h5 className="modalCart__box2--h5">Grand Total{" "} <span>₹ {this.state.cart.map(product=>(product.quantity*product.productPrice)).reduce((acc,value)=>acc+value)}</span></h5>
                     <div onClick={this.checkoutHandler} className="modalCart__box2--checkout nav__list--item product__details--cart-btn">checkout</div>
                   </div>
                </div></Modal>,<Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>]
@@ -302,7 +308,7 @@ import ForgotPassword from "./forgot-password/forgot-password"
                <Route exact path="/">
                <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>
                <Profile authenticated={this.props.authenticated} clicked={this.modalProfileHandler}/>
-                  <Main cart={this.state.cart} cartHandler={this.cartHandler} />
+               <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
                <Route exact path="/checkout">
                   <Checkout authenticated={this.props.authenticated} cart={this.state.cart}/>

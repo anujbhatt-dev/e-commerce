@@ -5,15 +5,22 @@
   position:fixed;
   transform: translate(-50%,-50%);
   // background: linear-gradient(90deg, rgba(237,233,233,1) 0%, rgba(255,255,255,1) 50%, rgba(237,233,233,1) 100%);
-  background: $color-white;
-  width:85%;
-  height:90%;
+  background: transparent;
+  // border: 2px solid $color-black;
+  width:22%;
+  height:82%;
   z-index: 10000;
   top:50%;
   left: 50%;
   font-size: 2rem;
   animation: modal .3s ease-out;
   border-radius: 8px;
+  @include respond(tab-port){
+    // .modal2{
+    width:36.5%;
+    height:78.5%;
+    // }
+  }
 }
 @keyframes modal {
     0%{
@@ -32,7 +39,7 @@
   background:$color-white;
   bottom: 1rem;
   right:1rem;
-  padding: 1rem 1.3rem;
+  padding: .6rem .8rem;
   box-shadow: 0 0 1rem $color-black;
   border-radius: 50%;
   transition: all .2s;
@@ -41,5 +48,11 @@
     background: $color-black;
     color: $color-white;
     box-shadow: 0 0 0rem $color-black;
+  }
+}
+@include respond(phone){
+  .modal2{
+    width:75%;
+    height:68.5%;
   }
 }

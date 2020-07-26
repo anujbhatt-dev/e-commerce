@@ -21,6 +21,11 @@
 
   }
    &__count{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 3.5rem;
+      width: 3.5rem;
       position: absolute;
       font-size: 1.5rem;
       background: $color-primary-blue;
@@ -63,5 +68,9 @@
   @include respond(phone){
     left:70%;
     top:88%;
+  }
+  & .cart__icon{
+    font-size: 3.5rem;
+    padding: 1.5rem 2rem;
   }
 }

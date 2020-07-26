@@ -1,5 +1,9 @@
  .dropdown{
-
+   user-select: none;
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -o-user-select: none;
    box-sizing: border-box;
     z-index: 5;
     flex-flow: column;

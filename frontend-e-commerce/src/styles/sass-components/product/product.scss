@@ -5,7 +5,7 @@
   height: 100%;
   width: 100%;
   overflow-y: auto;
-  font-size: 2rem;
+  font-size: 1.5rem;
    padding: 1rem;
    &::-webkit-scrollbar{
      width: 1.5rem;
@@ -33,22 +33,29 @@
       list-style: none;
       &-item{
         margin-bottom: 1rem;
-        margin-right: 1rem;
+        margin-right: 2rem;
         height: 10rem;
         width: 10rem;
         cursor: pointer;
-
-
+        // border: 1px solid $color-white;
+        // outline: 2px solid $color-black;
+        // outline-offset: 5px;
         & img{
+          border-radius : 8px;
           height: 100%;
           width: 100%;
         }
       }
       &-image{
-        height: 60rem;
-        width: 60rem;
+        height: 45rem;
+        width: 40rem;
         margin-bottom: 2rem;
+        margin-left: 1rem;
+        border: 1px solid $color-white;
+        outline: 8px solid $color-black;
+        outline-offset: 5px;
         & img{
+          border-radius: 8px;
           height: 100%;
           width: 100%;
         }
@@ -59,13 +66,13 @@
     text-align: center;
     flex-grow: 1;
     &--name{
-      font-size: 3rem;
+      font-size: 2.5rem;
       font-weight: 1000;
       margin-bottom: 1rem;
     }
     &--price{
       font-weight: 100;
-      font-size: 2.5rem;
+      font-size: 1.5rem;
       margin-bottom: 1rem;
       &-actualPrice{
         text-decoration: line-through;;
@@ -74,7 +81,7 @@
         margin: 0 1rem;
       }
       &-savePrice{
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: $color-orangered;
       }
     }
@@ -95,12 +102,16 @@
        & img{
          height: 10rem;
          width: 10rem;
+         // border: 1px solid $color-white;
+         // outline: 2px solid $color-black;
+         // outline-offset: 5px;
+         border-radius: 8px;
        }
       }
       &-color{
-        font-size: 1.5rem;
+        font-size: 1rem;
         text-transform: uppercase;
-        padding-bottom: .5rem;
+        padding: 1rem 0;
         border-bottom: 2px solid transparent;
         transition: all .3s;
       }
@@ -161,7 +172,7 @@
       &-list{
         margin-left: 2rem;
         margin-top: 2rem;
-        font-size: 1.5rem;
+        font-size: 1rem;
       }
       &-item{
          margin-bottom: .5rem;
@@ -172,7 +183,6 @@
     flex-flow: column;
   }
 }
-
 
 
 
@@ -213,6 +223,11 @@
 }
 
 
+@include respond(tab-land){
+  .Product{
+    flex-flow: column;
+  }
+}
 
 
 
