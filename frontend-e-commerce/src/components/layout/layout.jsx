@@ -152,7 +152,7 @@ import Navigation from "./main/navigation/navigation"
           }
        })
      }
-     
+
      // if(this.props.authenticated && (prevState.cart.length===0)){
      //   axios.get("/v1/client/cart/").then(res=>{
      //     alert("cart filled")
