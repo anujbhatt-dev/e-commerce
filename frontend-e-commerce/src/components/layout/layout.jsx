@@ -310,9 +310,6 @@ import ForgotPassword from "./forgot-password/forgot-password"
                <Route exact path="/myOrder">
                     <MyOrder/>
                </Route>
-               <Route  path="/forgotPassword/{id}">
-                    <ForgotPassword/>
-               </Route>
            </Switch>
            <Footer/>
            <Link to="myOrder">MYORDER</Link>

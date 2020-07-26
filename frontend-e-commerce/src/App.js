@@ -1,8 +1,10 @@
 import React from 'react';
 import "./App.scss"
 import Layout from "./components/layout/layout"
-import {BrowserRouter} from "react-router-dom"
+import {BrowserRouter, Route, Switch} from "react-router-dom"
 import axios from "axios"
+import ForgotPassword from './components/layout/forgot-password/forgot-password';
+import OAuthAuthorization from './components/layout/oauth-authorization/oauth-authorization';
 
 
 // let authenticated=false;
@@ -38,6 +40,13 @@ componentDidMount=()=>{
     return response;});
 }
 
+
+setAuthorizationHeader=(jwt)=>{
+  axios.defaults.headers.common['authorization'] = jwt;
+  this.setState({authenticated:true});
+}
+
+
 logoutHandler(){
   this.setState({authenticated:true});
 }
@@ -48,7 +57,12 @@ render(){
 
   return (
     <BrowserRouter>
-        <Layout authenticated={this.state.authenticated}/>
+      <Switch>
+              <Route exact path="/forgotPassword/:id"> <ForgotPassword/> </Route>
+              <Route exact path="/auth/:jwt"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+              <Route>  <Layout authenticated={this.state.authenticated}/>
+      </Route>
+      </Switch>
     </BrowserRouter>
   );
 }
