@@ -23,10 +23,12 @@ class App extends React.Component{
 
 state={
   authenticated:false,
+  name:"",
+  email:"",
 }
 
 componentDidUpdate(){
-  console.log("APP.jsx updated-->");
+  console.log("APP.jsx updated--> "+ JSON.stringify(this.state));
 }
 
 componentDidMount=()=>{
@@ -35,15 +37,15 @@ componentDidMount=()=>{
     let authorization=response.headers.authorization;
     if(authorization){
     axios.defaults.headers.common['authorization'] = authorization;
-  this.setState({authenticated:true});
+  this.setState({authenticated:true,name:response.headers.name,email:response.headers.name});
   }
     return response;});
 }
 
 
-setAuthorizationHeader=(jwt)=>{
+setAuthorizationHeader=(jwt,email,name)=>{
   axios.defaults.headers.common['authorization'] = jwt;
-  this.setState({authenticated:true});
+  this.setState({authenticated:true,name:name,email:email});
 }
 
 
@@ -59,7 +61,7 @@ render(){
     <BrowserRouter>
       <Switch>
               <Route exact path="/forgotPassword/:id"> <ForgotPassword/> </Route>
-              <Route exact path="/auth/:jwt"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+              <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
               <Route>  <Layout authenticated={this.state.authenticated}/>
       </Route>
       </Switch>
