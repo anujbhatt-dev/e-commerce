@@ -154,18 +154,29 @@ import Navigation from "./main/navigation/navigation"
        })
      }
 
-     // if(this.props.authenticated && (prevState.cart.length===0)){
-     //   axios.get("/v1/client/cart/").then(res=>{
-     //     alert("cart filled")
-     //     this.setState({cart:[...res.data]})
-     //   }).catch(err=>{
-     //      if(err.response && err.response.data[0]){
-     //        alert(err.response.data[0]);
-     //      }else{
-     //        alert("something went wrong....!!!!");
-     //      }
-     //   })
-     // }
+     if(this.props.authenticated && (prevState.cart.length===0)){
+       let newCart = null
+       axios.get("/v1/client/cart/").then(res=>{
+         console.log("cart filled"+JSON.stringify(res.data))
+         // newCart= {
+         //   productName:this.state.modalProductDetails.productName,
+         //   productPrice:this.state.modalProductDetails.productPrice,
+         //   quantity:this.state.productQuantity,
+         //   size:this.state.productSize,
+         //   selectedProductId:this.state.selectedProductId,
+         //   seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
+         //   seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id,
+         //   seletedColorImage:this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image
+         // }
+         this.setState({cart:[...res.data]})
+       }).catch(err=>{
+          if(err.response && err.response.data[0]){
+            alert(err.response.data[0]);
+          }else{
+            alert("something went wrong....!!!!");
+          }
+       })
+     }
    }
 
    deleteProductFromCartHandler=(id,i)=>{
