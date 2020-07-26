@@ -14,6 +14,7 @@ import Checkout from "./checkout/checkout"
 import MyOrder from "./my-order/my-order"
 import ReactToolip from "react-tooltip"
 import {withRouter} from "react-router-dom"
+import ForgotPassword from "./forgot-password/forgot-password"
 import Navigation from "./main/navigation/navigation"
 
  class Layout extends Component{
@@ -140,7 +141,7 @@ import Navigation from "./main/navigation/navigation"
           size:this.state.cart[this.state.cart.length-1].size,
           quantity:this.state.cart[this.state.cart.length-1].quantity
         }
-       axios.post("/v1/client/cart/"+this.state.cart[this.state.cart.length-1].selectedProductId,cartItem).then(res=>{
+       axios.post("/v1/client/cart",cartItem).then(res=>{
          alert("added to database")
          this.setState({loading:false})
        }).catch(err=>{
