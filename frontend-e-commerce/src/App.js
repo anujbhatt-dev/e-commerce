@@ -33,11 +33,11 @@ componentDidUpdate(){
 
 componentDidMount=()=>{
   axios.interceptors.response.use(response =>{
-   console.log("intercept->"+response.headers.authorization);
+   console.log("intercept->"+JSON.stringify(response.headers));
     let authorization=response.headers.authorization;
     if(authorization){
     axios.defaults.headers.common['authorization'] = authorization;
-  this.setState({authenticated:true,name:response.headers.name,email:response.headers.name});
+  this.setState({authenticated:true,name:response.headers.name,email:response.headers.email});
   }
     return response;});
 }
