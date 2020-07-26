@@ -1,10 +1,15 @@
 .pagination{
-
+     user-select: none;
+     -moz-user-select: none;
+     -khtml-user-select: none;
+     -webkit-user-select: none;
+     -o-user-select: none;
      margin-bottom: 5rem;
+     letter-spacing: 5px;
   &__minus{
      cursor: pointer;
      font-size: 2rem;
-     padding: .5rem;
+     padding: .5rem 3rem;
      &:hover{
        border-bottom: 2px solid $color-primary-blue;
      }
@@ -16,7 +21,7 @@
   &__plus{
     cursor: pointer;
     font-size: 2rem;
-    padding: .5rem;
+    padding: .5rem 3rem;
     &:hover{
       border-bottom: 2px solid $color-primary-blue;
     }
