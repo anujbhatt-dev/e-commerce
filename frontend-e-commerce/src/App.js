@@ -60,7 +60,7 @@ render(){
   return (
     <BrowserRouter>
       <Switch>
-              <Route exact path="/forgotPassword/:id"> <ForgotPassword/> </Route>
+              <Route exact path="/forgotPassword/:id"><ForgotPassword/></Route>
               <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
               <Route>  <Layout authenticated={this.state.authenticated}/>
       </Route>
