@@ -180,11 +180,12 @@ import Navigation from "./main/navigation/navigation"
 
    deleteProductFromCartHandler=(id,size,i)=>{
      alert("in delete")
+     console.log(id,size);
      let params={
        colorId:id,
        size:size
      }
-      axios.delete("/v1/client/cart",null,{params:params}).then(res=>{
+      axios.delete("/v1/client/cart",{params:params}).then(res=>{
         alert("deleted")
         let newCart = [...this.state.cart]
         newCart.splice(i,1);
@@ -256,7 +257,7 @@ import Navigation from "./main/navigation/navigation"
                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
                             <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
                             <div className="modalCart__box--item modalCart__box--color">{product.seletedColorName}</div>
-                            <div onClick={()=>this.deleteProductFromCartHandler(product.selectedColorId,product.size,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
+                            <div onClick={()=>this.deleteProductFromCartHandler(product.seletedColorId,product.size,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
                         </div>
                         <div className="modalCart__box--col2">
                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>
