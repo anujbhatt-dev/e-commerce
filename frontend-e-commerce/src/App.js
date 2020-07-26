@@ -7,13 +7,11 @@ import ForgotPassword from './components/layout/forgot-password/forgot-password'
 import OAuthAuthorization from './components/layout/oauth-authorization/oauth-authorization';
 
 
-// let authenticated=false;
 axios.interceptors.response.use(response =>{
  console.log("intercept->"+JSON.stringify(response.headers));
   let authorization=response.headers.authorization;
   if(authorization){
   axios.defaults.headers.common['authorization'] = authorization;
-//authenticated=true;
 }
   return response;});
 
@@ -62,6 +60,8 @@ render(){
       <Switch>
               <Route exact path="/forgotPassword/:id"><ForgotPassword/></Route>
               <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+              <Route exact path="/paymentResult/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+
               <Route>  <Layout email={this.state.email} authenticated={this.state.authenticated}/>
       </Route>
       </Switch>
