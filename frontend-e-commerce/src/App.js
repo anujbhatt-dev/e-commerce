@@ -62,7 +62,7 @@ render(){
       <Switch>
               <Route exact path="/forgotPassword/:id"><ForgotPassword/></Route>
               <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
-              <Route>  <Layout authenticated={this.state.authenticated}/>
+              <Route>  <Layout email={this.state.email} authenticated={this.state.authenticated}/>
       </Route>
       </Switch>
     </BrowserRouter>

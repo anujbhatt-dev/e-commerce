@@ -7,14 +7,14 @@ import axios from "axios"
      gTotal:null,
      finalAmount:null,
      formDetails:{
-       firstName:"",
-       lastName:"",
+       customerName:"",
+       customerNumber:"",
        email:"",
-       address:"",
+       landmark:"",
+       location:"",
        city:"",
        state:"",
        pincode:"",
-       phone:"",
        coupon:""
      },
      orders:[],
@@ -36,9 +36,33 @@ import axios from "axios"
    }
 
    componentDidMount=()=>{
+     let formDetails=null
      let gt = this.props.cart.map(product=>(product.quantity*product.productPrice)).reduce((acc,value)=>acc+value)
      this.setState({gTotal:gt,orders:[...this.props.cart],finalAmount:gt})
+     axios.get("/v1/order/getAddress").then(res=>{
 
+      formDetails={
+         customerName:res.data.customerName,
+         customerNumber:res.data.customerNumber,
+         landmark:res.data.landmark,
+         location:res.data.location,
+         city:res.data.city,
+         state:res.data.state,
+         pincode:res.data.pincode,
+         coupon:""
+       }
+       this.setState({formDetails:{...formDetails}})
+     }).catch(err=>{
+       if(err.response && err.response.data[0]){
+         alert(err.response.data[0]);
+       }else{
+         alert("something went wrong search");
+       }
+     })
+     formDetails={
+       email:this.props.email
+     }
+     this.setState({formDetails:formDetails})
    }
 
    componentDidUpdate=()=>{
@@ -71,12 +95,13 @@ import axios from "axios"
               <div className="checkout__details">
                  <form className="checkout__form" onSubmit={this.SubmitHandler}>
                      <input className="checkout__form--input" placeholder="Email" onChange={this.onChangeHandler} name="email" value={this.state.formDetails.email} type="text"/>
-                     <input className="checkout__form--input" placeholder="Firstname" onChange={this.onChangeHandler} name="firstName" value={this.state.formDetails.firstName} type="text"/>
-                     <input className="checkout__form--input" placeholder="lastname" onChange={this.onChangeHandler} name="lastName" value={this.state.formDetails.lastName} type="text"/>
-                     <input className="checkout__form--input" placeholder="address" onChange={this.onChangeHandler} name="address" value={this.state.formDetails.address} type="text"/>
+                     <input className="checkout__form--input" placeholder="Name" onChange={this.onChangeHandler} name="customerName" value={this.state.formDetails.customerName} type="text"/>
+                     <input className="checkout__form--input" placeholder="Name" onChange={this.onChangeHandler} name="customerNumber" value={this.state.formDetails.customerNumber} type="Number"/>
+                     <input className="checkout__form--input" placeholder="landmark" onChange={this.onChangeHandler} name="landmark" value={this.state.formDetails.landmark} type="text"/>
+                     <input className="checkout__form--input" placeholder="Pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
+                     <input className="checkout__form--input" placeholder="location" onChange={this.onChangeHandler} name="location" value={this.state.formDetails.location} type="text"/>
                      <input className="checkout__form--input" placeholder="City" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
                      <input className="checkout__form--input" placeholder="State" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
-                     <input className="checkout__form--input" placeholder="Pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
                  </form>
               </div>
              <h5 className="checkout__h5">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount)?this.state.finalAmount:<span>{this.state.gTotal+" - "+this.state.couponValue+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>

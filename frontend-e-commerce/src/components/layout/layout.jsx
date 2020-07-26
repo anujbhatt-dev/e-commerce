@@ -142,7 +142,6 @@ import Navigation from "./main/navigation/navigation"
           quantity:this.state.cart[this.state.cart.length-1].quantity
         }
        axios.post("/v1/client/cart",cartItem).then(res=>{
-         alert("added to database")
          this.setState({loading:false})
        }).catch(err=>{
           this.setState({loading:false})
@@ -179,9 +178,13 @@ import Navigation from "./main/navigation/navigation"
      // }
    }
 
-   deleteProductFromCartHandler=(id,i)=>{
+   deleteProductFromCartHandler=(id,size,i)=>{
      alert("in delete")
-      axios.delete("/v1/client/cart/"+id).then(res=>{
+     let params={
+       colorId:id,
+       size:size
+     }
+      axios.delete("/v1/client/cart",null,{params:params}).then(res=>{
         alert("deleted")
         let newCart = [...this.state.cart]
         newCart.splice(i,1);
@@ -218,8 +221,7 @@ import Navigation from "./main/navigation/navigation"
                 size:cartItem.size}
       })
       console.log(checkout);
-      axios.post("/v1/order/checkOut",checkout).then(res=>{
-             alert("/done");
+      axios.post("/v1/order/checkOut/",checkout).then(res=>{
       }).catch(err=>{
         if(err.response && err.response.data[0]){
           alert(err.response.data[0]);
@@ -254,7 +256,7 @@ import Navigation from "./main/navigation/navigation"
                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
                             <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
                             <div className="modalCart__box--item modalCart__box--color">{product.seletedColorName}</div>
-                            <div onClick={()=>this.deleteProductFromCartHandler(product.selectedProductId,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
+                            <div onClick={()=>this.deleteProductFromCartHandler(product.selectedColorId,product.size,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
                         </div>
                         <div className="modalCart__box--col2">
                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>
@@ -337,7 +339,7 @@ import Navigation from "./main/navigation/navigation"
                <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
                <Route exact path="/checkout">
-                  <Checkout authenticated={this.props.authenticated} cart={this.state.cart}/>
+                  <Checkout email={this.props.email} authenticated={this.props.authenticated} cart={this.state.cart}/>
                </Route>
                <Route exact path="/myOrder">
                     <MyOrder/>
