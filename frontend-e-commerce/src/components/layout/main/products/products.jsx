@@ -56,7 +56,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
          this.setState({
            productQuantity:1,
            show:false,
-           // selectedProductId:-1,
+           selectedProductId:-1,
            indexOfSelectedProduct:-1,
            modalProductDetails:
            {
@@ -292,6 +292,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
 
 
    render(){
+     console.log(this.props.cart);
      // if(this.state.loading)
      //    return <div className="feature"><div className="card"><Spinner /></div></div>
 
