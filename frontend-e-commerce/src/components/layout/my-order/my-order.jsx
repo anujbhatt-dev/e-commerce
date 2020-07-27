@@ -42,7 +42,7 @@
        })
    }
 
-   quer(yHandler=(e,id,index)=>{
+   queryHandler=(e,id,index)=>{
      if(this.state.myOrders[index].newQuery.length>0)
          axios.post("/v1/order/addQuery/"+id,null,{params:{query:this.state.myOrders[index].newQuery}})
          .then(res=>{
