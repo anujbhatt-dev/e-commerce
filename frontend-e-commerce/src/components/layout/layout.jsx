@@ -42,7 +42,6 @@ import Navigation from "./main/navigation/navigation"
    registerSubmitHandler=(e)=>{
      if(this.state.register.password===this.state.register.confirmPassword){
        axios.post("/v1/client/register",this.state.register).then(res=>{
-         console.log(res.data);
          this.setState({
            // authenticated:true,
            register:{
@@ -71,7 +70,6 @@ import Navigation from "./main/navigation/navigation"
 
    logInSubmitHandler=(e)=>{
      axios.post("/v1/client/authenticate",this.state.login).then(res=>{
-        console.log(res.data);
         this.setState({
           // authenticated:true,
           login:{
@@ -105,7 +103,6 @@ import Navigation from "./main/navigation/navigation"
    }
 
    modalToggleHandler=()=>{
-      console.log("in");
       if(this.state.show){
         this.setState({show:false})
       }else{
@@ -114,7 +111,6 @@ import Navigation from "./main/navigation/navigation"
    }
 
    modalProfileHandler=()=>{
-      console.log("in modalProfileHandler");
       if(this.state.profile){
         this.setState({profile:false})
       }else{
@@ -139,7 +135,6 @@ import Navigation from "./main/navigation/navigation"
        axios.get("/v1/client/cart/").then(res=>{
 
          this.setState({cart:[...res.data]})
-         console.log(this.state.cart);
        }).catch(err=>{
           if(err.response && err.response.data[0]){
             alert(err.response.data[0]);
@@ -153,7 +148,7 @@ import Navigation from "./main/navigation/navigation"
    componentDidUpdate=(prevProps,prevState)=>{
      if(this.state.loading){
         let cartItem = {
-          colorId:this.state.cart[this.state.cart.length-1].seletedColorId,
+          colorId:this.state.cart[this.state.cart.length-1].selectedColorId,
           size:this.state.cart[this.state.cart.length-1].size,
           quantity:this.state.cart[this.state.cart.length-1].quantity
         }
@@ -169,11 +164,11 @@ import Navigation from "./main/navigation/navigation"
        })
      }
    //
-     if(this.props.authenticated && (prevState.cart.length===0)){
+     if(this.props.authenticated && (prevState.cart.length===0) && !prevProps.authenticated){
+       console.log("in");
        axios.get("/v1/client/cart/").then(res=>{
 
          this.setState({cart:[...res.data]})
-         console.log(this.state.cart);
        }).catch(err=>{
           if(err.response && err.response.data[0]){
             alert(err.response.data[0]);
@@ -187,14 +182,11 @@ import Navigation from "./main/navigation/navigation"
 
 
    deleteProductFromCartHandler=(id,size,i)=>{
-     alert("in delete")
-     console.log(id,size);
      let params={
        colorId:id,
        size:size
      }
       axios.delete("/v1/client/cart",{params:params}).then(res=>{
-        alert("deleted")
         let newCart = [...this.state.cart]
         newCart.splice(i,1);
         this.setState({cart:[...newCart]})
@@ -225,11 +217,10 @@ import Navigation from "./main/navigation/navigation"
 
    checkoutHandler=()=>{
       let checkout = this.state.cart.map((cartItem,i)=>{
-        return {colorId:cartItem.seletedColorId,
+        return {colorId:cartItem.selectedColorId,
                 quantity:cartItem.quantity,
                 size:cartItem.size}
       })
-      console.log(checkout);
       axios.post("/v1/order/checkOut/",checkout).then(res=>{
       }).catch(err=>{
         if(err.response && err.response.data[0]){
@@ -260,12 +251,12 @@ import Navigation from "./main/navigation/navigation"
        </div>
                   {this.state.cart.map((product,i)=>(
                     <div className="modalCart__box">
-                        <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.seletedColorImage} alt=""/>
+                        <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.selectedColorImage} alt=""/>
                         <div className="modalCart__box--col1">
                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
                             <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
-                            <div className="modalCart__box--item modalCart__box--color">{product.seletedColorName}</div>
-                            <div onClick={()=>this.deleteProductFromCartHandler(product.seletedColorId,product.size,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
+                            <div className="modalCart__box--item modalCart__box--color">{product.selectedColorName}</div>
+                            <div onClick={()=>this.deleteProductFromCartHandler(product.selectedColorId,product.size,i)} className="modalCart__box--item modalCart__box--remove">remove</div>
                         </div>
                         <div className="modalCart__box--col2">
                             <div className="modalCart__box--item modalCart__box--productPrice">₹ {product.productPrice}</div>

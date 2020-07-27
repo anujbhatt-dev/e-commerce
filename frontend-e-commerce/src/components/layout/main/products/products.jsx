@@ -141,7 +141,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                  this.setState({
                    nomatch:true
                  })
-                 console.log(this.props.searchValue)
                }
                this.props.selectedCategoryHandler({
                  id:-2,
@@ -153,7 +152,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
             this.setState({
               loading:false
               })
-              console.log(this.props.searchValue)
               this.props.selectedCategoryHandler({
                 id:-2,
                 name:this.props.searchValue,
@@ -203,7 +201,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                   modalProductDetails:{...res.data},
                   caller:false,
                 })
-                console.log(this.state.modalProductDetails);
           }).catch(err=>{
              this.setState({
                caller:false
@@ -258,7 +255,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
     }
 
     addCartHandler=()=>{
-      console.log(this.props.cart);
       let flag=0;
       for(let i = 0;i<this.props.cart.length;i++){
         if(this.props.cart[i].selectedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id){
@@ -272,9 +268,9 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
           quantity:this.state.productQuantity,
           size:this.state.productSize,
           selectedProductId:this.state.selectedProductId,
-          seletedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
-          seletedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id,
-          seletedColorImage:this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image})
+          selectedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
+          selectedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id,
+          selectedColorImage:this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image})
           // if(!show){
           //   this.setState({show:false})
           // }
@@ -292,7 +288,6 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
 
 
    render(){
-     console.log(this.props.cart);
      // if(this.state.loading)
      //    return <div className="feature"><div className="card"><Spinner /></div></div>
 
@@ -376,7 +371,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                       </div>
                       <div className="product__details--cart">
 
-                    { this.props.cart.findIndex(item=>(item.seletedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id)&& (item.size===this.state.productSize))===-1
+                    { this.props.cart.findIndex(item=>(item.selectedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id)&& (item.size===this.state.productSize))===-1
                       ?<div onClick={this.addCartHandler} className="nav__list--item product__details--cart-btn">Add to cart</div>
                       :<div className="nav__list--item product__details--cart-btn">ADDED</div>
                     }
