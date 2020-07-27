@@ -8,14 +8,15 @@ import axios from "axios"
      finalAmount:null,
      formDetails:{
        customerName:"",
-       customerNumber:"",
+       customerPhone:"",
+       houseNumber:"",
        email:"",
        landmark:"",
        location:"",
        city:"",
        state:"",
        pincode:"",
-       coupon:""
+       coupon:"-1",
      },
      orders:[],
      couponAppling:false,
@@ -84,6 +85,39 @@ import axios from "axios"
      }
    }
 
+
+   placeOrderHandler=()=>{
+     let param={
+       promo:-1,
+     }
+
+     axios.post("/v1/order/placeOrder",this.state.formDetails,{params:param})
+     .then(res=>{
+      let payload=res.data;
+     
+       let uri = "CALLBACK_URL="+encodeURIComponent(payload.CALLBACK_URL)+
+         "&CHANNEL_ID="+encodeURIComponent(payload.CHANNEL_ID)+
+         "&CHECKSUMHASH="+encodeURIComponent(payload.CHECKSUMHASH)+
+         "&CUST_ID="+encodeURIComponent(payload.CUST_ID)+
+         "&INDUSTRY_TYPE_ID="+encodeURIComponent(payload.INDUSTRY_TYPE_ID)+
+         "&MID="+encodeURIComponent(payload.MID)+
+         "&ORDER_ID="+encodeURIComponent(payload.ORDER_ID)+
+         "&TXN_AMOUNT="+encodeURIComponent(payload.TXN_AMOUNT)+
+         "&WEBSITE="+encodeURIComponent(payload.WEBSITE)
+
+console.log(
+"https://securegw-stage.paytm.in/theia/processTransaction?"+uri
+)
+
+window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"+uri;
+     }
+);
+   }
+   
+
+
+
+
    render(){
      if(!this.props.authenticated){
        window.location.href = "http://localhost:3000";
@@ -94,15 +128,17 @@ import axios from "axios"
         <div className="checkout">
               <div className="checkout__details">
                  <form className="checkout__form" onSubmit={this.SubmitHandler}>
-                     <input className="checkout__form--input" placeholder="Email" onChange={this.onChangeHandler} name="email" value={this.state.formDetails.email} type="text"/>
-                     <input className="checkout__form--input" placeholder="Name" onChange={this.onChangeHandler} name="customerName" value={this.state.formDetails.customerName} type="text"/>
-                     <input className="checkout__form--input" placeholder="Name" onChange={this.onChangeHandler} name="customerNumber" value={this.state.formDetails.customerNumber} type="Number"/>
-                     <input className="checkout__form--input" placeholder="landmark" onChange={this.onChangeHandler} name="landmark" value={this.state.formDetails.landmark} type="text"/>
-                     <input className="checkout__form--input" placeholder="Pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
-                     <input className="checkout__form--input" placeholder="location" onChange={this.onChangeHandler} name="location" value={this.state.formDetails.location} type="text"/>
-                     <input className="checkout__form--input" placeholder="City" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
-                     <input className="checkout__form--input" placeholder="State" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
+                     <input className="checkout__form--input" placeholder="email" onChange={this.onChangeHandler} name="email" value={this.state.formDetails.email} type="text"/>
+                     <input className="checkout__form--input" placeholder="name" onChange={this.onChangeHandler} name="customerName" value={this.state.formDetails.customerName} type="text"/>
+                     <input className="checkout__form--input" placeholder="number" onChange={this.onChangeHandler} name="customerPhone" value={this.state.formDetails.customerNumber} type="Number"/>
+                     <input className="checkout__form--input" placeholder="house number" onChange={this.onChangeHandler} name="houseNumber" value={this.state.formDetails.houseNumber} type="text"/>
+                    <input className="checkout__form--input" placeholder="location" onChange={this.onChangeHandler} name="location" value={this.state.formDetails.location} type="text"/>
+                    <input className="checkout__form--input" placeholder="landmark" onChange={this.onChangeHandler} name="landmark" value={this.state.formDetails.landmark} type="text"/>
+                     <input className="checkout__form--input" placeholder="pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
+                     <input className="checkout__form--input" placeholder="city" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
+                     <input className="checkout__form--input" placeholder="state" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
                  </form>
+                 <button  onClick={this.placeOrderHandler}>PAY</button>
               </div>
              <h5 className="checkout__h5">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount)?this.state.finalAmount:<span>{this.state.gTotal+" - "+this.state.couponValue+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
              <div className="checkout__product">

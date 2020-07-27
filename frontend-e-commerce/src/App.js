@@ -5,6 +5,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom"
 import axios from "axios"
 import ForgotPassword from './components/layout/forgot-password/forgot-password';
 import OAuthAuthorization from './components/layout/oauth-authorization/oauth-authorization';
+import PaymentResult from './components/layout/payment-result/payment-result';
 
 
 axios.interceptors.response.use(response =>{
@@ -59,7 +60,7 @@ render(){
       <Switch>
               <Route exact path="/forgotPassword/:id"><ForgotPassword/></Route>
               <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
-              <Route exact path="/paymentResult/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+              <Route exact path="/paymentResult/:jwt/:email/:name"><PaymentResult setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
 
               <Route>  <Layout email={this.state.email} authenticated={this.state.authenticated}/>
       </Route>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
 
 class PaymentResult extends Component {
 
@@ -8,7 +9,7 @@ class PaymentResult extends Component {
 
         console.log(this.props)
         this.props.setAuthorizationHeader("Bearer "+this.props.match.params.jwt,this.props.match.params.email,this.props.match.params.name);
-        this.props.history.push("/myOrder");
+        this.props.history.push("/myOrders");
 
     }
 
@@ -22,4 +23,4 @@ class PaymentResult extends Component {
 }
 
 
-export default PaymentResult;
+export default withRouter(PaymentResult);
