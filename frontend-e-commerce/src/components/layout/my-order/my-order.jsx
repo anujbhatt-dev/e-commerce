@@ -43,25 +43,26 @@
    }
 
    queryHandler=(e,id,index)=>{
-     if(this.state.querying){
-         axios.post("/v1/order/addQuery/"+id).then(res=>{
+         axios.post("/v1/order/addQuery/"+id,null,{params:{query:this.state.myOrders[index].newQuery}})
+         .then(res=>{
+           console.log("THEN");
            let newOrders=[...this.state.myOrders]
            let newOrder=newOrders[index];
-          let queries= [...newOrder[queries]];
-          queries.push(newOrder.newQuery);
+           newOrder.queries.push(newOrder.newQuery);
            newOrder.newQuery="";
           this.setState({
               myOrders:[...newOrders]
           })
 
          }).catch(err=>{
+          console.log("CATCh");
            if(err.response && err.response.data[0]){
              alert(err.response.data[0]);
            }else{
              alert("something went wrong....!!!!");
            }
          })
-       }
+       
      e.preventDefault()
    }
 
@@ -97,6 +98,19 @@
                                     </div>
                              ))}
                          </div>
+                         <div className="queries">
+                               <form className="queries__form" onSubmit={(e)=>this.queryHandler(e,order.id,i)}>
+                                    <input className="queries__form--input" onChange={(e)=>this.onChangeHandler(e,i)} value={this.state.myOrders[i].newQuery} placeholder="Post your Query" type="text"/>
+                                    <button className="queries__form--btn">Post</button>
+                               </form>
+                               <div className="queries__posts">
+                                   <ul className="queries__posts--list">
+                                       {order.queries.map((query,i)=>(
+                                         <li>{query}</li>
+                                       ))}
+                                   </ul>
+                               </div>
+                         </div>
                          <div className="myOrders__box--address">
                              <h4 className="myOrders__box--address-head">Shipping Addres</h4>
                              <hr className="myOrders__box--hr"/>
@@ -113,19 +127,7 @@
                              {order.promoDiscount!==0?<div className="myOrders__box--orderId">Promo Discount: ₹{order.promoDiscount}</div>:null}<br/>
                              {order.paymentMode?<div className="myOrders__box--orderId">Payment Mode: {order.paymentMode}</div>:null}
                          </div>
-                         <div className="queries">
-                               <form className="queries__form" onSubmit={(e)=>this.queryHandler(e,order.id,i)}>
-                                    <input className="queries__form--input" onChange={(e)=>this.onChangeHandler(e,i)} value={this.state.myOrders[i].newQuery} placeholder="Post your Query" type="text"/>
-                                    <button className="queries__form--btn">Post</button>
-                               </form>
-                               <div className="queries__posts">
-                                   <ul className="queries__posts--list">
-                                       {order.queries.map((query,i)=>(
-                                         <li>{query.query}</li>
-                                       ))}
-                                   </ul>
-                               </div>
-                         </div>
+                        
                     </div>
                 </div>
              )): <div>you dont have any order</div>}
