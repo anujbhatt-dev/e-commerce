@@ -9,8 +9,8 @@ import UpdateProduct from "./products/update-product/update-product"
 import Subscribe from "./subscribe/subscribe"
 import Promo from "./promo/promo"
 import Designs from "./designs/designs"
-
 import {Route , Switch} from "react-router-dom"
+import ClientSideUI from "./client-side-ui/client-side-ui"
 
  class Main extends Component{
 
@@ -29,6 +29,8 @@ import {Route , Switch} from "react-router-dom"
                   <Route exact path="/subscribe" component={Subscribe}/>
                   <Route exact path="/promo" component={Promo}/>
                   <Route exact path="/designs" component={Designs}/>
+                  <Route exact path="/clientui" component={ClientSideUI}/>
+
               </Switch>
          </div>
      )

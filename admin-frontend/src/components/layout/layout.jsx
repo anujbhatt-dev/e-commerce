@@ -25,6 +25,8 @@ import {Link} from "react-router-dom"
                          <Link to="/subscribe"><li className="nav__list--item">subscribe</li></Link>
                          <Link to="/designs"><li className="nav__list--item">designs</li></Link>
                          <Link to="/promo"><li className="nav__list--item">promo</li></Link>
+                         <Link to="/clientui"><li className="nav__list--item">client ui</li></Link>
+
                     </ul>
                </div>
           </Sidebar>
