@@ -255,13 +255,13 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
     }
 
     addCartHandler=()=>{
-      let flag=0;
-      for(let i = 0;i<this.props.cart.length;i++){
-        if(this.props.cart[i].selectedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id){
-          flag=1;
-        }
-      }
-      if(flag===0){
+      // let flag=0;
+      // for(let i = 0;i<this.props.cart.length;i++){
+      //   if(this.props.cart[i].selectedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id){
+      //     flag=1;
+      //   }
+      // }
+      // if(flag===0){
         let show = this.props.cartHandler({
           productName:this.state.modalProductDetails.productName,
           productPrice:this.state.modalProductDetails.productPrice,
@@ -280,10 +280,10 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
             //   this.setState({modalProductDetails:{...newModalProductDetails}})
             this.setState({show:true})
           }
-      }
-      if(flag===1){
-        alert('already added to the cart')
-      }
+      // }
+      // if(flag===1){
+      //   alert('already added to the cart')
+      // }
     }
 
 

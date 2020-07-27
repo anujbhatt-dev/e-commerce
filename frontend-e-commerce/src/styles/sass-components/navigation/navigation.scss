@@ -81,3 +81,18 @@
      }
    }
 }
+
+.secondaryNavigation{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: $color-white;
+  padding:2rem 0rem;
+  & img{
+    height: 8rem;
+    width: 25rem;
+    @include respond(phone){
+
+    }
+  }
+}

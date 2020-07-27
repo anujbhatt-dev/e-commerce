@@ -1,5 +1,6 @@
 .checkout{
   display: flex;
+  position: relative;
   &__details{
     display: flex;
     flex-grow: 1;
@@ -10,8 +11,10 @@
   }
   &__form{
     display: flex;
-    flex-flow: column;
-    width: 30rem;
+    // flex-flow: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
     margin: 5rem;
     &--input{
       height: 5rem;
@@ -19,14 +22,38 @@
       font-size: 1.5rem;
       // border-right: none;
       padding: 0 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       border: 1px solid $color-black;
       &:focus{
         outline: none;
       }
     }
+    &--location{
+      flex-basis: 100%;
+    }
+    &--btn{
+      display: inline-block;
+      font-size: 1.5rem;
+      height: 5rem;
+      width:10rem;
+      background: $color-black;
+      color:$color-white;
+      transition: all .2s;
+      padding: .5rem 2rem;
+      border: none;
+      cursor: pointer;
+      border: 1px solid $color-black;
+      &:hover{
+        background: $color-white;
+        color:$color-black;
+        border: 1px solid $color-black;
+      }
+    }
   }
   &__product{
+
+    max-height: 100vh;
+    overflow-y: auto;
     // display: flex;
     flex-flow: column;
     // align-self: flex-start;
@@ -73,6 +100,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-flow: column;
     &--form{
 
       &-input{
@@ -81,11 +109,16 @@
         font-size: 1.5rem;
         // border-right: none;
         padding: 0 1rem;
-        margin-bottom: 2rem;
+        margin-bottom: 4rem;
         border: 1px solid $color-black;
         &:focus{
           outline: none;
         }
+      }
+      &-text{
+        font-size: 1.5rem;
+        padding: 0 1rem;
+        margin-bottom: 2rem;
       }
       &-btn{
         font-size: 1.5rem;
@@ -110,7 +143,10 @@
     }
   }
   &__h5Desktop{
-    padding:3rem 1rem;
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    padding:.5rem 1rem;
     order: 1;
     text-align: right;
     font-size: 1rem;

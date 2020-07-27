@@ -1,0 +1,19 @@
+.orderItems{
+  display: flex;
+   &__card{
+      display: flex;
+      flex-flow: column;
+      margin: .5rem;
+     &--image{
+       height: 15rem;
+       width:13rem
+     }
+     &--item{
+       display: inline-block;
+     }
+     &--items{
+       display: flex;
+       justify-content: space-between;
+     }
+   }
+}

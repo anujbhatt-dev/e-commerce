@@ -11,11 +11,12 @@ import Backdrop from "../../UI/backdrop/backdrop"
 import Backdrop2 from "../../UI/backdrop2/backdrop2"
 import {Route,Switch, Link} from  "react-router-dom"
 import Checkout from "./checkout/checkout"
-import MyOrder from "./my-order/my-order"
+import MyOrders from "./my-order/my-order"
 import ReactToolip from "react-tooltip"
 import {withRouter} from "react-router-dom"
 import ForgotPassword from "./forgot-password/forgot-password"
 import Navigation from "./main/navigation/navigation"
+import SecondaryNavigation from "./secondary-nav/secondary-nav"
 
  class Layout extends Component{
 
@@ -316,15 +317,14 @@ import Navigation from "./main/navigation/navigation"
                             </form>
                         </div>
                    </Modal2>,<Backdrop2 clicked={this.modalProfileHandler} show={this.state.profile}/>]
-     }else{
-       modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
-                        <div className="userDetail">
-                            <div>{this.state.userDetail.firstName+" "+this.state.userDetail.lastName}</div>
-                            <div>{this.state.userDetail.email}</div>
-                            <div>logout</div>
-                        </div>
-                   </Modal2>,<Backdrop2 clicked={this.modalProfileHandler} show={this.state.profile}/>]
      }
+     // else{
+     //   modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
+     //                    <div className="userDetail">
+     //                        <Link to="myOrder">MYORDER</Link>
+     //                    </div>
+     //               </Modal2>,<Backdrop2 clicked={this.modalProfileHandler} show={this.state.profile}/>]
+     // }
 
 
      return (
@@ -339,14 +339,16 @@ import Navigation from "./main/navigation/navigation"
                <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
                <Route exact path="/checkout">
+                   <SecondaryNavigation/>
                   <Checkout email={this.props.email} authenticated={this.props.authenticated} cart={this.state.cart}/>
                </Route>
-               <Route exact path="/myOrder">
-                    <MyOrder/>
+               <Route exact path="/myOrders">
+                    <SecondaryNavigation/>
+                    <MyOrders authenticated={this.props.authenticated} />
                </Route>
            </Switch>
            <Footer/>
-           <Link to="myOrder">MYORDER</Link>
+
         </>
      )
    }

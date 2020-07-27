@@ -1,0 +1,21 @@
+.myOrders{
+  position: relative;
+  &__box{
+    background: $color-grey-light-3;
+    margin: 1rem;
+    padding: 1rem;
+    &--orderId{
+       & span{
+
+       }
+    }
+    &--transactionId{
+      & span{
+        
+      }
+    }
+//
+//
+//
+  }
+}
