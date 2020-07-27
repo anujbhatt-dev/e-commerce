@@ -35,12 +35,13 @@
   &__posts{
     // height: 10rem;
     &--list{
+      border:1px solid rgba($color-black,.1);
       overflow-y: auto;
-      max-height: 20rem;
-      font-size: 1.5rem;
+      max-height: 12rem;
+      font-size: 1rem;
+      padding-left: 2rem;
       & > *{
         line-height: 2;
-        padding-left: .5rem;
       }
     }
   }

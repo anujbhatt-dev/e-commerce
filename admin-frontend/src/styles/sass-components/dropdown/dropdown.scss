@@ -9,7 +9,7 @@
     transition: all .2s;
     background: $color-white;
     &__item{
-      width: 15rem;
+      width: 25rem;
       // display: none;
       transition: all .3s;
       text-align: center;
@@ -33,6 +33,6 @@
 
 }
 .nav__list--item:hover > .dropdown > .dropdown__item{
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 1rem 2rem;
 }

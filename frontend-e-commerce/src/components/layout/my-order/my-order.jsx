@@ -63,7 +63,7 @@
              alert("something went wrong....!!!!");
            }
          })
-       
+
      e.preventDefault()
    }
 
@@ -105,11 +105,11 @@
                                     <button className="queries__form--btn">Post</button>
                                </form>
                                <div className="queries__posts">
-                                   <ul className="queries__posts--list">
+                                   <ol className="queries__posts--list">
                                        {order.queries.map((query,i)=>(
                                          <li>{query}</li>
                                        ))}
-                                   </ul>
+                                   </ol>
                                </div>
                          </div>
                          <div className="myOrders__box--address">
@@ -128,7 +128,7 @@
                              {order.promoDiscount!==0?<div className="myOrders__box--orderId">Promo Discount: ₹{order.promoDiscount}</div>:null}<br/>
                              {order.paymentMode?<div className="myOrders__box--orderId">Payment Mode: {order.paymentMode}</div>:null}
                          </div>
-                        
+
                     </div>
                 </div>
              )): <div>you dont have any order</div>}
