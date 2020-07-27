@@ -16,7 +16,7 @@
       axios.get("/v1/admin/order",{params:{pageNumber:1}}).then(res=>{
          this.setState({
            myOrders:[...res.data.orders],
-           maxPageNum:Math.ceil(res.data.total/3)-1,
+           maxPageNum:Math.ceil(res.data.total/3),
            totalOrders:res.data.total
          })
       }).catch(err=>{
@@ -30,7 +30,7 @@
 
     paginationHandler=(operation)=>{
       if(operation==="minus" && this.state.pageNum>1){
-        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum-1)}}).then(res=>{
+        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum)}}).then(res=>{
            this.setState({
              myOrders:[...res.data.orders],
              pageNum:this.state.pageNum-1,
@@ -45,7 +45,7 @@
         })
       }
       if(operation==="plus" && this.state.pageNum<this.state.maxPageNum){
-        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum+1)}}).then(res=>{
+        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum)}}).then(res=>{
            console.log(res.data.orders);
            this.setState({
              myOrders:[...res.data.orders],
@@ -65,10 +65,10 @@
   componentDidUpdate=(prevProps,prevState)=>{
     if(prevState.status!==this.state.status){
         if(this.state.status==="ALL")
-        axios.get("/v1/admin/order",{params:{pageNumber:1}}).then(res=>{
+        axios.get("/v1/admin/order",{params:{pageNumber:0}}).then(res=>{
            this.setState({
              myOrders:[...res.data.orders],
-             maxPageNum:Math.ceil(res.data.total/3)-1,
+             maxPageNum:Math.ceil(res.data.total/3),
              totalOrders:res.data.total,
              pageNum:1
            })
@@ -80,10 +80,10 @@
           }
         })
         else
-        axios.get("/v1/admin/order/status/"+this.state.status,{params:{pageNumber:1}}).then(res=>{
+        axios.get("/v1/admin/order/status/"+this.state.status,{params:{pageNumber:0}}).then(res=>{
            this.setState({
              myOrders:[...res.data.orders],
-             maxPageNum:Math.ceil(res.data.total/3)-1,
+             maxPageNum:Math.ceil(res.data.total/3),
              totalOrders:res.data.total,
              pageNum:1
            })
@@ -95,6 +95,30 @@
           }
         })
     }
+  }
+
+
+  onStatusChangeHandler=(id,index,status)=>{
+    
+       
+    let newOrders=[...this.state.myOrders];
+    let newOrder=newOrders[index];
+    newOrder.status=status;
+
+    axios.put("/v1/admin/order/updateOrderStatus/"+id+"/"+status).
+    then(res=>{
+      this.setState({
+        myOrders:newOrders,
+      })
+    }).catch(err=>{
+      if(err.response && err.response.data[0]){
+        alert(err.response.data[0]);
+      }else{
+        alert("something went wrong....!!!!");
+      }
+    })
+   
+
   }
 
 
@@ -131,7 +155,7 @@
                      <hr className="myOrders__box--hr"/>
                      <div className="flexer">
                          <div className="orderItems">
-                              {order.orderItems.map((orderItem,ii)=>(
+                              {order.orderItems.map((orderItem,i)=>(
                                      <div className="orderItems__card">
                                          <img className="orderItems__card--item orderItems__card--image" src={'data:image/png;base64,'+orderItem.image} alt=""/>
                                          <div className="orderItems__card--items">
@@ -169,15 +193,14 @@
                               {order.paymentMode?<div className="myOrders__box--orderId">Payment Mode: {order.paymentMode}</div>:null}
                               <div className="nav__list--item product__details--aspect-size">Status : {order.status}
                                       <span className="dropdown">
-                                          <span onClick={()=>this.setState({setStatus:"ALL"})} className="dropdown__item">ALL</span>
-                                          <span onClick={()=>this.setState({setStatus:"PLACED"})} className="dropdown__item">PLACED</span>
-                                          <span onClick={()=>this.setState({setStatus:"PAYMENT_PENDING"})} className="dropdown__item">PAYMENT PENDING</span>
-                                          <span onClick={()=>this.setState({setStatus:"DELIVERED"})} className="dropdown__item">DELIVERED</span>
-                                          <span onClick={()=>this.setState({setStatus:"PAYMENT_FAILED"})} className="dropdown__item">PAYMENT FAILED</span>
-                                          <span onClick={()=>this.setState({setStatus:"REFUND_COMPLETED"})} className="dropdown__item">REFUND COMPLETED</span>
-                                          <span onClick={()=>this.setState({setStatus:"REFUND_REQUESTED"})} className="dropdown__item">REFUND REQUESTED</span>
-                                          <span onClick={()=>this.setState({setStatus:"SHIPPED"})} className="dropdown__item">SHIPPED</span>
-                                          <span onClick={()=>this.setState({setStatus:"CANCELED"})} className="dropdown__item">CANCELED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"PLACED")} className="dropdown__item">PLACED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"PAYMENT_PENDING")} className="dropdown__item">PAYMENT PENDING</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"DELIVERED")} className="dropdown__item">DELIVERED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"PAYMENT_FAILED")} className="dropdown__item">PAYMENT FAILED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"REFUND_COMPLETED")} className="dropdown__item">REFUND COMPLETED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"REFUND_REQUESTED")} className="dropdown__item">REFUND REQUESTED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"SHIPPED")} className="dropdown__item">SHIPPED</span>
+                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"CANCELED")} className="dropdown__item">CANCELED</span>
                                       </span></div>
                           </div>
 
