@@ -18,13 +18,13 @@
     }
   }
   &__register{
-    border-bottom-left-radius: 18px;
-    border-bottom-right-radius:18px;
+    // border-bottom-right-radius:18px;
+    // border-bottom-left-radius: 18px;
     letter-spacing: 2px;
     border: 1px solid $color-black;
     margin-bottom: 1rem;
     padding: 2rem;
-    background: rgba($color-white,.9);
+    background: rgba($color-white,1);
     & h3{
       margin-bottom: 1rem;
     }
@@ -41,7 +41,7 @@
     }
   }
   &__login{
-    background: rgba($color-white,.9);
+    background: rgba($color-white,1);
     padding: 2rem;
     border: 1px solid $color-black;
     margin-bottom: 1rem;
@@ -68,8 +68,8 @@
 
   }
   &__google{
-    border-top-left-radius: 18px;
-    border-top-right-radius:18px;
+    // border-top-left-radius: 18px;
+    // border-top-right-radius:18px;
     letter-spacing: 1px;
     text-align: center;
     display: inline-block;

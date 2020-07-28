@@ -331,7 +331,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
         <>
            {modal}
            {modalLogin}
-           <SocialMedia />
+           <SocialMedia authenticated={this.props.authenticated} logout={this.props.logout} name={this.props.name}/>
            <Switch>
                <Route exact path="/">
                <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>

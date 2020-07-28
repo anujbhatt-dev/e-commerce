@@ -47,8 +47,8 @@ setAuthorizationHeader=(jwt,email,name)=>{
 }
 
 
-logoutHandler(){
-  this.setState({authenticated:true});
+logoutHandler=()=>{
+  window.location.href="http://localhost:3001";
 }
 
 render(){
@@ -62,7 +62,7 @@ render(){
               <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
               <Route exact path="/paymentResult/:jwt/:email/:name"><PaymentResult setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
 
-              <Route>  <Layout email={this.state.email} authenticated={this.state.authenticated}/>
+              <Route>  <Layout logout={this.logoutHandler} name={this.state.name} email={this.state.email} authenticated={this.state.authenticated}/>
       </Route>
       </Switch>
     </BrowserRouter>

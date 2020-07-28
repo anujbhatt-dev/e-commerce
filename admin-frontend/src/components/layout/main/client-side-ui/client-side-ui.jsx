@@ -59,12 +59,12 @@ class ClientSideUI extends Component {
             <div className="subscribe__box">
               <form onSubmit={this.onSubmitHandler}>
                 <input required onChange={this.onChangeHandler} name="image1" value={this.state.data.image1} className="subscribe__box--name" type="text" placeholder="image 1 link"/>
-                <input required onChange={this.onChangeHandler} name="image2" value={this.state.data.image2} className="subscribe__box--name" type="text" placeholder="image 2 link"/>
+                <textarea required onChange={this.onChangeHandler} name="image2" value={this.state.data.image2} className="subscribe__box--name" type="text" placeholder="image 2 link"></textarea>
                 <input required onChange={this.onChangeHandler} name="quote" value={this.state.data.quote} className="subscribe__box--name" type="text" placeholder="quote"/>
                <input className="subscribe__box--btn" value="update" type="submit"/>
               </form>
             </div>
-            
+
         </div>
         )
     }
