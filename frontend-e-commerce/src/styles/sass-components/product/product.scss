@@ -45,6 +45,7 @@
           border-radius : 8px;
           height: 100%;
           width: 100%;
+
         }
       }
       &-image{
@@ -55,10 +56,20 @@
         border: 1px solid $color-white;
         outline: 8px solid $color-black;
         outline-offset: 5px;
+        overflow: hidden;
         & img{
+          transform:translate(-50%,-50%) scale(1) ;
+          position: relative;
+          top:50%;
+          left:50%;
           border-radius: 8px;
           height: 100%;
           width: 100%;
+          transition: all .5s;
+          &:hover{
+            // transform: scale(1.5);
+            // transform-origin: 75% 75%;
+          }
         }
       }
     }
