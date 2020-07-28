@@ -8,7 +8,7 @@ import axios from "axios"
 import Spinner from "../../../../UI/spinner/spinner"
 import Modal from "../../../../UI/modal/modal"
 import Backdrop from "../../../../UI/backdrop/backdrop"
-
+import ReactImageZoom from    'react-image-zoom';
 
 
  class Products extends Component{
@@ -293,12 +293,20 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
 
      let products= null;
 
+          
+
+        //                         
+    
+        //className="card__image" width=400 height=250 zoomWidth=500 img={'data:image/png;base64,'+product.defaultImage} alt="thomas"
      if(this.state.products.length!==0){
        products = <div className="feature">
-                      {this.state.products.map((product,i)=>(
+                      {this.state.products.map((product,i)=>{
+                               
+                        return (
                         this.state.loading?<Spinner/>:<div key={product.id} onClick={()=>this.modalToggleHandler(product.id,product.productName)} className="card">
-                            <img className="card__image" src={'data:image/png;base64,'+product.defaultImage} alt="thomas"/>
-                            <div className="card__details">
+                         <img className="card__image" src={'data:image/png;base64,'+product.defaultImage} alt="thomas"/>
+                           
+                           <div className="card__details">
                                <div className="card__details-name">
                                     {product.productName}
                                </div>
@@ -312,7 +320,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                                </div>
                             </div>
                         </div>
-                      ))}
+                      )})}
 
                   </div>
      }
@@ -320,6 +328,7 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
      let modal = null;
      // if(Object.keys(this.state.modalProductDetails).length!==0 && this.state.modalProductDetails.colors.length!==0  && Object.keys(this.state.modalProductDetails.colors[0]).length!==0   && this.state.modalProductDetails.colors[0].images.length!==0   && Object.keys(this.state.modalProductDetails.colors[0].images[0]).length!==0 ){
         if(this.state.modalProductDetails.colors[0].images[0].image!==null){
+          const props1 = {zoomPosition:"bottom",width: 400, height: 250, zoomWidth: 500, img: 'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image};
          modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
                <button  onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
                <div className="product">
@@ -329,7 +338,12 @@ import Backdrop from "../../../../UI/backdrop/backdrop"
                              <li onClick={()=>{this.selectedAngleOfTheImageHandler(i)}}  className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
                            ))}
                        </ul>
-                       <div className="product__imageBox--angle-image"><img src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected image"/></div>
+                    
+
+                       <div className="product__imageBox--angle-image">   <ReactImageZoom  {...props1}/>
+                       {//<img src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected image"/>
+                       }
+                       </div>
                    </div>
                    <div className="product__details">
                       <div className="product__details--name">
