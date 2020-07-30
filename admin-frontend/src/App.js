@@ -21,8 +21,9 @@ componentDidUpdate=()=>{
 componentDidMount=()=>{
   axios.interceptors.response.use(response =>{
     let authorization=response.headers.authorization;
-    if(authorization){
+    if(authorization && response.headers.key){
     axios.defaults.headers.common['authorization'] = authorization;
+    axios.defaults.headers.common['key'] = response.headers.key;
   this.setState({authenticated:true,name:response.headers.name,email:response.headers.email});
   }
 
@@ -30,10 +31,6 @@ componentDidMount=()=>{
 }
 
 
-setAuthorizationHeader=(jwt,email,name)=>{
-  axios.defaults.headers.common['authorization'] = jwt;
-  this.setState({authenticated:true,name:name,email:email});
-}
 
 
 logoutHandler=()=>{

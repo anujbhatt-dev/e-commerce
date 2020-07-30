@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import axios from "axios"
 import Spinner from "../../../../../UI/spinner/spinner"
+import { withRouter } from "react-router-dom"
 
 class UpdateCategory extends Component{
 
@@ -210,4 +211,4 @@ class UpdateCategory extends Component{
 }
 
 
-export default UpdateCategory;
+export default  withRouter(UpdateCategory);
