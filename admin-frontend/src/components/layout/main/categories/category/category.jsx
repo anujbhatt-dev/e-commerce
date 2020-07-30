@@ -4,6 +4,9 @@ import {Link} from "react-router-dom"
  class Catagory extends Component{
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
 
      return (
        <div className="categories__box">

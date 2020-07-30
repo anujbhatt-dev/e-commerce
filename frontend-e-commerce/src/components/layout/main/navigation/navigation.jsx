@@ -32,7 +32,7 @@ import axios from "axios"
     }
 
    componentDidMount=()=>{
-      axios.get("/v1/admin/category/").then(res=>{
+      axios.get("/v1/client/category").then(res=>{
         this.setState({
           categories:[...res.data]
         })
@@ -43,6 +43,10 @@ import axios from "axios"
           alert("something went wrong");
         }
       })
+   }
+
+   imageClickHandler=()=>{
+     window.location.href="http://sheltered-scrubland-77233.herokuapp.com/"
    }
 
    render(){
@@ -60,6 +64,7 @@ import axios from "axios"
                         gender:category.gender
                       })} key={category.id} className="dropdown__item">{category.name}</span>
                     }
+                    return <span key={category.id}></span>
                   })}
                </span></span>
                women = <span href="#heading" className="nav__list--item">Women
@@ -72,6 +77,7 @@ import axios from "axios"
                               gender:category.gender
                             })} key={category.id} className="dropdown__item">{category.name}</span>
                           }
+                          return <span key={category.id}></span>
                         })}
                      </span></span>
                     others = <span href="#heading" className="nav__list--item">other
@@ -84,13 +90,14 @@ import axios from "axios"
                                     gender:category.gender
                                   })} key={category.id} className="dropdown__item">{category.name}</span>
                                 }
+                                return <span key={category.id}></span>
                               })}
                            </span></span>
      }
 
      return (
        <nav className="nav">
-          <img className="nav__image" src={logo} alt="logo"/>
+          <img onClick={this.imageClickHandler} className="nav__image" src={logo} alt="logo"/>
           <div className="nav__list">
               {men}
               {women}

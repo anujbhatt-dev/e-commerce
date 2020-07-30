@@ -79,6 +79,9 @@ this.setState({
    }
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
 
      return (
        <div className="subscribe">

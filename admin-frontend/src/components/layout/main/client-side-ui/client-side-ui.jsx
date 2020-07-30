@@ -54,6 +54,9 @@ class ClientSideUI extends Component {
 
 
     render() {
+      if(!this.props.authenticated){
+        window.location.href=this.props.address;
+      }
         return (
             <div className="subscribe">
             <div className="subscribe__box">

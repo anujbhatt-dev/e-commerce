@@ -11,9 +11,10 @@ import {Link} from "react-router-dom"
 
    render(){
 
+
      return (
         <div className="layout">
-          <Sidebar>
+          {this.props.authenticated?<Sidebar>
                <div className="nav">
                     <img className="nav__image" src={logo} alt="logo"/>
                     <ul className="nav__list">
@@ -26,11 +27,12 @@ import {Link} from "react-router-dom"
                          <Link to="/designs"><li className="nav__list--item">designs</li></Link>
                          <Link to="/promo"><li className="nav__list--item">promo</li></Link>
                          <Link to="/clientui"><li className="nav__list--item">client ui</li></Link>
-
+                         <Link to="/clients"><li className="nav__list--item">clients</li></Link>
+                         <li onClick={this.props.logout} className="nav__list--item">logout</li>
                     </ul>
                </div>
-          </Sidebar>
-          <Main>
+          </Sidebar>:null}
+          <Main authenticated={this.props.authenticated}>
 
           </Main>
         </div>

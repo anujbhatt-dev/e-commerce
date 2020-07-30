@@ -9,7 +9,7 @@ import PaymentResult from './components/layout/payment-result/payment-result';
 
 
 axios.interceptors.response.use(response =>{
- console.log("intercept->"+JSON.stringify(response.headers));
+ // console.log("intercept->"+JSON.stringify(response.headers));
   let authorization=response.headers.authorization;
   if(authorization){
   axios.defaults.headers.common['authorization'] = authorization;
@@ -27,7 +27,7 @@ state={
 }
 
 componentDidUpdate(){
-  console.log("APP.jsx updated--> "+ JSON.stringify(this.state));
+  // console.log("APP.jsx updated--> "+ JSON.stringify(this.state));
 }
 
 componentDidMount=()=>{
@@ -48,7 +48,7 @@ setAuthorizationHeader=(jwt,email,name)=>{
 
 
 logoutHandler=()=>{
-  window.location.href="http://localhost:3001";
+  window.location.href="http://sheltered-scrubland-77233.herokuapp.com/";
 }
 
 render(){

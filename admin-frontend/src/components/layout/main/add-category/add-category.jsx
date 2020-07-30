@@ -86,6 +86,10 @@
     }
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
+
       let savedCategory=null
       if(this.state.categorySaved)
          savedCategory= [<hr className=".verticalHr"/>,<div className="addCategory__savedCategory">

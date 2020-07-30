@@ -5,7 +5,7 @@
 
    state={
       myOrders:[],
-      pageNum:1,
+      pageNum:0,
       maxPageNum:null,
       totalOrders:0,
       status:"All",
@@ -13,11 +13,12 @@
     }
 
     componentDidMount=()=>{
-      axios.get("/v1/admin/order",{params:{pageNumber:1}}).then(res=>{
+      axios.get("/v1/admin/order",{params:{pageNumber:0}}).then(res=>{
          this.setState({
            myOrders:[...res.data.orders],
-           maxPageNum:Math.ceil(res.data.total/3),
-           totalOrders:res.data.total
+           maxPageNum:Math.ceil(res.data.total/3)-1,
+           totalOrders:res.data.total,
+           pageNum:0
          })
       }).catch(err=>{
         if(err.response && err.response.data[0]){
@@ -29,11 +30,12 @@
     }
 
     paginationHandler=(operation)=>{
-      if(operation==="minus" && this.state.pageNum>1){
-        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum)}}).then(res=>{
+      if(operation==="minus" && this.state.pageNum>0){
+        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum-1)}}).then(res=>{
            this.setState({
              myOrders:[...res.data.orders],
              pageNum:this.state.pageNum-1,
+
              // maxPageNum:Math.ceil(res.data.total/3)-1,
            })
         }).catch(err=>{
@@ -45,7 +47,7 @@
         })
       }
       if(operation==="plus" && this.state.pageNum<this.state.maxPageNum){
-        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum)}}).then(res=>{
+        axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum+1)}}).then(res=>{
            console.log(res.data.orders);
            this.setState({
              myOrders:[...res.data.orders],
@@ -70,7 +72,7 @@
              myOrders:[...res.data.orders],
              maxPageNum:Math.ceil(res.data.total/3),
              totalOrders:res.data.total,
-             pageNum:1
+             pageNum:0
            })
         }).catch(err=>{
           if(err.response && err.response.data[0]){
@@ -85,7 +87,7 @@
              myOrders:[...res.data.orders],
              maxPageNum:Math.ceil(res.data.total/3),
              totalOrders:res.data.total,
-             pageNum:1
+             pageNum:0
            })
         }).catch(err=>{
           if(err.response && err.response.data[0]){
@@ -99,8 +101,8 @@
 
 
   onStatusChangeHandler=(id,index,status)=>{
-    
-       
+
+
     let newOrders=[...this.state.myOrders];
     let newOrder=newOrders[index];
     newOrder.status=status;
@@ -117,13 +119,16 @@
         alert("something went wrong....!!!!");
       }
     })
-   
+
 
   }
 
 
 
     render(){
+      if(!this.props.authenticated){
+        window.location.href=this.props.address;
+      }
       // if(!this.props.authenticated){
       //   window.location.href = "http://localhost:3001";
       // }\
@@ -143,7 +148,7 @@
                        <span onClick={()=>this.setState({status:"SHIPPED"})} className="dropdown__item">SHIPPED</span>
                        <span onClick={()=>this.setState({status:"CANCELED"})} className="dropdown__item">CANCELED</span>
                    </span></div>
-              <div className="pagination"><span onClick={()=>this.paginationHandler("minus")} className="pagination__minus">-</span><span className="pagination__num">{this.state.myOrders.length===0?"0":this.state.pageNum}/{this.state.myOrders.length===0?"0":this.state.maxPageNum}</span><span onClick={()=>this.paginationHandler("plus")} className="pagination__plus">+</span></div>
+              <div className="pagination"><span onClick={()=>this.paginationHandler("minus")} className="pagination__minus">-</span><span className="pagination__num">{this.state.myOrders.length===0?"0":this.state.pageNum+1}/{this.state.myOrders.length===0?"0":this.state.maxPageNum+1}</span><span onClick={()=>this.paginationHandler("plus")} className="pagination__plus">+</span></div>
               <div className="pagination pagination-2">Total Orders:<strong>{this.state.totalOrders}</strong></div>
               {this.state.myOrders.length!==0?this.state.myOrders.map((order,i)=>(
                  <div className="myOrders__box">
@@ -207,7 +212,9 @@
 
                      </div>
                  </div>
-              )): <div>you dont have any order</div>}
+              )): <div id="heading" className="noMatch">
+             <div className="noMatch__text">no orders yet</div>
+                   </div>}
            </div>
       )
     }

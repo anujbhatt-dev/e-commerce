@@ -43,3 +43,9 @@
     box-shadow: 0 0 0rem $color-black;
   }
 }
+@include respond(phone){
+  .modal{
+    width:90%;
+    height:80%;
+  }
+}

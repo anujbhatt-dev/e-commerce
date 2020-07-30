@@ -83,7 +83,7 @@
 @include respond(tab-port){
     .modalCart{
       &__box{
-        flex-flow: column;
+        flex-wrap: wrap;
         &--item{
          padding: .5rem 2rem;
          margin: 1rem;

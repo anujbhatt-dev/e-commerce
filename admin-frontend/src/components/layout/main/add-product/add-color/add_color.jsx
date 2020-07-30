@@ -82,6 +82,9 @@ class AddColor extends Component {
 
 
     render() {
+      if(!this.props.authenticated){
+        window.location.href=this.props.address;
+      }
         return (
             <div>
                   <div className="addCategory__form--info">

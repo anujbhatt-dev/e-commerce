@@ -1,16 +1,15 @@
  import React, {Component} from "react"
-import tshirt from "../../../../assets/images/t-shirt.jpg"
 import axios from "axios"
 
  class BigImage extends Component{
-   
+
   state={
     quote:"",
     image:""
   }
 
   componentDidMount=()=>{
-    axios.get("/v1/admin/ui").then(res=>{
+    axios.get("/v1/client/ui").then(res=>{
          this.setState({
            quote:res.data[0].quote,
            image:res.data[0].image1

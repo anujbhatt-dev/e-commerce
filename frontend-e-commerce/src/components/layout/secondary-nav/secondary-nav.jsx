@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
    render(){
 
      return (
-        <nav className="secondaryNavigation">
+        <nav id="scroll" className="secondaryNavigation">
             <Link to="/"><img src={logo} alt="logo"/></Link>
         </nav>
      )

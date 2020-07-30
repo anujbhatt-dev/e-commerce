@@ -4,14 +4,12 @@ import axios from 'axios';
 import SecondaryNavigation from "../secondary-nav/secondary-nav"
 import Footer from "../footer/footer"
 
-class ForgotPassword extends Component {
+class ForgotPasswordIntermediate extends Component {
 
 
     state={
-        uuid:null,
         email:null,
-       password:null,
-       confirmPassword:null,
+        flag:0
     }
 
 
@@ -36,14 +34,10 @@ class ForgotPassword extends Component {
     }
 
     onSubmitHandler=(e)=>{
-
-       // this.props.history.push("/");
-
-       console.log(this.state)
-
-        axios.post("/v1/client/forgotPassword",null,{params:this.state})
+       this.setState({flag:3})
+        axios.get("/v1/client/forgotPassword",{params:this.state})
         .then((res)=>{
-              this.props.history.push("/");
+              this.setState({flag:1})
         })
         .catch(err=>{
           if(err.response && err.response.data[0]){
@@ -60,11 +54,10 @@ class ForgotPassword extends Component {
           <>
             <SecondaryNavigation />
             <form onSubmit={this.onSubmitHandler} style={{position:"static"}} className="customDesign__form">
-              <h1 className="customDesign__form--head">Change your password</h1>
+              <h1 className="customDesign__form--head">we will send you an email</h1>
               <input required className="customDesign__form--input" onChange={this.onChangeHandler}   value={this.state.email} type="email" name="email" placeholder="email"/>
-              <input required className="customDesign__form--input" onChange={this.onChangeHandler}   value={this.state.password} type="password" name="password" placeholder="new password"/>
-              <input required className="customDesign__form--input" onChange={this.onChangeHandler}   value={this.state.confirmPassword} type="password" name="confirmPassword" placeholder="confirm password"/>
-              <button className="customDesign__form--btn">Save</button>
+              <button className="customDesign__form--btn">{this.state.flag===1?"Resend":this.state.flag===3?"sending...":"Send"}</button>
+              {this.state.flag===1?<h6 style={{display:"inline-block",fontSize:"1.5rem",padding:"1rem 1rem"}}>check your mail</h6>:null}
             </form>
             <Footer />
         </>
@@ -73,4 +66,4 @@ class ForgotPassword extends Component {
 }
 
 
-export default  withRouter(ForgotPassword);
+export default  withRouter(ForgotPasswordIntermediate);

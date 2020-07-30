@@ -31,6 +31,9 @@ import Spinner from "../../../../UI/spinner/spinner"
    }
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
 
      let categories = null
      if(this.state.populating){
@@ -41,7 +44,7 @@ import Spinner from "../../../../UI/spinner/spinner"
        console.log("in  ",this.state.categories.length);
      }else{
        categories  = <>{this.state.categories.map((category,i)=>{
-        return (<Category categoryIndex={i} key={category.name+category.id} categoryGender={category.gender} categoryId={category.id} categoryName={category.name} categoryInfo={category.information} />)
+        return (<Category authenticated={this.props.authenticated}   address={this.props.address}  categoryIndex={i} key={category.name+category.id} categoryGender={category.gender} categoryId={category.id} categoryName={category.name} categoryInfo={category.information} />)
        })}</>
      }
 
