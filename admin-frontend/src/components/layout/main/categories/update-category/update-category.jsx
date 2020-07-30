@@ -134,6 +134,9 @@ class UpdateCategory extends Component{
        }
 
       render(){
+        if(!this.props.authenticated){
+          window.location.href=this.props.address;
+        }
         // console.log(this.props.history);
          let savedCategory=null
          if(this.state.deleting){

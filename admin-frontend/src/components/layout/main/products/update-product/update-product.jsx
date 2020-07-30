@@ -1,5 +1,6 @@
  import React, {Component} from "react"
 import axios from "axios";
+import {withRouter} from "react-router-dom"
 import ReactTooltip from "react-tooltip"
 import UpdateColor from "./update-color/update-color"
 
@@ -164,6 +165,10 @@ import UpdateColor from "./update-color/update-color"
     }
 
    render(){
+     console.log(this.props.authenticated);
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
      let product = null;
      let color = null;
      let updateColor = null;
@@ -205,7 +210,7 @@ import UpdateColor from "./update-color/update-color"
                    ))}
               </div>
 
-          updateColor =   <UpdateColor productId={this.state.product.id}/>
+          updateColor =   <UpdateColor authenticated={this.props.authenticated}  address={this.props.address}  productId={this.state.product.id}/>
      }
 
 
@@ -224,4 +229,4 @@ import UpdateColor from "./update-color/update-color"
  }
 
 
-export default UpdateProduct;
+export default withRouter(UpdateProduct);

@@ -94,6 +94,9 @@ import { withRouter } from "react-router-dom";
 
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
      let modal =null;
      if(this.state.stage===1){
        modal = <Modal clicked={this.modalToggleHandler} show={this.state.show}>

@@ -68,6 +68,7 @@ import axios from "axios"
        email:this.props.email
      }
      this.setState({formDetails:formDetails})
+     document.getElementById("scroll").scrollIntoView()
    }
 
    componentDidUpdate=()=>{
@@ -91,7 +92,7 @@ import axios from "axios"
    }
 
 
-   placeOrderHandler=()=>{
+   placeOrderHandler=(e)=>{
      let param={}
      if(this.state.couponDetails.message==="VALID PROMO CODE"){
        param={
@@ -101,10 +102,12 @@ import axios from "axios"
        param={
          promo:-1,
        }
-     }else if(this.state.formDetails.coupon===""){
+     }else{
           param={
             promo:-1,
           }
+
+
       }
 
 
@@ -130,6 +133,8 @@ console.log(
 window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"+uri;
      }
 );
+
+  e.preventDefault();
    }
 
 
@@ -138,7 +143,7 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
 
    render(){
      if(!this.props.authenticated){
-       window.location.href = "http://localhost:3001";
+       window.location.href = "http://sheltered-scrubland-77233.herokuapp.com/";
      }
 
      console.log(this.props.cart);
@@ -155,10 +160,10 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
                      <input required className="checkout__form--input" placeholder="pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
                      <input required className="checkout__form--input" placeholder="city" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
                      <input required className="checkout__form--input" placeholder="state" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
-                     <button  className="checkout__form--input checkout__form--btn" type="submit">PAY</button>
+                     <button disabled={true} className="checkout__form--input checkout__form--btn" type="submit">PAY</button>
                  </form>
               </div>
-             <h5 className="checkout__h5">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.gTotal+" - "+this.state.couponDetails.value+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
+             <h5 className="checkout__h5">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.gTotal+" - "+Math.floor(this.state.couponDetails.value)+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
              <div className="checkout__product">
               {this.state.orders.length?this.state.orders.map((product,i)=>(
                 <div className="checkout__product--box">
@@ -181,7 +186,7 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
                   </form>
                   <div className="checkout__coupon--form-text">{this.state.couponDetails.length!==0?this.state.couponDetails.message:null}</div>
               </div>
-              <h5 className="checkout__h5Desktop">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.gTotal+" - "+this.state.couponDetails.value+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
+              <h5 className="checkout__h5Desktop">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.gTotal+" - "+Math.floor(this.state.couponDetails.value)+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
             </div>
         </div>
      )

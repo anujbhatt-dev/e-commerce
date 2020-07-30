@@ -1,18 +1,12 @@
- import React, {Component} from "react"
- // import dwight from "../../../../assets/images/dwight.jpg"
- import sidhu from "../../../../assets/images/sidhu.jpg"
- // import sidhu2 from "../../../../assets/images/sidhu2.jpg"
- // import thomas from "../../../../assets/images/thomas_for_ig.jpg"
- // import final from "../../../../assets/images/final_template.jpg"
+import React, {Component} from "react"
 import axios from "axios"
 import Spinner from "../../../../UI/spinner/spinner"
 import Modal from "../../../../UI/modal/modal"
 import Backdrop from "../../../../UI/backdrop/backdrop"
-import ReactImageZoom from    'react-image-zoom';
 
 
 
- class Products extends Component{
+class Products extends Component{
 
    state={
      selectedAngleOfTheImage:0,
@@ -110,13 +104,14 @@ import ReactImageZoom from    'react-image-zoom';
           this.loadingHandler()
         }
       }
+      document.getElementById("heading").scrollIntoView()
    }
 
    componentDidMount=()=>{
       axios.get("/v1/product/getProductsOrderByDate/-1/0").then(res=>{
         this.setState({
           products:[...res.data],
-          maxIndex:Math.ceil(res.data[0].size/8)-1
+          maxIndex:Math.ceil(res.data[0].size/8.0)-1
         })
       }).catch(err=>{
         if(err.response && err.response.data[0]){
@@ -133,7 +128,7 @@ import ReactImageZoom from    'react-image-zoom';
                if(res.data.length!==0){
                  this.setState({
                    products:[...res.data],
-                   maxIndex:Math.ceil(res.data[0].size/8)-1,
+                   maxIndex:Math.ceil(res.data[0].size/8.0)-1,
                    loading:false,
                    nomatch:false
                  })
@@ -171,7 +166,7 @@ import ReactImageZoom from    'react-image-zoom';
        axios.get("/v1/product/getProduct"+this.props.sortBy+"/"+this.props.selectedCategory.id+"/"+this.state.selectedIndex).then(res=>{
           this.setState({
               products:[...res.data],
-              maxIndex:Math.ceil(res.data[0].size/8)-1,
+              maxIndex:Math.ceil(res.data[0].size/8.0)-1,
               loading:false
             })
           }).catch(err=>{
@@ -256,13 +251,6 @@ import ReactImageZoom from    'react-image-zoom';
     }
 
     addCartHandler=()=>{
-      // let flag=0;
-      // for(let i = 0;i<this.props.cart.length;i++){
-      //   if(this.props.cart[i].selectedColorId===this.state.modalProductDetails.colors[this.state.selectedImageIndex].id){
-      //     flag=1;
-      //   }
-      // }
-      // if(flag===0){
         let show = this.props.cartHandler({
           productName:this.state.modalProductDetails.productName,
           productPrice:this.state.modalProductDetails.productPrice,
@@ -272,49 +260,27 @@ import ReactImageZoom from    'react-image-zoom';
           selectedColorName:this.state.modalProductDetails.colors[this.state.selectedImageIndex].colorName,
           selectedColorId:this.state.modalProductDetails.colors[this.state.selectedImageIndex].id,
           selectedColorImage:this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[0].image})
-          // if(!show){
-          //   this.setState({show:false})
-          // }
           if(show){
-            //   let newModalProductDetails = {...this.state.modalProductDetails}
-            //   newModalProductDetails.disabled = true;
-            //   this.setState({modalProductDetails:{...newModalProductDetails}})
-            this.setState({show:true})
+          this.setState({show:true})
           }
-      // }
-      // if(flag===1){
-      //   alert('already added to the cart')
-      // }
-    }
+      }
 
 
  mouseMoveHandler=(e)=>{
-   // console.log("X"+e.clientX);
-   // console.log("Y"+e.clientY);
-   let coordinates= (e.clientX-400+33).toString()+"px "+(e.clientY-440+207).toString()+"px"
-   // console.log(coordinates);
-   document.getElementById("hoverImage").style.transformOrigin = coordinates;
+    let coordinates= (e.clientX-420).toString()+"px "+(e.clientY-207).toString()+"px"
+    document.getElementById("hoverImage").style.transformOrigin = coordinates;
 
  }
 
  mouseLeaveHandler=(e)=>{
-   // console.log("X"+e.clientX);
-   // console.log("Y"+e.clientY);
    document.getElementById("hoverImage").style.transformOrigin =  "0 0";
  }
 
    render(){
-     // if(this.state.loading)
-     //    return <div className="feature"><div className="card"><Spinner /></div></div>
-
      let products= null;
 
 
-
-        //
-
-        //className="card__image" width=400 height=250 zoomWidth=500 img={'data:image/png;base64,'+product.defaultImage} alt="thomas"
-     if(this.state.products.length!==0){
+    if(this.state.products.length!==0){
        products = <div className="feature">
                       {this.state.products.map((product,i)=>{
 
@@ -342,24 +308,20 @@ import ReactImageZoom from    'react-image-zoom';
      }
 
      let modal = null;
-     // if(Object.keys(this.state.modalProductDetails).length!==0 && this.state.modalProductDetails.colors.length!==0  && Object.keys(this.state.modalProductDetails.colors[0]).length!==0   && this.state.modalProductDetails.colors[0].images.length!==0   && Object.keys(this.state.modalProductDetails.colors[0].images[0]).length!==0 ){
-        if(this.state.modalProductDetails.colors[0].images[0].image!==null){
-        //  const props1 = {zoomPosition:"right",width: 475, height: 535, zoomWidth: 500 ,offsets:{vertical: 0, horizontal: 0}, zoomHeight: 500, scale:1.2, img: 'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image};
-         modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
+      if(this.state.modalProductDetails.colors[0].images[0].image!==null){
+       modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
                <button  onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
                <div className="product">
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
                            {this.state.modalProductDetails.colors[this.state.selectedImageIndex].images.map((image,i)=>(
-                             <li onClick={()=>{this.selectedAngleOfTheImageHandler(i)}}  className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
+                             <li key={image.image+i} onClick={()=>{this.selectedAngleOfTheImageHandler(i)}}  className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
                            ))}
                        </ul>
 
 
                        <div className="product__imageBox--angle-image">
-                       {//<ReactImageZoom  {...props1}/>
-                       }
-                       <img id="hoverImage" onMouseMove={this.mouseMoveHandler} onMouseLeave={this.mouseLeaveHandler} src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected image"/>
+                       <img id="hoverImage" onMouseMove={this.mouseMoveHandler} onMouseLeave={this.mouseLeaveHandler} src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected"/>
                        </div>
                    </div>
                    <div className="product__details">
@@ -368,16 +330,16 @@ import ReactImageZoom from    'react-image-zoom';
                       </div>
                       <div className="product__details--price">
                           {(this.state.modalProductDetails.actualPrice!==this.state.modalProductDetails.productPrice)?
-                          [<span className="product__details--price-actualPrice">₹ {this.state.modalProductDetails.actualPrice}</span>,
-                          <span className="product__details--price-salePrice">₹ {this.state.modalProductDetails.productPrice}</span>,
-                          <span className="product__details--price-savePrice"> Save ₹ {this.state.modalProductDetails.actualPrice-this.state.modalProductDetails.productPrice}</span>]:
-                          <span className="product__details--price-salePrice">₹ {this.state.modalProductDetails.productPrice}</span>
+                          [<span key={"span1"} className="product__details--price-actualPrice">₹ {this.state.modalProductDetails.actualPrice}</span>,
+                          <span key={"span2"} className="product__details--price-salePrice">₹ {this.state.modalProductDetails.productPrice}</span>,
+                          <span key={"span3"} className="product__details--price-savePrice"> Save ₹ {this.state.modalProductDetails.actualPrice-this.state.modalProductDetails.productPrice}</span>]:
+                          <span key={"span4"} className="product__details--price-salePrice">₹ {this.state.modalProductDetails.productPrice}</span>
                         }
                       </div>
                       <div className="product__details--similar">
                         {this.state.modalProductDetails.colors.map((color,i)=>(
-                          <div onClick={()=>this.imageHandler(i)} key={color.id} className="product__details--similar-item">
-                              <img src={'data:image/png;base64,'+color.images[i].image}alt="image"/>
+                          <div onClick={()=>this.imageHandler(i)} key={color.id+i} className="product__details--similar-item">
+                              <img src={'data:image/png;base64,'+color.images[0].image} alt={color.colorName}/>
                               <div className="product__details--similar-color">{color.colorName}</div>
                           </div>
                         ))}
@@ -412,7 +374,7 @@ import ReactImageZoom from    'react-image-zoom';
                           <div className="product__details--comment-head">{this.state.modalProductDetails.comment}</div>
                           <ul className="product__details--comment-list">
                             {this.state.modalProductDetails.category.information.map((info,i)=>(
-                              <li className="product__details--comment-item">{info}</li>
+                              <li key={info+i} className="product__details--comment-item">{info}</li>
                             ))}
                           </ul>
                       </div>
@@ -438,7 +400,7 @@ import ReactImageZoom from    'react-image-zoom';
            </div>
 
           <div  className="sort">
-          {(this.props.selectedCategory.id!==-1)?<div className="nav__list--item">Sort
+          {(this.props.selectedCategory.id!==-1 && this.props.selectedCategory.id!==-2)?<div className="nav__list--item">Sort
           <span className="dropdown">
               <span onClick={()=>this.props.sortByHandler("sOrderByDate")} className="dropdown__item">Newest</span>
               <span onClick={()=>this.props.sortByHandler("ByPriceDesc")} className="dropdown__item">₹ high to low</span>

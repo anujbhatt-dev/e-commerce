@@ -114,6 +114,9 @@ this.setState({savingProduct:true})
     }
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
      let categories = null;
      if(this.state.categories.length!==0){
        categories = <select
@@ -186,7 +189,7 @@ this.setState({savingProduct:true})
       <div className="">
          <input disabled="true" className="addProduct__form--name" value={this.state.savedProduct.productName}/>
          <img className="stage__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
-        <AddColor productId={this.state.savedProduct.id} colorsSaved={this.colorsSaved}/>
+        <AddColor authenticated={this.props.authenticated}   address={this.props.address}  productId={this.state.savedProduct.id} colorsSaved={this.colorsSaved}/>
       </div>
      )
      else if(this.state.stage==2)
@@ -198,7 +201,7 @@ this.setState({savingProduct:true})
       </div>
         <div  className="stage__2">
             {this.state.savedColors.map(color=>
-                <AddImages  id={color.id} name={color.colorName}/>
+                <AddImages authenticated={this.props.authenticated}   address={this.props.address}  id={color.id} name={color.colorName}/>
             )}
         </div>
       </div>

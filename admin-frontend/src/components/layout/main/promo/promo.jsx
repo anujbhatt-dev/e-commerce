@@ -123,7 +123,9 @@ import Spinner from "../../../../UI/spinner/spinner"
    }
 
    render(){
-
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
      let promos= null;
      if(this.state.promos.length!==0){
        promos = <>

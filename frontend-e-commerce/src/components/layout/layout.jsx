@@ -14,8 +14,8 @@ import Checkout from "./checkout/checkout"
 import MyOrders from "./my-order/my-order"
 import ReactToolip from "react-tooltip"
 import {withRouter} from "react-router-dom"
-import ForgotPassword from "./forgot-password/forgot-password"
-import Navigation from "./main/navigation/navigation"
+import ForgotPasswordIntermediate from "./forgot-password-intermediate/forgot-password-intermediate"
+// import Navigation from "./main/navigation/navigation"
 import SecondaryNavigation from "./secondary-nav/secondary-nav"
 
  class Layout extends Component{
@@ -133,7 +133,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
 
    componentDidMount=()=>{
      if(this.props.authenticated){
-       axios.get("/v1/client/cart/").then(res=>{
+       axios.get("/v1/client/cart").then(res=>{
 
          this.setState({cart:[...res.data]})
        }).catch(err=>{
@@ -167,7 +167,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
    //
      if(this.props.authenticated && (prevState.cart.length===0) && !prevProps.authenticated){
        console.log("in");
-       axios.get("/v1/client/cart/").then(res=>{
+       axios.get("/v1/client/cart").then(res=>{
 
          this.setState({cart:[...res.data]})
        }).catch(err=>{
@@ -239,7 +239,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
      let modal=null;
      let modalLogin=null;
      if(this.state.cart.length!==0){
-       modal = this.props.authenticated?[<Modal clicked={this.modalToggleHandler} show={this.state.show}><div className="modalCart">
+       modal = this.props.authenticated?[<Modal key={"modal1"} clicked={this.modalToggleHandler} show={this.state.show}><div className="modalCart">
        <div className="modalCart__box modalCart__box--head">
            <div className="modalCart__box--col1">
                Products
@@ -251,7 +251,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
            </div>
        </div>
                   {this.state.cart.map((product,i)=>(
-                    <div className="modalCart__box">
+                    <div key={product.id+i} className="modalCart__box">
                         <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.selectedColorImage} alt=""/>
                         <div className="modalCart__box--col1">
                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
@@ -270,8 +270,8 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
                     <h5 className="modalCart__box2--h5">Grand Total{" "} <span>₹ {this.state.cart.map(product=>(product.quantity*product.productPrice)).reduce((acc,value)=>acc+value)}</span></h5>
                     <div onClick={this.checkoutHandler} className="modalCart__box2--checkout nav__list--item product__details--cart-btn">checkout</div>
                   </div>
-               </div></Modal>,<Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>]
-               :[<Modal clicked={this.modalToggleHandler} show={this.state.show}>
+               </div></Modal>,<Backdrop key={"backdrop1"} clicked={this.modalToggleHandler} show={this.state.show}/>]
+               :[<Modal key={"modal1"} clicked={this.modalToggleHandler} show={this.state.show}>
                                <div className="user">
                                    <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </a>
                                    <hr/>
@@ -292,18 +292,19 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
                                        <button className="user__register--btn" type="submit">sighup</button>
                                    </form>
                                </div>
-                          </Modal>, <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>]
+                          </Modal>, <Backdrop key={"backdrop1"} clicked={this.modalToggleHandler} show={this.state.show}/>]
      }
      if(!this.props.authenticated){
-       modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
+       modalLogin = [<Modal2 key={"modal2"} clicked={this.modalProfileHandler} show={this.state.profile}>
                         <div className="user">
-                            <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </a>
+                            <a href="http://innerclantest-env.eba-3xcbvtbq.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
                             <hr/>
                             <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                  <h3>logIn</h3>
                                  <input onChange={this.logInChangeHandler}  value={this.state.login.email} required placeholder="email" className="user__input" name="email" type="text"/>
                                  <input onChange={this.logInChangeHandler}  value={this.state.login.password} required placeholder="password" className="user__input" name="password" type="password"/>
                                  <button className="user__login--btn" type="submit">login</button>
+                                 <Link to="/forgotPassword"><p className="user__login--forgotPassword">Forgot Password?</p></Link>
                             </form>
                             <hr/>
                             <form className="user__register" onSubmit={this.registerSubmitHandler}>
@@ -316,7 +317,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
                                 <button className="user__register--btn" type="submit">sighup</button>
                             </form>
                         </div>
-                   </Modal2>,<Backdrop2 clicked={this.modalProfileHandler} show={this.state.profile}/>]
+                   </Modal2>,<Backdrop2 key={"backdrop2"} clicked={this.modalProfileHandler} show={this.state.profile}/>]
      }
      // else{
      //   modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
@@ -338,8 +339,9 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
                <Profile authenticated={this.props.authenticated} clicked={this.modalProfileHandler}/>
                <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
+               <Route exact path="/forgotPassword" component={ForgotPasswordIntermediate}/>
                <Route exact path="/checkout">
-                   <SecondaryNavigation/>
+                  <SecondaryNavigation/>
                   <Checkout email={this.props.email} authenticated={this.props.authenticated} cart={this.state.cart}/>
                </Route>
                <Route exact path="/myOrders">

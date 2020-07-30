@@ -22,6 +22,9 @@ import dwight from "../../../../assets/images/dwight.jpg"
 
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
      let customOrders = null;
      if(this.state.customOrders.length!==0){
         customOrders = <div className="designs">
@@ -30,7 +33,7 @@ import dwight from "../../../../assets/images/dwight.jpg"
                                 <div className="designs__box--item">{customOrder.email}</div>
                                 <div className="designs__box--item">{customOrder.createdOn}</div>
                                 <div className="designs__box--item">{customOrder.comment}</div>
-                                <img className="designs__box--image" src={dwight} alt="dwight"/>
+                                <img className="designs__box--image" src={'data:image/png;base64,'+customOrder.image} alt="dwight"/>
                               </div>
                             ))}
                        </div>

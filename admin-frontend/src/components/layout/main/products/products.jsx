@@ -40,6 +40,9 @@ productDeleteHandler=(id)=>{
 
 
    render(){
+     if(!this.props.authenticated){
+       window.location.href=this.props.address;
+     }
      let products=null;
      if(this.state.products.length!==0){
        products=

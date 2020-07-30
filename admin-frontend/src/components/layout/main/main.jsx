@@ -11,26 +11,32 @@ import Promo from "./promo/promo"
 import Designs from "./designs/designs"
 import {Route , Switch} from "react-router-dom"
 import ClientSideUI from "./client-side-ui/client-side-ui"
+import Clients from "./clients/clients"
+import Login from "../../login/login"
+import Landing from "./landing/landing"
 
  class Main extends Component{
 
    render(){
+     let address="http://localhost:3000/"
 
      return (
          <div className="main">
               <Switch>
-                  <Route exact path="/orders" component={Orders}/>
-                  <Route exact path="/products" component={Products}/>
-                  <Route exact path="/categories" component={Categories}/>
-                  <Route exact path="/addProduct" component={AddProduct}/>
-                  <Route exact path="/addCategory" component={AddCategory}/>
-                  <Route exact path="/updateCategory" component={UpdateCategory}/>
-                  <Route exact path="/updateProduct" component={UpdateProduct}/>
-                  <Route exact path="/subscribe" component={Subscribe}/>
-                  <Route exact path="/promo" component={Promo}/>
-                  <Route exact path="/designs" component={Designs}/>
-                  <Route exact path="/clientui" component={ClientSideUI}/>
-
+                  <Route exact path="/"><Landing /></Route>
+                  <Route exact path="/login"><Login address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/orders"><Orders address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/products"><Products address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/categories"><Categories address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/addProduct"><AddProduct address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/addCategory"><AddCategory address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/updateCategory"><UpdateCategory address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/updateProduct"><UpdateProduct address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/subscribe"><Subscribe address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/promo"><Promo address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/designs"><Designs address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/clientui"><ClientSideUI address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/clients"><Clients address={address} authenticated={this.props.authenticated}/></Route>
               </Switch>
          </div>
      )

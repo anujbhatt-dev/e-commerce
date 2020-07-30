@@ -21,11 +21,12 @@
       text-transform: uppercase;
       border-bottom: 2px solid transparent;
       background: $color-grey-light-3;
-      &:hover,&:active{
+      &:hover{
          color: $color-black;
          background: rgba($color-grey,.09);
          border-bottom: 2px solid $color-primary-blue;
       }
+
       &-modifier{
         width: 20rem
       }

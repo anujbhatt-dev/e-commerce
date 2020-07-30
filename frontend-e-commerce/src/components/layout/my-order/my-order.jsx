@@ -1,5 +1,6 @@
  import React, {Component} from "react"
  import axios from "axios"
+ import {Link} from "react-router-dom"
 
 
 
@@ -71,13 +72,13 @@
 
    render(){
      if(!this.props.authenticated){
-       window.location.href = "http://localhost:3001";
+       window.location.href = "http://sheltered-scrubland-77233.herokuapp.com/";
      }
 
      return (
           <div className="myOrders">
              {this.state.myOrders.length!==0?this.state.myOrders.map((order,i)=>(
-                <div className="myOrders__box">
+                <div key={order.id+i} className="myOrders__box">
                     <div className="myOrders__box--orderId">Date: <span>{order.orderedOnDate}</span></div>
                     <div className="myOrders__box--orderId">Time: <span>{order.orderedOnTime}</span></div>
                     <div className="myOrders__box--orderId">Status: <span>{order.status}</span></div>
@@ -88,7 +89,7 @@
                     <div className="flexer">
                         <div className="orderItems">
                              {order.orderItems.map((orderItem,ii)=>(
-                                    <div className="orderItems__card">
+                                    <div key={orderItem.id+ii} className="orderItems__card">
                                         <img className="orderItems__card--item orderItems__card--image" src={'data:image/png;base64,'+orderItem.image} alt=""/>
                                         <div className="orderItems__card--items">
                                         <div className="orderItems__card--item orderItems__card--size">Size: <span>{orderItem.size}</span></div>
@@ -131,7 +132,12 @@
 
                     </div>
                 </div>
-             )): <div>you dont have any order</div>}
+             )): <div id="heading" className="noMatch">
+             <div className="noMatch__text">0 order found</div>
+             <div  className="noMatch__suggestion">Whoever said that money can’t buy happiness simply didn’t know where to go shopping. <Link to="/">Start Shopping</Link></div>
+                   </div>
+
+            }
           </div>
      )
    }

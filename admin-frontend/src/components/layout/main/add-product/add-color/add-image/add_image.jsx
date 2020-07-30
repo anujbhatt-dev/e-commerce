@@ -52,6 +52,9 @@ submitHandler=(e)=>{
 
 
     render() {
+      if(!this.props.authenticated){
+        window.location.href=this.props.address;
+      }
         return (
             <div className="stage__2--item">
                <form onSubmit={this.submitHandler}>

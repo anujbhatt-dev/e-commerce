@@ -1,7 +1,6 @@
  import React, {Component} from "react"
 import  axios  from "axios"
 import validator from "validator"
-import ReactPlayer from "react-player";
 
  class CustomDesign extends Component{
 
@@ -36,7 +35,7 @@ import ReactPlayer from "react-player";
    }
 
    imageUploadHandler=(e)=>{
-       let newState={... this.state.productForm};
+       let newState={ ...this.state.productForm};
        newState.image = e.target.files[0];
        this.setState({
            ...newState
@@ -53,7 +52,6 @@ import ReactPlayer from "react-player";
          email:this.state.customEmail,
          comment:this.state.comment
        }
-       console.log(this.state);
        axios.post("/v1/design/",formData,{
           params:params
        }).then(res=>{
@@ -72,7 +70,7 @@ import ReactPlayer from "react-player";
    }
 
    componentDidMount=()=>{
-    axios.get("/v1/admin/ui").then(res=>{
+    axios.get("/v1/client/ui").then(res=>{
          this.setState({
            video:res.data[0].image2
          })
@@ -84,21 +82,20 @@ import ReactPlayer from "react-player";
       }
     })
     }
-// <div className="customDesign__video"><ReactPlayer muted url="https://coverr.co/videos/girl-picks-up-a-book-from-bookshelf-xNiTxd3LN7" playing="true" controls="false" loop="true" width="100%" height="100%"/></div> 
-    // <video autoplay="true" loop src={"https://vimeo.com/442260616"} className="customDesign__video"></video>
-    // <iframe width="560" autoplay="true" loop  height="315" src="https://www.youtube.com/embed/5nvpcf2p_4Y" className="customDesign__video" frameborder="0"  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
    render(){
 
      return (
           <div className="customDesign">
-          <video muted autoplay="true" loop src={this.state.video} className="customDesign__video"></video>
+          <video muted autoPlay={true} loop src={this.state.video} className="customDesign__video"></video>
             <div className="customDesign__videoGradient"></div>
             <form onSubmit={this.customHandler} className="customDesign__form">
               <h1 className="customDesign__form--head">Your First Customised Product</h1>
               <input required onChange={this.onChangeHandler} value={this.state.customEmail} name="customEmail" placeholder="enter your email" data-tip="enter your email" className="customDesign__form--input" type="email"/>
               <textarea required onChange={this.onChangeHandler} className="customDesign__form--description" name="comment" value={this.state.comment} data-tip="enter comment" placeholder="description"></textarea>
               <input required onChange={this.imageUploadHandler} id="customDesign__image" className="customDesign__form--image" name="image" type="file"/>
-              <label className="customDesign__form--imageLabel"  htmlFor="customDesign__image"  data-tip="upload a file here"><i class="fa fa-camera" aria-hidden="true"></i>{" "} uplaod a image</label>
+              <label className="customDesign__form--imageLabel"  htmlFor="customDesign__image"  data-tip="upload a file here"><i className="fa fa-camera" aria-hidden="true"></i>uplaod a image</label>
               <button className="customDesign__form--btn" type="submit">submit</button>
           </form>
           </div>
