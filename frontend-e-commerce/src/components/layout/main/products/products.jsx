@@ -289,14 +289,17 @@ import ReactImageZoom from    'react-image-zoom';
 
 
  mouseMoveHandler=(e)=>{
-   console.log("X"+e.clientX);
-   console.log("Y"+e.clientY);
-   document.getElementById("hoverImage").style.transformOrigin = "0 0";
+   // console.log("X"+e.clientX);
+   // console.log("Y"+e.clientY);
+   let coordinates= (e.clientX-400+33).toString()+"px "+(e.clientY-440+207).toString()+"px"
+   // console.log(coordinates);
+   document.getElementById("hoverImage").style.transformOrigin = coordinates;
+
  }
 
  mouseLeaveHandler=(e)=>{
-   console.log("X"+e.clientX);
-   console.log("Y"+e.clientY);
+   // console.log("X"+e.clientX);
+   // console.log("Y"+e.clientY);
    document.getElementById("hoverImage").style.transformOrigin =  "0 0";
  }
 
