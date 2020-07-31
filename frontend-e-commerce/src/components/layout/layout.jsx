@@ -1,6 +1,7 @@
  import React, {Component} from "react"
 import SocialMedia from "./social-media/social-media"
 import Footer from "./footer/footer"
+import WhoAreWe from "./footer/who-are-we/who-are-we"
 import Main from "./main/main"
 import Cart from "./main/cart/cart"
 import Profile from "./main/profile/profile"
@@ -335,10 +336,11 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
            <SocialMedia authenticated={this.props.authenticated} logout={this.props.logout} name={this.props.name}/>
            <Switch>
                <Route exact path="/">
-               <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>
-               <Profile authenticated={this.props.authenticated} clicked={this.modalProfileHandler}/>
-               <Main cart={this.state.cart} cartHandler={this.cartHandler} />
+                   <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>
+                   <Profile authenticated={this.props.authenticated} clicked={this.modalProfileHandler}/>
+                   <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
+               <Route exact path="/whoAreWe" component={WhoAreWe}/>
                <Route exact path="/forgotPassword" component={ForgotPasswordIntermediate}/>
                <Route exact path="/checkout">
                   <SecondaryNavigation/>
