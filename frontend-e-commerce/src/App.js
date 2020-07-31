@@ -34,6 +34,7 @@ componentDidMount=()=>{
   axios.interceptors.response.use(response =>{
     let authorization=response.headers.authorization;
     if(authorization){
+      console.log("AUthorization 123")
     axios.defaults.headers.common['authorization'] = authorization;
   this.setState({authenticated:true,name:response.headers.name,email:response.headers.email});
   }

@@ -93,6 +93,7 @@ import axios from "axios"
 
 
    placeOrderHandler=(e)=>{
+
      let param={}
      if(this.state.couponDetails.message==="VALID PROMO CODE"){
        param={
