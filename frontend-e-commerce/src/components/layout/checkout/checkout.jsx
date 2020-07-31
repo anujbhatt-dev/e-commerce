@@ -68,7 +68,7 @@ import axios from "axios"
        email:this.props.email
      }
      this.setState({formDetails:formDetails})
-     document.getElementById("scroll").scrollIntoView()
+     document.getElementById("links").scrollIntoView()
    }
 
    componentDidUpdate=()=>{

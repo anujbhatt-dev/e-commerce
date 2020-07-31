@@ -1,0 +1,32 @@
+.privacyPolicy{
+   margin: 1rem 25rem 5rem ;
+   @include respond(phone){
+     margin: 1rem 7rem 5rem ;
+   }
+  &__head{
+    text-align: center;
+    &--h1{
+     margin: 1rem 0;
+     font-size: 5rem;
+     font-style: normal;
+     font-weight: bolder;
+     overflow-wrap: break-word;
+     word-wrap: break-word;
+    }
+  }
+  &__body{
+
+    & p{
+      line-height: 2;
+      font-size: 1.8rem;
+    }
+    & ul{
+      line-height: 2;
+      font-size: 2rem;
+    }
+    & h2{
+      font-size: 3rem;
+      margin-top: 3rem;
+    }
+  }
+}

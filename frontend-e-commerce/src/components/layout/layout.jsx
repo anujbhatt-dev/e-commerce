@@ -2,6 +2,9 @@
 import SocialMedia from "./social-media/social-media"
 import Footer from "./footer/footer"
 import WhoAreWe from "./footer/who-are-we/who-are-we"
+import SizeChart from "./footer/size-chart/size-chart"
+import DeliveryAndReturn from "./footer/delivery-and-return/delivery-and-return"
+import PrivacyPolicy from "./footer/privacy-policy/privacy-policy"
 import Main from "./main/main"
 import Cart from "./main/cart/cart"
 import Profile from "./main/profile/profile"
@@ -341,6 +344,9 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
                    <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
                <Route exact path="/whoAreWe" component={WhoAreWe}/>
+               <Route exact path="/privacyPolicy" component={PrivacyPolicy}/>
+               <Route exact path="/sizeChart" component={SizeChart}/>
+               <Route exact path="/deliveryAndReturn" component={DeliveryAndReturn}/>
                <Route exact path="/forgotPassword" component={ForgotPasswordIntermediate}/>
                <Route exact path="/checkout">
                   <SecondaryNavigation/>

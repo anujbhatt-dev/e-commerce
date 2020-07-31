@@ -6,7 +6,7 @@
    render(){
 
      return (
-       <div className="links">
+       <div id="links" className="links">
           <ul className="links__list">
              <span style={{margin:"0 auto"}} className="nav__list--item  nav__list--item-modifier">{(this.props.name!=="")?"Welcome "+this.props.name:null}</span>
              <span style={{margin:"0 auto"}} className="nav__list--item  nav__list--item-modifier">Who are we?</span>

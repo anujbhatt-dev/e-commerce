@@ -6,7 +6,7 @@
 
 
    componentDidMount=()=>{
-     document.getElementById("cards").scrollIntoView();
+     document.getElementById("links").scrollIntoView();
    }
 
    render(){
@@ -15,6 +15,7 @@
        <>
        <SecondaryNavigation />
        <div id="cards" className="row">
+              <h4>Developers</h4>
               <div className="cards" >
                        <div className="cards__side cards__side--front">
                          <div className="cards__picture cards__picture--1">
