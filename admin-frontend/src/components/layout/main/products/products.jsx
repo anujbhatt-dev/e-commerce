@@ -57,7 +57,7 @@ productDeleteHandler=(id)=>{
                      <div className="products__box--details-item">Created On:  <span className="products__box--details-span">{product.createdOn}</span></div>
                      <div className="products__box--details-item">Updated On:  <span className="products__box--details-span">{product.updatedOn}</span></div>
                      <div className="products__box--details-item">Sale:  <span className="products__box--details-span">{product.sale}</span></div>
-                     <div className="products__box--details-item">Views:  <span className="products__box--details-span">{product.views}</span></div>
+                     <div className="products__box--details-item">Views:  <span className="products__box--details-span">{product.view}</span></div>
                 </div>
                 <div className="products__box--image">
                     <img src={'data:image/png;base64,'+product.defaultImage} alt=""/>

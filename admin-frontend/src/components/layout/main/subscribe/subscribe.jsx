@@ -8,23 +8,23 @@ import axios from "axios"
      link:"",
      subject:"",
      body:"",
-     subscriptions:{},
+     subscriptions:[],
      sending:false,
    }
 
    componentWillMount=()=>{
 
-    // axios.get("api/v1/admin/").
-    // then(res=>{
-    //   this.setState({
-    //     subscriptions:res.data,
-    //   })
-    // }).catch(err=>{
-    //   if(err.response && err.response.data)
-    //   alert(err.response.data[0]);
-    //   else
-    //     alert("contact the team");
-    // })
+    axios.get("/v1/admin/subscription").then(res=>{
+      console.log(res.data)
+      this.setState({
+        subscriptions:[...res.data],
+      })
+    }).catch(err=>{
+      if(err.response && err.response.data)
+      alert(err.response.data[0]);
+      else
+        alert("contact the team");
+    })
    }
 
    componentDidUpdate=()=>{
@@ -101,10 +101,16 @@ this.setState({
                   </tr>
                </thead>
                <tbody>
-                   <tr>
-                      <th>user@gmail.com</th>
-                      <th>2020-07-21</th>
-                   </tr>
+               {this.state.subscriptions.length!==0?
+                    this.state.subscriptions.map((subscriber,i)=>(
+                      <tr>
+                          <th>{subscriber.email}</th>
+                          <th>{subscriber.createedOn}</th>
+                      </tr>
+     ))   
+                
+                   
+                   :null}
                </tbody>
            </table>
        </div>

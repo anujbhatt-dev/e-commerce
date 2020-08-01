@@ -1,5 +1,7 @@
  import React, {Component} from "react"
 import axios from "axios"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
  class BigImage extends Component{
 
@@ -16,9 +18,9 @@ import axios from "axios"
          })
     }).catch(err=>{
       if(err.response && err.response.data[0]){
-        alert(err.response.data[0]);
+        toast.error(err.response.data[0]);
       }else{
-        alert("something went wrong");
+        toast.error("something went wrong");
       }
     })
     }

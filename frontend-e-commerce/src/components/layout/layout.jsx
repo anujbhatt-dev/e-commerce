@@ -22,12 +22,16 @@ import ForgotPasswordIntermediate from "./forgot-password-intermediate/forgot-pa
 // import Navigation from "./main/navigation/navigation"
 import SecondaryNavigation from "./secondary-nav/secondary-nav"
 
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
  class Layout extends Component{
 
    state={
      cart:[],
      show:false,
-     userDetail:{},
+     userDetail:null,
      profile:false,
      register:{
        firstName:"",
@@ -62,13 +66,13 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
          })
        }).catch(err=>{
          if(err.response && err.response.data[0]){
-           alert(err.response.data[0]);
+           toast.error(err.response.data[0]);
          }else{
-           alert("something went wrong search");
+           toast.error("something went wrong search");
          }
        })
      }else{
-       alert("password should match")
+       toast.error("password should match")
      }
      e.preventDefault();
    }
@@ -87,9 +91,9 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
         })
      }).catch(err=>{
        if(err.response && err.response.data[0]){
-         alert(err.response.data[0]);
+         toast.error(err.response.data[0]);
        }else{
-         alert("something went wrong search");
+         toast.error("something went wrong search");
        }
      })
      e.preventDefault();
@@ -142,9 +146,9 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
          this.setState({cart:[...res.data]})
        }).catch(err=>{
           if(err.response && err.response.data[0]){
-            alert(err.response.data[0]);
+            toast.error(err.response.data[0]);
           }else{
-            alert("something went wrong....!!!!");
+            toast.error("something went wrong....!!!!");
           }
        })
      }
@@ -158,27 +162,29 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
           quantity:this.state.cart[this.state.cart.length-1].quantity
         }
        axios.post("/v1/client/cart",cartItem).then(res=>{
+         toast.info("added to cart",{
+           className:"toast"
+         });
          this.setState({loading:false})
        }).catch(err=>{
           this.setState({loading:false})
           if(err.response && err.response.data[0]){
-            alert(err.response.data[0]);
+            toast.error(err.response.data[0]);
           }else{
-            alert("something went wrong....!!!!");
+            toast.error("something went wrong....!!!!");
           }
        })
      }
    //
      if(this.props.authenticated && (prevState.cart.length===0) && !prevProps.authenticated){
-       console.log("in");
        axios.get("/v1/client/cart").then(res=>{
 
          this.setState({cart:[...res.data]})
        }).catch(err=>{
           if(err.response && err.response.data[0]){
-            alert(err.response.data[0]);
+            toast.error(err.response.data[0]);
           }else{
-            alert("something went wrong....!!!!");
+            toast.error("something went wrong....!!!!");
           }
        })
      }
@@ -197,9 +203,9 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
         this.setState({cart:[...newCart]})
       }).catch(err=>{
         if(err.response && err.response.data[0]){
-          alert(err.response.data[0]);
+          toast.error(err.response.data[0]);
         }else{
-          alert("something went wrong....!!!!");
+          toast.error("something went wrong....!!!!");
         }
       })
    }
@@ -229,9 +235,9 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
       axios.post("/v1/order/checkOut/",checkout).then(res=>{
       }).catch(err=>{
         if(err.response && err.response.data[0]){
-          alert(err.response.data[0]);
+          toast.error(err.response.data[0]);
         }else{
-          alert("something went wrong....!!!!");
+          toast.error("something went wrong....!!!!");
         }
       })
       this.setState({show:false})
@@ -336,7 +342,7 @@ import SecondaryNavigation from "./secondary-nav/secondary-nav"
         <>
            {modal}
            {modalLogin}
-           <SocialMedia authenticated={this.props.authenticated} logout={this.props.logout} name={this.props.name}/>
+           <SocialMedia userDetail={this.state.userDetail} authenticated={this.props.authenticated} logout={this.props.logout} name={this.props.name}/>
            <Switch>
                <Route exact path="/">
                    <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>

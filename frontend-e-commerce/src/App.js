@@ -6,7 +6,10 @@ import axios from "axios"
 import ForgotPassword from './components/layout/forgot-password/forgot-password';
 import OAuthAuthorization from './components/layout/oauth-authorization/oauth-authorization';
 import PaymentResult from './components/layout/payment-result/payment-result';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure()
 
 axios.interceptors.response.use(response =>{
  // console.log("intercept->"+JSON.stringify(response.headers));

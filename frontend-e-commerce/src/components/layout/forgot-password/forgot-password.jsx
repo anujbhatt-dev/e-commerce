@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import SecondaryNavigation from "../secondary-nav/secondary-nav"
 import Footer from "../footer/footer"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 class ForgotPassword extends Component {
 
@@ -47,9 +49,9 @@ class ForgotPassword extends Component {
         })
         .catch(err=>{
           if(err.response && err.response.data[0]){
-            alert(err.response.data[0]);
+            toast.error(err.response.data[0]);
           }else{
-            alert("something went wrong");
+            toast.error("something went wrong");
           }
         })
          e.preventDefault();

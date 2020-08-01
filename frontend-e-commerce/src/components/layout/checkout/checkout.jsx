@@ -1,6 +1,8 @@
  import React, {Component} from "react"
 import ReactToolip from "react-tooltip"
 import axios from "axios"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
  class Checkout extends Component{
    state={
@@ -59,9 +61,9 @@ import axios from "axios"
        this.setState({formDetails:{...formDetails}})
      }).catch(err=>{
        if(err.response && err.response.data[0]){
-         alert(err.response.data[0]);
+         toast.error(err.response.data[0]);
        }else{
-         alert("something went wrong search");
+         toast.error("something went wrong search");
        }
      })
      formDetails={
@@ -83,9 +85,9 @@ import axios from "axios"
          })
        }).catch(err=>{
          if(err.response && err.response.data[0]){
-           alert(err.response.data[0]);
+           toast.error(err.response.data[0]);
          }else{
-           alert("something went wrong search");
+           toast.error("something went wrong search");
          }
        })
      }

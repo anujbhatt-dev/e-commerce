@@ -1,7 +1,8 @@
  import React, {Component} from "react"
  import axios from "axios"
  import {Link} from "react-router-dom"
-
+ import { ToastContainer, toast } from 'react-toastify';
+ import 'react-toastify/dist/ReactToastify.css';
 
 
  class MyOrders extends Component{
@@ -26,9 +27,9 @@
 
      }).catch(err=>{
        if(err.response && err.response.data[0]){
-         alert(err.response.data[0]);
+         toast.error(err.response.data[0]);
        }else{
-         alert("something went wrong....!!!!");
+         toast.error("something went wrong....!!!!");
        }
      })
    }
@@ -59,9 +60,9 @@
          }).catch(err=>{
           console.log("CATCh");
            if(err.response && err.response.data[0]){
-             alert(err.response.data[0]);
+             toast.error(err.response.data[0]);
            }else{
-             alert("something went wrong....!!!!");
+             toast.error("something went wrong....!!!!");
            }
          })
 

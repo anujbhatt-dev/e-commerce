@@ -1,6 +1,8 @@
  import React, {Component} from "react"
 import  axios  from "axios"
 import validator from "validator"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
  class CustomDesign extends Component{
 
@@ -19,7 +21,7 @@ import validator from "validator"
      if(validator.isEmail(this.state.customEmail))
       this.setState({custom:true})
      else
-      alert("enter a valid email")
+      toast.error("enter a valid email")
     e.preventDefault();
    }
 
@@ -55,14 +57,14 @@ import validator from "validator"
        axios.post("/v1/design/",formData,{
           params:params
        }).then(res=>{
-         alert("successfully submitted")
+         toast.error("successfully submitted")
          this.setState({custom:false,customEmail:"",comment:"",image:''})
        }).catch(err=>{
-         // alert(err.response.data[0]);
+         // toast.error(err.response.data[0]);
          if(err.response && err.response.data[0]){
-          alert(err.response.data[0]);
+          toast.error(err.response.data[0]);
         }else{
-          alert("something went wrong");
+          toast.error("something went wrong");
         }
           this.setState({custom:false})
        })
@@ -76,9 +78,9 @@ import validator from "validator"
          })
     }).catch(err=>{
       if(err.response && err.response.data[0]){
-        alert(err.response.data[0]);
+        toast.error(err.response.data[0]);
       }else{
-        alert("something went wrong");
+        toast.error("something went wrong");
       }
     })
     }

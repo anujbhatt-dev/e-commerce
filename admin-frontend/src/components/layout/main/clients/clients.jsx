@@ -1,5 +1,6 @@
 import React, {Component} from "react"
 import Spinner from "../../../../UI/spinner/spinner"
+import axios from "axios"
 
  class Clients extends Component{
 
@@ -9,17 +10,17 @@ import Spinner from "../../../../UI/spinner/spinner"
 
    componentDidMount=()=>{
 
-    // axios.get("/v1/admin/clients").
-    // then(res=>{
-    //    this.setState({
-    //         clients:[...res.data]
-    //    })
-    // }).catch(err=>{
-    //   if(err.response && err.response.data)
-    //   alert(err.response.data[0]);
-    //   else
-    //     alert("contact the team");
-    // })
+    axios.get("/v1/admin/client").
+    then(res=>{
+       this.setState({
+            clients:[...res.data]
+       })
+    }).catch(err=>{
+      if(err.response && err.response.data)
+      alert(err.response.data[0]);
+      else
+        alert("contact the team");
+    })
    }
 
    render(){
@@ -29,20 +30,24 @@ import Spinner from "../../../../UI/spinner/spinner"
      let clients= null;
      if(this.state.clients.length!==0){
        clients = <>
-                {this.state.clients.map((promo,i)=>{
-          return    <tr key={promo.id}>
-                     <th>{promo.name}</th>
-                     <th>{promo.access}</th>
-                     <th>{promo.value}</th>
-                     <th>{promo.expiryDate}</th>
-                     <th>{promo.createdOn}</th>
-                     <th>{promo.usedBy}</th>
-                     <th><input onClick={()=>this.deletePromoHandler(promo.id,i)} style={{background:"red"}} className="subscribe__box--btn" value="delete" type="submit"/></th>
+                {this.state.clients.map((client,i)=>{
+          return    <tr key={client.id}>
+                     <th>{i+1}</th>          
+                     <th>{client.firstName}</th>          
+                     <th>{client.lastName}</th>
+                     <th>{client.email}</th>
+                     <th>{client.totalOrder}</th>
+                     <th>{client.visit}</th>
+                     <th>{client.phone?client.phone:"null"}</th>
+                     <th>{client.createdOn}</th>
+                     <th>{client.lastLoggedIn}</th>
+                     <th>{client.uuid}</th>
                   </tr>
                 })}
        </>
      }
-     if(this.state.deleting){
+     if(this.state.deleting)
+     {
        return <Spinner />
      }
 
@@ -51,13 +56,16 @@ import Spinner from "../../../../UI/spinner/spinner"
            <table cellspacing="20px" className="subscribe__table">
                <thead>
                   <tr>
-                     <th>name</th>
-                     <th>access</th>
-                     <th>value</th>
-                     <th>expiry date</th>
+                     <th>S.No.</th> 
+                     <th>First Name</th>
+                     <th>Last Name</th>
+                     <th>Email</th>
+                     <th>Total Orders</th>
+                     <th>Visits</th>
+                     <th>Phone Number</th>
                      <th>created On</th>
-                     <th>usedBy</th>
-                     <th></th>
+                     <th>Last LoggedIn</th>
+                     <th>uuid</th>
                   </tr>
                </thead>
                <tbody>

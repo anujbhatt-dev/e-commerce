@@ -1,6 +1,8 @@
  import React, {Component} from "react"
 import logo from "../../../../assets/images/innerclan_page-0001.jpg"
 import axios from "axios"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
  class Navigation extends Component{
 
@@ -38,9 +40,9 @@ import axios from "axios"
         })
       }).catch(err=>{
         if(err.response && err.response.data[0]){
-          alert(err.response.data[0]);
+          toast.error(err.response.data[0]);
         }else{
-          alert("something went wrong");
+          toast.error("something went wrong");
         }
       })
    }

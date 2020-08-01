@@ -18,7 +18,7 @@ import Landing from "./landing/landing"
  class Main extends Component{
 
    render(){
-     let address="http://localhost:3000/"
+     let address="http://localhost:3000/Login"
 
      return (
          <div className="main">

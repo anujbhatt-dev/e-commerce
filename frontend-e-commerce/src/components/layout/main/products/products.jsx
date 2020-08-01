@@ -3,7 +3,8 @@ import axios from "axios"
 import Spinner from "../../../../UI/spinner/spinner"
 import Modal from "../../../../UI/modal/modal"
 import Backdrop from "../../../../UI/backdrop/backdrop"
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class Products extends Component{
@@ -115,9 +116,9 @@ class Products extends Component{
         })
       }).catch(err=>{
         if(err.response && err.response.data[0]){
-          alert(err.response.data[0]);
+          toast.error(err.response.data[0]);
         }else{
-          alert("something went wrong mount");
+          toast.error("something went wrong mount");
         }
       })
    }
@@ -155,9 +156,9 @@ class Products extends Component{
               })
               this.props.searchHandler("")
             if(err.response && err.response.data[0]){
-              alert(err.response.data[0]);
+              toast.error(err.response.data[0]);
             }else{
-              alert("something went wrong search");
+              toast.error("something went wrong search");
             }
           })
      }
@@ -174,9 +175,9 @@ class Products extends Component{
               loading:false
               })
             if(err.response && err.response.data[0]){
-              alert(err.response.data[0]);
+              toast.error(err.response.data[0]);
             }else{
-              alert("something went wrong loading");
+              toast.error("something went wrong loading");
             }
           })
         }
@@ -202,9 +203,9 @@ class Products extends Component{
                caller:false
                })
              if(err.response && err.response.data[0]){
-               alert(err.response.data[0]);
+               toast.error(err.response.data[0]);
              }else{
-               alert("something went wrong....!!!!");
+               toast.error("something went wrong....!!!!");
              }
            })
          }

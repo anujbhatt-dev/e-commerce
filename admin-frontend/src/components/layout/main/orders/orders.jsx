@@ -9,13 +9,34 @@
       maxPageNum:null,
       totalOrders:0,
       status:"All",
-      setStatus:""
+      setStatus:"",
+
     }
+
+    trackIdInputChangeHandler=(e,i)=>{
+      let orders= [...this.state.myOrders]
+      orders[i].trackIdInput=e.target.value
+      this.setState({
+        myOrders:[...orders]
+      })
+    }
+
+    trackIdInputSubmitHandler=(e,id,i)=>{
+       console.log(id+" "+this.state.myOrders[i].trackIdInput)
+
+      e.preventDefault()
+ }
+ 
 
     componentDidMount=()=>{
       axios.get("/v1/admin/order",{params:{pageNumber:0}}).then(res=>{
+         let orders=[...res.data.orders]
+         orders.forEach((order,i)=>(
+           order.trackIdInput="",
+           order.savedtrackIdInput=""
+         ))
          this.setState({
-           myOrders:[...res.data.orders],
+           myOrders:[...orders],
            maxPageNum:Math.ceil(res.data.total/3)-1,
            totalOrders:res.data.total,
            pageNum:0
@@ -32,8 +53,13 @@
     paginationHandler=(operation)=>{
       if(operation==="minus" && this.state.pageNum>0){
         axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum-1)}}).then(res=>{
+          let orders=[...res.data.orders]
+         orders.forEach((order,i)=>(
+           order.trackIdInput="",
+           order.savedtrackIdInput=""
+         ))
            this.setState({
-             myOrders:[...res.data.orders],
+             myOrders:[...orders],
              pageNum:this.state.pageNum-1,
 
              // maxPageNum:Math.ceil(res.data.total/3)-1,
@@ -48,9 +74,13 @@
       }
       if(operation==="plus" && this.state.pageNum<this.state.maxPageNum){
         axios.get("/v1/admin/order",{params:{pageNumber:(this.state.pageNum+1)}}).then(res=>{
-           console.log(res.data.orders);
+          let orders=[...res.data.orders]
+          orders.forEach((order,i)=>(
+            order.trackIdInput="",
+            order.savedtrackIdInput=""
+          ))
            this.setState({
-             myOrders:[...res.data.orders],
+             myOrders:[...orders],
              pageNum:this.state.pageNum+1,
              // maxPageNum:Math.ceil(res.data.total/3)-1,
            })
@@ -209,7 +239,11 @@
                                           <span onClick={()=>this.onStatusChangeHandler(order.id,i,"CANCELED")} className="dropdown__item">CANCELED</span>
                                       </span></div>
                           </div>
-
+                          <form style={{flexBasis:"100%"}} onSubmit={(e)=>this.trackIdInputSubmitHandler(e,order.id,i)}>
+                               <input  type="text" onChange={(e)=>this.trackIdInputChangeHandler(e,i)} value={order.trackIdInput} name="trackIdInput"/>
+                               <button type="submit">save</button>
+                          </form>
+                          {order.savedtrackIdInput!==""?<div style={{flexBasis:"100%"}} className="myOrders__box--orderId">savedtrackIdInput: <span>{order.savedtrackIdInput}</span></div>:null}
                      </div>
                  </div>
               )): <div id="heading" className="noMatch">
