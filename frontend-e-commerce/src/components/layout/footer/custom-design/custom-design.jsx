@@ -54,7 +54,7 @@ import 'react-toastify/dist/ReactToastify.css';
          email:this.state.customEmail,
          comment:this.state.comment
        }
-       axios.post("/v1/design/",formData,{
+       axios.post("/v1/design",formData,{
           params:params
        }).then(res=>{
          toast.error("successfully submitted")

@@ -4,6 +4,7 @@
   align-self: flex-start;
   flex-wrap: wrap;
   &__box{
+    position: relative;
     // width: 25rem;
     padding: 1.5rem;
     margin: 1.5rem;
@@ -18,4 +19,7 @@
       margin: 0 auto;
     }
   }
+}
+#delete{
+  right:1rem;
 }

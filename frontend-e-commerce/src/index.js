@@ -4,7 +4,7 @@ import App from './App';
 import axios from "axios"
 import ReactTooltip from "react-tooltip"
 
-axios.defaults.baseURL="http://innerclantest-env.eba-3xcbvtbq.ap-south-1.elasticbeanstalk.com/api"
+axios.defaults.baseURL="http://localhost:8082/api"
 
 //let authorization;
 

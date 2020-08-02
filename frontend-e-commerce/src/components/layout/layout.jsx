@@ -65,10 +65,11 @@ import 'react-toastify/dist/ReactToastify.css';
            userDetail:{...res.data}
          })
        }).catch(err=>{
+         console.log(err.response);
          if(err.response && err.response.data[0]){
            toast.error(err.response.data[0]);
          }else{
-           toast.error("something went wrong search");
+           toast.error("something went wrong...!!!");
          }
        })
      }else{
@@ -90,8 +91,9 @@ import 'react-toastify/dist/ReactToastify.css';
           userDetail:{...res.data}
         })
      }).catch(err=>{
-       if(err.response && err.response.data[0]){
-         toast.error(err.response.data[0]);
+      
+       if(err.response && err.response.data){
+         toast.error(err.response.data);
        }else{
          toast.error("something went wrong search");
        }

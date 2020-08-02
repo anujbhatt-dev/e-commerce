@@ -105,11 +105,11 @@ this.setState({
                     this.state.subscriptions.map((subscriber,i)=>(
                       <tr>
                           <th>{subscriber.email}</th>
-                          <th>{subscriber.createedOn}</th>
+                          <th>{subscriber.createdOn}</th>
                       </tr>
-     ))   
-                
-                   
+     ))
+
+
                    :null}
                </tbody>
            </table>

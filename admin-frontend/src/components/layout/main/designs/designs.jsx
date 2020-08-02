@@ -20,6 +20,21 @@ import dwight from "../../../../assets/images/dwight.jpg"
        })
   }
 
+  designDeleteHandler=(id,i)=>{
+    axios.delete("/v1/admin/design",{params:{id:id}}).then(res=>{
+         // let newState={...this.state.customOrders}
+         // newState.splice(i,1);
+         // this.setState({
+         //   customOrders:{...newState}
+         // })
+    }).catch(err=>{
+      if(err.response && err.response.data)
+      alert(err.response.data[0]);
+      else
+      alert("contact the team");
+    })
+  }
+
 
    render(){
      if(!this.props.authenticated){
@@ -34,6 +49,7 @@ import dwight from "../../../../assets/images/dwight.jpg"
                                 <div className="designs__box--item">{customOrder.createdOn}</div>
                                 <div className="designs__box--item">{customOrder.comment}</div>
                                 <img className="designs__box--image" src={'data:image/png;base64,'+customOrder.image} alt="dwight"/>
+                                <button id="delete" onClick={()=>this.designDeleteHandler(customOrder.id,i)} type="submit" className="products__box--btn updateProduct__delete--btn">delete</button>
                               </div>
                             ))}
                        </div>
