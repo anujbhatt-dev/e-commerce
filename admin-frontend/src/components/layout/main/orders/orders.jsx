@@ -22,9 +22,9 @@
     }
 
     trackIdInputSubmitHandler=(e,id,i)=>{
-       console.log(id+" "+this.state.myOrders[i].trackIdInput)
-
-      e.preventDefault()
+      // console.log(id+" "+this.state.myOrders[i].trackIdInput)
+axios.post(`/v1/admin/order/${this.state.myOrders[i].orderId}/trackingId/${this.state.myOrders[i].trackIdInput}`);
+      e.preventDefault();
  }
  
 
@@ -231,7 +231,7 @@
                                       <span className="dropdown">
                                           <span onClick={()=>this.onStatusChangeHandler(order.id,i,"PLACED")} className="dropdown__item">PLACED</span>
                                           <span onClick={()=>this.onStatusChangeHandler(order.id,i,"PAYMENT_PENDING")} className="dropdown__item">PAYMENT PENDING</span>
-                                          <span onClick={()=>this.onStatusChangeHandler(order.id,i,"DELIVERED")} className="dropdown__item">DELIVERED</span>
+                                          <span onClick={()=>this.onSftatusChangeHandler(order.id,i,"DELIVERED")} className="dropdown__item">DELIVERED</span>
                                           <span onClick={()=>this.onStatusChangeHandler(order.id,i,"PAYMENT_FAILED")} className="dropdown__item">PAYMENT FAILED</span>
                                           <span onClick={()=>this.onStatusChangeHandler(order.id,i,"REFUND_COMPLETED")} className="dropdown__item">REFUND COMPLETED</span>
                                           <span onClick={()=>this.onStatusChangeHandler(order.id,i,"REFUND_REQUESTED")} className="dropdown__item">REFUND REQUESTED</span>
@@ -240,10 +240,10 @@
                                       </span></div>
                           </div>
                           <form style={{flexBasis:"100%"}} onSubmit={(e)=>this.trackIdInputSubmitHandler(e,order.id,i)}>
-                               <input  type="text" onChange={(e)=>this.trackIdInputChangeHandler(e,i)} value={order.trackIdInput} name="trackIdInput"/>
+                               <input  type="text" onChange={(e)=>this.trackIdInputChangeHandler(e,i)} value={order.trackIdInput&&order.trackIdInput.length<=0?order.trackingId:order.trackIdInput} name="trackIdInput"/>
                                <button type="submit">save</button>
                           </form>
-                          {order.savedtrackIdInput!==""?<div style={{flexBasis:"100%"}} className="myOrders__box--orderId">savedtrackIdInput: <span>{order.savedtrackIdInput}</span></div>:null}
+                          {/* {order.savedtrackIdInput!==""?<div style={{flexBasis:"100%"}} className="myOrders__box--orderId">savedtrackIdInput: <span>{order.savedtrackIdInput}</span></div>:null} */}
                      </div>
                  </div>
               )): <div id="heading" className="noMatch">

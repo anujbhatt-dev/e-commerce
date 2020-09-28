@@ -170,7 +170,7 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
                      <input required className="checkout__form--input" placeholder="pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
                      <input required className="checkout__form--input" placeholder="city" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
                      <input required className="checkout__form--input" placeholder="state" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
-                     <button disabled={true} className="checkout__form--input checkout__form--btn" type="submit">PAY</button>
+                     <button disabled={false} className="checkout__form--input checkout__form--btn" type="submit">PAY</button>
                  </form>
               </div>
              <h5 className="checkout__h5"><div><span className="checkout__h5Desktop--tax">tax</span><span className="checkout__h5Desktop--tax">18%</span></div><br/>
