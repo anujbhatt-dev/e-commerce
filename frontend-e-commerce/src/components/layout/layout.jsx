@@ -309,7 +309,7 @@ import 'react-toastify/dist/ReactToastify.css';
      if(!this.props.authenticated){
        modalLogin = [<Modal2 key={"modal2"} clicked={this.modalProfileHandler} show={this.state.profile}>
                         <div className="user">
-                            <a href="http://innerclantest-env.eba-3xcbvtbq.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
+                            <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
                             <hr/>
                             <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                  <h3>logIn</h3>

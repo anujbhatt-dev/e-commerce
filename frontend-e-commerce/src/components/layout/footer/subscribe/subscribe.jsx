@@ -17,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
       let param={
         email:this.state.email
       }
-       axios.post("/v1/subscribe/",null,{params:param}).then(res=>{
+       axios.post("/v1/subscribe",null,{params:param}).then(res=>{
             toast.success("you have been successfully subscibed")
             this.setState({
               subscribing:false,
