@@ -98,7 +98,7 @@
       }
       &-savePrice{
         font-size: 1rem;
-        color: $color-orangered;
+        color: $color-red;
       }
     }
     &--similar{
@@ -236,6 +236,7 @@
       }
     }
   }
+
 }
 
 
@@ -261,7 +262,7 @@
    cursor: pointer;
    position: absolute;
    left: -6rem;
-   color: $color-black;
+   color: $color-grey-dark-3;
    font-size: 5rem;
    font-weight: bolder;
    @include respond(phone){
@@ -281,7 +282,7 @@
    cursor: pointer;
   position: absolute;
   right: -6rem;
-  color: $color-black;
+  color: $color-grey-dark-3;
   font-size: 5rem;
   font-weight: bolder;
   @include respond(phone){

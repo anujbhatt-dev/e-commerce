@@ -56,7 +56,7 @@ import 'react-toastify/dist/ReactToastify.css';
      let men=null;
      let women=null;
      if(this.state.categories.length!==0){
-         men = <span  className="nav__list--item">Men
+         {/*men = <span  className="nav__list--item">Men
                <span className="dropdown">
                   {this.state.categories.map((category,i)=>{
                     if(category.gender==="MALE"){
@@ -94,7 +94,7 @@ import 'react-toastify/dist/ReactToastify.css';
                                 }
                                 return <span key={category.id}></span>
                               })}
-                           </span></span>
+                           </span></span>*/}
      }
 
      return (

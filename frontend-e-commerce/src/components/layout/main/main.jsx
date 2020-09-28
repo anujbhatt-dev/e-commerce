@@ -13,7 +13,7 @@ class Main extends Component{
     searchBy:false,
     selectedCategory:{
       id:-1,
-      name:"Latest",
+      name:"Collection",
       gender:""
     },
     sortBy:"sOrderByDate"

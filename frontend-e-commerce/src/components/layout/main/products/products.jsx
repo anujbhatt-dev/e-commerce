@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 class Products extends Component{
 
    state={
+     mounting:true,
+     changing:false,
      selectedAngleOfTheImage:0,
      nomatch:false,
      productSize:"M",
@@ -52,6 +54,7 @@ class Products extends Component{
          this.setState({
            productQuantity:1,
            show:false,
+           caller:false,
            selectedProductId:-1,
            indexOfSelectedProduct:-1,
            modalProductDetails:
@@ -92,6 +95,9 @@ class Products extends Component{
 
 
    onChangeHandler=(name)=>{
+     if(this.state.loading){
+       return null;
+     }
       const index = this.state.selectedIndex
       if(name==="minus"){
         if(index!==0){
@@ -112,9 +118,13 @@ class Products extends Component{
       axios.get("/v1/product/getProductsOrderByDate/-1/0").then(res=>{
         this.setState({
           products:[...res.data],
-          maxIndex:Math.ceil(res.data[0].size/8.0)-1
+          maxIndex:Math.ceil(res.data[0].size/12.0)-1,
+          mounting:false
         })
       }).catch(err=>{
+        this.setState({
+          mounting:false
+        })
         if(err.response && err.response.data[0]){
           toast.error(err.response.data[0]);
         }else{
@@ -129,7 +139,7 @@ class Products extends Component{
                if(res.data.length!==0){
                  this.setState({
                    products:[...res.data],
-                   maxIndex:Math.ceil(res.data[0].size/8.0)-1,
+                   maxIndex:Math.ceil(res.data[0].size/12.0)-1,
                    loading:false,
                    nomatch:false
                  })
@@ -167,7 +177,7 @@ class Products extends Component{
        axios.get("/v1/product/getProduct"+this.props.sortBy+"/"+this.props.selectedCategory.id+"/"+this.state.selectedIndex).then(res=>{
           this.setState({
               products:[...res.data],
-              maxIndex:Math.ceil(res.data[0].size/8.0)-1,
+              maxIndex:Math.ceil(res.data[0].size/12.0)-1,
               loading:false
             })
           }).catch(err=>{
@@ -197,10 +207,12 @@ class Products extends Component{
                 this.setState({
                   modalProductDetails:{...res.data},
                   caller:false,
+                  changing:false
                 })
           }).catch(err=>{
              this.setState({
-               caller:false
+               caller:false,
+               changing:false
                })
              if(err.response && err.response.data[0]){
                toast.error(err.response.data[0]);
@@ -215,6 +227,9 @@ class Products extends Component{
 }
 
    arrowHandler=(side)=>{
+     this.setState({
+       changing:true
+     })
      let index = null
      let id = null
      if(side==="left"){
@@ -226,7 +241,8 @@ class Products extends Component{
          selectedProductId:id,
          caller:true,
          indexOfSelectedProduct:index,
-         productQuantity:1
+         productQuantity:1,
+         // loading:false
        })
      }
      if(side==="right"){
@@ -238,10 +254,12 @@ class Products extends Component{
          selectedProductId:id,
          caller:true,
          indexOfSelectedProduct:index,
-         productQuantity:1
+         productQuantity:1,
+         // loading:false
        })
      }
-   }
+
+}
 
     imageHandler=(i)=>{
        this.setState({selectedImageIndex:i,selectedAngleOfTheImage:0})
@@ -268,7 +286,7 @@ class Products extends Component{
 
 
  mouseMoveHandler=(e)=>{
-    let coordinates= (e.clientX-420).toString()+"px "+(e.clientY-207).toString()+"px"
+    let coordinates= (e.clientX-450).toString()+"px "+(e.clientY-185).toString()+"px"
     document.getElementById("hoverImage").style.transformOrigin = coordinates;
 
  }
@@ -282,11 +300,11 @@ class Products extends Component{
 
 
     if(this.state.products.length!==0){
-       products = <div className="feature">
-                      {this.state.products.map((product,i)=>{
+       products = <>
+                      {this.state.loading?<Spinner/>:this.state.products.map((product,i)=>{
 
                         return (
-                        this.state.loading?<Spinner/>:<div key={product.id} onClick={()=>this.modalToggleHandler(product.id,product.productName)} className="card">
+                        <div key={product.id} onClick={()=>this.modalToggleHandler(product.id,product.productName)} className="card">
                          <img className="card__image" src={'data:image/png;base64,'+product.defaultImage} alt="thomas"/>
 
                            <div className="card__details">
@@ -305,14 +323,14 @@ class Products extends Component{
                         </div>
                       )})}
 
-                  </div>
+                  </>
      }
 
      let modal = null;
       if(this.state.modalProductDetails.colors[0].images[0].image!==null){
        modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
-               <button  onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>
-               <div className="product">
+              {!this.state.changing?<button  onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>:null}
+               {!this.state.changing?<div className="product">
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
                            {this.state.modalProductDetails.colors[this.state.selectedImageIndex].images.map((image,i)=>(
@@ -380,8 +398,8 @@ class Products extends Component{
                           </ul>
                       </div>
                    </div>
-               </div>
-               <button  onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>
+               </div>:<Spinner/>}
+               {!this.state.changing?<button  onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>:null}
          </Modal>
      }
 
@@ -412,15 +430,17 @@ class Products extends Component{
            <div className="sort__productCount">{this.state.products.length!==0?this.state.products[0].size+" products":null}</div>
           </div>
 
-          {products}
+          <div div className="feature">
+              {this.state.mounting?<Spinner/>:this.props.searchBy?<Spinner/>:products}
+          </div>
 
 
 
-            <div style={{display:"flex",justifyContent:"center"}}>
+            <div >
                 <div className="pagination">
-                     <span onClick={()=>this.onChangeHandler("minus")} className="pagination__minus">-</span>
-                     <span value={this.selectedIndex} className="pagination__pageNumber">{this.state.selectedIndex+1} / {this.state.maxIndex+1}</span>
-                     <span onClick={()=>this.onChangeHandler('plus')} className="pagination__plus">+</span>
+                     <span onClick={()=>this.onChangeHandler("minus")} className="pagination__minus"> {"-"}</span>
+                     <span value={this.selectedIndex} className="pagination__pageNumber"> <span className="pageCount">{this.state.selectedIndex+1}</span>  / <span  className="pageCount">{this.state.maxIndex+1}</span></span>
+                     <span onClick={()=>this.onChangeHandler('plus')} className="pagination__plus">{"+"}</span>
                 </div>
             </div>
        </>

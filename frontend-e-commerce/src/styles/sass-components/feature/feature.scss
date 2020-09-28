@@ -1,6 +1,10 @@
 .feature{
+   min-height: 50vh;
    display: flex;
+   align-items: center;
+   justify-content: center;
    margin: 5rem 25rem;
+  // margin-top: 15rem;
    flex-basis: 25%;
    perspective: 1000px;
    // margin-bottom: 50rem;

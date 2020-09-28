@@ -1,4 +1,9 @@
 .modal{
+  user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,7 +50,7 @@
 }
 @include respond(phone){
   .modal{
-    width:90%;
+    width:85%;
     height:80%;
   }
 }

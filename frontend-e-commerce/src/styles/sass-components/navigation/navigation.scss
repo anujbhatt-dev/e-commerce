@@ -10,7 +10,7 @@
     // left: -4rem;
     flex-grow: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
    &--item{
      user-select: none;
@@ -39,9 +39,9 @@
   }
   &__image{
      position: relative;
-     top:-2rem;
-     height: 8rem;
-     width: 25rem;
+     // top:-2rem;
+     height: 6rem;
+     width: 20rem;
      margin:  .5rem;
      cursor: pointer;
   }
@@ -72,6 +72,7 @@
        align-self: center;
      }
      &__list{
+       justify-content: center;
        padding: 0;
        // align-self: center;
        margin: 0;
@@ -96,8 +97,8 @@
   background: $color-white;
   padding:2rem 0rem;
   & img{
-    height: 8rem;
-    width: 25rem;
+    height: 6rem;
+    width: 20rem;
     @include respond(phone){
 
     }

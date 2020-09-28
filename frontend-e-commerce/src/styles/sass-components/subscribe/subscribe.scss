@@ -1,4 +1,5 @@
 .subscribe{
+  overflow: hidden;
   height: 70vh;
   display: flex;
   flex-flow:column;
@@ -40,11 +41,11 @@
       padding: .5rem 2rem;
       border: none;
       cursor: pointer;
-      border: 1px solid $color-black;
+      // border: 1px solid $color-black;
       &:hover{
-        background: $color-white;
-        color:$color-black;
-        border: 1px solid $color-black;
+        background: $color-grey-dark-3;
+        // color:$color-black;
+        // border: 1px solid $color-black;
       }
       &:focus{
         outline: none;

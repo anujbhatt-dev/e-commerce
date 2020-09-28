@@ -84,8 +84,10 @@
                     <div className="myOrders__box--orderId">Time: <span>{order.orderedOnTime}</span></div>
                     <div className="myOrders__box--orderId">Status: <span>{order.status}</span></div>
                     <div className="myOrders__box--orderId">Total: ₹<span>{order.total}</span></div>
+                    {order.trackingId?<div className="myOrders__box--orderId">TrackingId: <span>{order.trackingId}</span></div>:null}
                     {order.transactionId?<div className="myOrders__box--orderId">TransactionId: <span>{order.transactionId}</span></div>:null}
                     <div className="myOrders__box--orderId">OrderId: <span>{order.orderId}</span></div>
+                    {order.trackingId?<a href="https://www.dtdc.in/tracking/shipment-tracking.asp" target="_blank">click here to track your order</a>:null}
                     <hr className="myOrders__box--hr"/>
                     <div className="flexer">
                         <div className="orderItems">

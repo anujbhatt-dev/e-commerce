@@ -91,7 +91,7 @@ import 'react-toastify/dist/ReactToastify.css';
           userDetail:{...res.data}
         })
      }).catch(err=>{
-      
+
        if(err.response && err.response.data){
          toast.error(err.response.data);
        }else{
@@ -285,7 +285,7 @@ import 'react-toastify/dist/ReactToastify.css';
                </div></Modal>,<Backdrop key={"backdrop1"} clicked={this.modalToggleHandler} show={this.state.show}/>]
                :[<Modal key={"modal1"} clicked={this.modalToggleHandler} show={this.state.show}>
                                <div className="user">
-                                   <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> continue with google </a>
+                                   <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> Continue with Google </a>
                                    <hr/>
                                    <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                         <h3>logIn</h3>
@@ -315,7 +315,7 @@ import 'react-toastify/dist/ReactToastify.css';
                                  <h3>logIn</h3>
                                  <input onChange={this.logInChangeHandler}  value={this.state.login.email} required placeholder="email" className="user__input" name="email" type="text"/>
                                  <input onChange={this.logInChangeHandler}  value={this.state.login.password} required placeholder="password" className="user__input" name="password" type="password"/>
-                                 <button className="user__login--btn" type="submit">login</button>
+                                 <button className="user__login--btn" type="submit">LogIn</button>
                                  <Link to="/forgotPassword"><p className="user__login--forgotPassword">Forgot Password?</p></Link>
                             </form>
                             <hr/>
@@ -326,7 +326,7 @@ import 'react-toastify/dist/ReactToastify.css';
                                  <input value={this.state.register.email} onChange={this.registerChangeHandler} required placeholder="email" className="user__input" name="email" type="text"/>
                                  <input value={this.state.register.password} onChange={this.registerChangeHandler} required placeholder="password" className="user__input" name="password" type="password"/>
                                  <input value={this.state.register.confirmPassword} onChange={this.registerChangeHandler} required placeholder="confirm password" className="user__input" name="confirmPassword" type="password"/>
-                                <button className="user__register--btn" type="submit">sighup</button>
+                                <button className="user__register--btn" type="submit">SignUp</button>
                             </form>
                         </div>
                    </Modal2>,<Backdrop2 key={"backdrop2"} clicked={this.modalProfileHandler} show={this.state.profile}/>]

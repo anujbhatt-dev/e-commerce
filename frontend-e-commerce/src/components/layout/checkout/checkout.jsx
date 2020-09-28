@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
        city:"",
        state:"",
        pincode:"",
-       coupon:"-1",
+       coupon:"",
      },
      couponDetails:{
        message:"",
@@ -45,7 +45,7 @@ import 'react-toastify/dist/ReactToastify.css';
    componentDidMount=()=>{
      let formDetails=null
      let gt = this.props.cart.map(product=>(product.quantity*product.productPrice)).reduce((acc,value)=>acc+value)
-     this.setState({gTotal:gt,orders:[...this.props.cart],finalAmount:gt})
+     this.setState({gTotal:gt,orders:[...this.props.cart],finalAmount:gt+Math.round(gt*18/100)})
      axios.get("/v1/order/getAddress").then(res=>{
 
       formDetails={
@@ -73,24 +73,30 @@ import 'react-toastify/dist/ReactToastify.css';
      document.getElementById("links").scrollIntoView()
    }
 
-   componentDidUpdate=()=>{
+   componentDidUpdate=(prevState,prevProps)=>{
      if(this.state.couponAppling){
-       axios.get('/v1/admin/promo/isValid/'+this.state.formDetails.coupon).then(res=>{
-         console.log(res.data);
-         this.setState({
-           couponAppling:false,
-           couponDetails:{...res.data},
-           finalAmount:(res.data.value!=="-1")?this.state.gTotal-res.data.value:this.state.gTotal,
-           validCouponName:this.state.formDetails.coupon
+       // if(){
+         axios.get('/v1/admin/promo/isValid/'+this.state.formDetails.coupon).then(res=>{
+           console.log(res.data);
+           this.setState({
+             couponAppling:false,
+             couponDetails:{...res.data},
+             finalAmount:(res.data.value!=="-1")?this.state.finalAmount-res.data.value:this.state.finalAmount,
+             validCouponName:this.state.formDetails.coupon
+           })
+           console.log(this.state);
+         }).catch(err=>{
+           this.setState({
+             couponAppling:false
+           })
+           if(err.response && err.response.data[0]){
+             toast.error(err.response.data[0]);
+           }else{
+             toast.error("something went wrong search");
+           }
          })
-       }).catch(err=>{
-         if(err.response && err.response.data[0]){
-           toast.error(err.response.data[0]);
-         }else{
-           toast.error("something went wrong search");
-         }
-       })
-     }
+       }
+       // }
    }
 
 
@@ -154,19 +160,21 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
         <div className="checkout">
               <div className="checkout__details">
                  <form className="checkout__form" onSubmit={this.placeOrderHandler}>
+                     <h3 style={{flexBasis:"100%",textAlign:"center", padding:"1rem 0"}}>Billing Address</h3>
                      <input required className="checkout__form--input" placeholder="email" onChange={this.onChangeHandler} name="email" value={this.state.formDetails.email} type="text"/>
                      <input required className="checkout__form--input" placeholder="name" onChange={this.onChangeHandler} name="customerName" value={this.state.formDetails.customerName} type="text"/>
                      <input required className="checkout__form--input" placeholder="number" onChange={this.onChangeHandler} name="customerPhone" value={this.state.formDetails.customerPhone} type="Number"/>
                      <input required className="checkout__form--input" placeholder="house number" onChange={this.onChangeHandler} name="houseNumber" value={this.state.formDetails.houseNumber} type="text"/>
-                    <input required className="checkout__form--input checkout__form--location" placeholder="location" onChange={this.onChangeHandler} name="location" value={this.state.formDetails.location} type="text"/>
-                    <input required className="checkout__form--input" placeholder="landmark" onChange={this.onChangeHandler} name="landmark" value={this.state.formDetails.landmark} type="text"/>
+                     <input required className="checkout__form--input checkout__form--location" placeholder="location" onChange={this.onChangeHandler} name="location" value={this.state.formDetails.location} type="text"/>
+                     <input required className="checkout__form--input" placeholder="landmark" onChange={this.onChangeHandler} name="landmark" value={this.state.formDetails.landmark} type="text"/>
                      <input required className="checkout__form--input" placeholder="pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
                      <input required className="checkout__form--input" placeholder="city" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
                      <input required className="checkout__form--input" placeholder="state" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
                      <button disabled={true} className="checkout__form--input checkout__form--btn" type="submit">PAY</button>
                  </form>
               </div>
-             <h5 className="checkout__h5">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.gTotal+" - "+Math.floor(this.state.couponDetails.value)+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
+             <h5 className="checkout__h5"><div><span className="checkout__h5Desktop--tax">tax</span><span className="checkout__h5Desktop--tax">18%</span></div><br/>
+             Grand Total:{" "} <span> ₹ {(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount+" (inc tax)":<span>{this.state.finalAmount} (inc tax & coupon applied)</span>}</span></h5>
              <div className="checkout__product">
               {this.state.orders.length?this.state.orders.map((product,i)=>(
                 <div className="checkout__product--box">
@@ -184,12 +192,15 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
               <hr className="checkout__hr"/>
               <div className="checkout__coupon">
                   <form className="checkout__coupon--form" onSubmit={this.couponSubmitHandler}>
-                      <input className="checkout__coupon--form-input" name="coupon" onChange={this.onChangeHandler} value={this.state.formDetails.coupon} type="text"/>
-                      <button  className="checkout__coupon--form-btn" type="submit">Apply</button>
+                      <input  className="checkout__coupon--form-input" name="coupon" onChange={this.onChangeHandler} value={this.state.formDetails.coupon} type="text"/>
+                      <button   className="checkout__coupon--form-btn" type="submit">Apply</button>
                   </form>
                   <div className="checkout__coupon--form-text">{this.state.couponDetails.length!==0?this.state.couponDetails.message:null}</div>
               </div>
-              <h5 className="checkout__h5Desktop">Grand Total:{" "} <span> ₹ {(this.state.gTotal===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.gTotal+" - "+Math.floor(this.state.couponDetails.value)+" = ₹ "+this.state.finalAmount}</span>}</span> </h5>
+
+              <h5 className="checkout__h5Desktop">
+              <div><span className="checkout__h5Desktop--tax">tax</span><span className="checkout__h5Desktop--tax">18%</span></div><br/>
+              Grand Total:{" "} <span> ₹ {(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount+" (inc tax)":<span>{this.state.finalAmount} (inc tax & coupon applied)</span>}</span></h5>
             </div>
         </div>
      )

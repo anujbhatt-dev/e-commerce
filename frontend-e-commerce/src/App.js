@@ -8,6 +8,7 @@ import OAuthAuthorization from './components/layout/oauth-authorization/oauth-au
 import PaymentResult from './components/layout/payment-result/payment-result';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorBoundary from "./error-boundry/error-boundry"
 
 toast.configure()
 
@@ -37,7 +38,6 @@ componentDidMount=()=>{
   axios.interceptors.response.use(response =>{
     let authorization=response.headers.authorization;
     if(authorization){
-      console.log("AUthorization 123")
     axios.defaults.headers.common['authorization'] = authorization;
   this.setState({authenticated:true,name:response.headers.name,email:response.headers.email});
   }
@@ -61,14 +61,16 @@ render(){
 
   return (
     <BrowserRouter>
-      <Switch>
-              <Route exact path="/forgotPassword/:id"><ForgotPassword/></Route>
-              <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
-              <Route exact path="/paymentResult/:jwt/:email/:name"><PaymentResult setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+      <ErrorBoundary>
+            <Switch>
+                    <Route exact path="/forgotPassword/:id"><ForgotPassword/></Route>
+                    <Route exact path="/auth/:jwt/:email/:name"><OAuthAuthorization setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
+                    <Route exact path="/paymentResult/:jwt/:email/:name"><PaymentResult setAuthorizationHeader={this.setAuthorizationHeader}/></Route>
 
-              <Route>  <Layout logout={this.logoutHandler} name={this.state.name} email={this.state.email} authenticated={this.state.authenticated}/>
-      </Route>
-      </Switch>
+                    <Route>  <Layout logout={this.logoutHandler} name={this.state.name} email={this.state.email} authenticated={this.state.authenticated}/>
+            </Route>
+            </Switch>
+        </ErrorBoundary>
     </BrowserRouter>
   );
 }
