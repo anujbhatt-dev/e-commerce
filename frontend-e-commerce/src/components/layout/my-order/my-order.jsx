@@ -88,7 +88,7 @@ import Spinner from "../../../UI/spinner/spinner"
      return (
           <div className="myOrders">
              {this.state.myOrders.length!==0?this.state.myOrders.map((order,i)=>(
-                <div key={order.id+i} className="myOrders__box">
+                order.status==="PLACED"?<div key={order.id+i} className="myOrders__box">
                     <div className="myOrders__box--orderId">Date: <span>{order.orderedOnDate}</span></div>
                     <div className="myOrders__box--orderId">Time: <span>{order.orderedOnTime}</span></div>
                     <div className="myOrders__box--orderId">Status: <span>{order.status}</span></div>
@@ -143,7 +143,7 @@ import Spinner from "../../../UI/spinner/spinner"
                     </div>
                     {order.trackingId?<div className="myOrders__box--orderId">TrackingId: <span>{order.trackingId}</span></div>:null}
                     {order.trackingId?<a href="https://www.dtdc.in/tracking/shipment-tracking.asp" target="_blank">click here to track your order</a>:null}
-                </div>
+                </div>:null
              )): <div id="heading" className="noMatch">
              <div className="noMatch__text">0 order found</div>
              <div  className="noMatch__suggestion">Whoever said that money can’t buy happiness simply didn’t know where to go shopping. <Link to="/">Start Shopping</Link></div>
