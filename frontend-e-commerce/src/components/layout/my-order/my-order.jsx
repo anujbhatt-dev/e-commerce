@@ -15,6 +15,7 @@ import Spinner from "../../../UI/spinner/spinner"
    }
 
    componentDidMount=()=>{
+     window.scrollTo({top:0,behaviour:"smooth"})
      axios.get("/v1/order").then(res=>{
 
           let myOrders=[...res.data];

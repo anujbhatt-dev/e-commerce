@@ -183,6 +183,7 @@ import 'react-toastify/dist/ReactToastify.css';
              <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
              <div><span className="checkout__h5Desktop--tax">Shipping</span><span className="checkout__h5Desktop--tax">free</span></div><br/>
              <div><span className="checkout__h5Desktop--tax">Tax(18%)</span><span className="checkout__h5Desktop--tax" style={{color:"black",fontWeight:"bolder"}}>₹{Math.round(this.state.gTotal*18/100)}</span></div><br/>
+             {this.state.couponDetails.value!=="-1"?<><div><span className="checkout__h5Desktop--tax">Discount</span><span className="checkout__h5Desktop--tax" style={{color:"black",fontWeight:"bolder"}}>₹{this.state.couponDetails.value}</span></div><br/></>:null}
              <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
              Grand Total {" "} <span style={{color:"black",fontWeight:"bolder"}}> ₹{(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.finalAmount} (coupon applied)</span>}</span></h5>
              <div className="checkout__product">
@@ -213,6 +214,7 @@ import 'react-toastify/dist/ReactToastify.css';
               <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
               <div><span className="checkout__h5Desktop--tax">Shipping</span><span className="checkout__h5Desktop--tax">free</span></div><br/>
               <div><span className="checkout__h5Desktop--tax">Tax(18%)</span><span className="checkout__h5Desktop--tax" style={{color:"black",fontWeight:"bolder"}}>₹{Math.round(this.state.gTotal*18/100)}</span></div><br/>
+              {this.state.couponDetails.value!=="-1"?<><div><span className="checkout__h5Desktop--tax">Discount</span><span className="checkout__h5Desktop--tax" style={{color:"black",fontWeight:"bolder"}}>₹{this.state.couponDetails.value}</span></div><br/></>:null}
               <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
               Grand Total {" "} <span style={{color:"black",fontWeight:"bolder"}}> ₹{(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.finalAmount} (coupon applied)</span>}</span></h5>
             </div>
