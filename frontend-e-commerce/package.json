@@ -17,6 +17,7 @@
     "react-scripts": "3.4.1",
     "react-toastify": "^6.0.8",
     "react-tooltip": "^4.2.7",
+    "react-whatsapp": "^0.2.0",
     "redux": "^4.0.5",
     "validator": "^13.1.1"
   },

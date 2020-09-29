@@ -1,4 +1,4 @@
- import React, {Component} from "react"
+import React, {Component} from "react"
 import SocialMedia from "./social-media/social-media"
 import Footer from "./footer/footer"
 import WhoAreWe from "./footer/who-are-we/who-are-we"
@@ -21,8 +21,8 @@ import {withRouter} from "react-router-dom"
 import ForgotPasswordIntermediate from "./forgot-password-intermediate/forgot-password-intermediate"
 // import Navigation from "./main/navigation/navigation"
 import SecondaryNavigation from "./secondary-nav/secondary-nav"
-
-
+import Whatsapp from "./whatsapp/whatsapp"
+import GoTOTop from "./goToTop/goToTop"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -345,6 +345,8 @@ import 'react-toastify/dist/ReactToastify.css';
            {modal}
            {modalLogin}
            <SocialMedia userDetail={this.state.userDetail} authenticated={this.props.authenticated} logout={this.props.logout} name={this.props.name}/>
+           <Whatsapp/>
+           <GoTOTop />
            <Switch>
                <Route exact path="/">
                    <Cart clicked={this.modalToggleHandler} cart={this.state.cart} count={this.state.cart.length}/>

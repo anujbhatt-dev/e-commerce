@@ -3,11 +3,12 @@
  import {Link} from "react-router-dom"
  import { ToastContainer, toast } from 'react-toastify';
  import 'react-toastify/dist/ReactToastify.css';
-
+import Spinner from "../../../UI/spinner/spinner"
 
  class MyOrders extends Component{
 
    state={
+     flag:-1,
      myOrders:[],
      query:"",
      querying:false
@@ -21,7 +22,8 @@
             order.newQuery=""
           })
         this.setState({
-          myOrders:[...myOrders]
+          myOrders:[...myOrders],
+          flag:0
         })
 
 
@@ -76,6 +78,12 @@
        window.location.href = "http://sheltered-scrubland-77233.herokuapp.com/";
      }
 
+     if(this.state.flag===-1){
+         return <div style={{display:"flex",justifyContent:"center"}}>
+                    <Spinner/>
+                </div>
+     }
+
      return (
           <div className="myOrders">
              {this.state.myOrders.length!==0?this.state.myOrders.map((order,i)=>(
@@ -84,10 +92,8 @@
                     <div className="myOrders__box--orderId">Time: <span>{order.orderedOnTime}</span></div>
                     <div className="myOrders__box--orderId">Status: <span>{order.status}</span></div>
                     <div className="myOrders__box--orderId">Total: ₹<span>{order.total}</span></div>
-                    {order.trackingId?<div className="myOrders__box--orderId">TrackingId: <span>{order.trackingId}</span></div>:null}
                     {order.transactionId?<div className="myOrders__box--orderId">TransactionId: <span>{order.transactionId}</span></div>:null}
                     <div className="myOrders__box--orderId">OrderId: <span>{order.orderId}</span></div>
-                    {order.trackingId?<a href="https://www.dtdc.in/tracking/shipment-tracking.asp" target="_blank">click here to track your order</a>:null}
                     <hr className="myOrders__box--hr"/>
                     <div className="flexer">
                         <div className="orderItems">
@@ -134,12 +140,13 @@
                          </div>
 
                     </div>
+                    {order.trackingId?<div className="myOrders__box--orderId">TrackingId: <span>{order.trackingId}</span></div>:null}
+                    {order.trackingId?<a href="https://www.dtdc.in/tracking/shipment-tracking.asp" target="_blank">click here to track your order</a>:null}
                 </div>
              )): <div id="heading" className="noMatch">
              <div className="noMatch__text">0 order found</div>
              <div  className="noMatch__suggestion">Whoever said that money can’t buy happiness simply didn’t know where to go shopping. <Link to="/">Start Shopping</Link></div>
-                   </div>
-
+            </div>
             }
           </div>
      )

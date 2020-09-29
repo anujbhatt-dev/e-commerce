@@ -5,8 +5,11 @@
   &__box{
 
 
-    background: $color-grey-light-3;
+    background: rgba($color-primary-blue,.1);
+    border: 1px solid rgba($color-black,.02);
     margin: 1rem;
+    box-shadow: 0rem 0rem 1rem rgba($color-black,.1);
+    margin-bottom: 3rem;
     padding: 1rem;
     &--address{
       display: inline-block;
@@ -22,7 +25,9 @@
     }
     &--hr{
       border: none;
-      border-bottom: 1px dashed $color-grey;
+      border-bottom: 1px solid rgba($color-black,.2);
+      width: 60%;
+      margin: auto;
       margin-top: .3rem;
       margin-bottom: .5rem;
     }
@@ -41,4 +46,10 @@
   @include respond(tab-port){
     margin: 0 3rem;
   }
+}
+#btn__id{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:15rem;
 }

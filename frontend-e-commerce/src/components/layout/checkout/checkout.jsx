@@ -27,6 +27,7 @@ import 'react-toastify/dist/ReactToastify.css';
      validCouponName:"",
      orders:[],
      couponAppling:false,
+     payButton:"PAY"
    }
 
    couponSubmitHandler=(e)=>{
@@ -81,7 +82,7 @@ import 'react-toastify/dist/ReactToastify.css';
            this.setState({
              couponAppling:false,
              couponDetails:{...res.data},
-             finalAmount:(res.data.value!=="-1")?this.state.finalAmount-res.data.value:this.state.finalAmount,
+             finalAmount:(res.data.value!=="-1")?((this.state.finalAmount-res.data.value)<=0?1:(this.state.finalAmount-res.data.value)):this.state.finalAmount,
              validCouponName:this.state.formDetails.coupon
            })
            console.log(this.state);
@@ -119,7 +120,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
       }
 
-
+     document.getElementById("btn__id").disabled = true;
+     this.setState({payButton:"REDIRECTING..."})
 
      axios.post("/v1/order/placeOrder",this.state.formDetails,{params:param})
      .then(res=>{
@@ -135,13 +137,16 @@ import 'react-toastify/dist/ReactToastify.css';
          "&TXN_AMOUNT="+encodeURIComponent(payload.TXN_AMOUNT)+
          "&WEBSITE="+encodeURIComponent(payload.WEBSITE)
 
-console.log(
-"https://securegw-stage.paytm.in/theia/processTransaction?"+uri
-)
+          console.log(
+          "https://securegw-stage.paytm.in/theia/processTransaction?"+uri
+          )
 
-window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"+uri;
-     }
-);
+          window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"+uri;
+          }
+).catch(e=>{
+  document.getElementById("btn__id").disabled = false;
+  this.setState({payButton:"TRY AGAIN"})
+});
 
   e.preventDefault();
    }
@@ -170,11 +175,16 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
                      <input required className="checkout__form--input" placeholder="pincode" onChange={this.onChangeHandler} name="pincode" value={this.state.formDetails.pincode} type="text"/>
                      <input required className="checkout__form--input" placeholder="city" onChange={this.onChangeHandler} name="city" value={this.state.formDetails.city} type="text"/>
                      <input required className="checkout__form--input" placeholder="state" onChange={this.onChangeHandler} name="state" value={this.state.formDetails.state} type="text"/>
-                     <button disabled={false} className="checkout__form--input checkout__form--btn" type="submit">PAY</button>
+                     <input id="btn__id" disabled={false} className="checkout__form--input checkout__form--btn" type="submit" value={this.state.payButton}/>
                  </form>
               </div>
-             <h5 className="checkout__h5"><div><span className="checkout__h5Desktop--tax">tax</span><span className="checkout__h5Desktop--tax">18%</span></div><br/>
-             Grand Total:{" "} <span> ₹ {(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount+" (inc tax)":<span>{this.state.finalAmount} (inc tax & coupon applied)</span>}</span></h5>
+             <h5 className="checkout__h5">
+             <div><span className="checkout__h5Desktop--tax"><strong style={{color:"black",fontWeight:"bolder"}}>Subtotal</strong></span><span className="checkout__h5Desktop--tax"><strong style={{color:"black",fontWeight:"bolder"}}>₹{this.state.gTotal}</strong></span></div><br/>
+             <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
+             <div><span className="checkout__h5Desktop--tax">Shipping</span><span className="checkout__h5Desktop--tax">free</span></div><br/>
+             <div><span className="checkout__h5Desktop--tax">Tax(18%)</span><span className="checkout__h5Desktop--tax" style={{color:"black",fontWeight:"bolder"}}>₹{Math.round(this.state.gTotal*18/100)}</span></div><br/>
+             <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
+             Grand Total {" "} <span style={{color:"black",fontWeight:"bolder"}}> ₹{(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.finalAmount} (coupon applied)</span>}</span></h5>
              <div className="checkout__product">
               {this.state.orders.length?this.state.orders.map((product,i)=>(
                 <div className="checkout__product--box">
@@ -199,8 +209,12 @@ window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"
               </div>
 
               <h5 className="checkout__h5Desktop">
-              <div><span className="checkout__h5Desktop--tax">tax</span><span className="checkout__h5Desktop--tax">18%</span></div><br/>
-              Grand Total:{" "} <span> ₹ {(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount+" (inc tax)":<span>{this.state.finalAmount} (inc tax & coupon applied)</span>}</span></h5>
+              <div><span className="checkout__h5Desktop--tax"><strong style={{color:"black",fontWeight:"bolder"}}>Subtotal</strong></span><span className="checkout__h5Desktop--tax"><strong style={{color:"black",fontWeight:"bolder"}}>₹{this.state.gTotal}</strong></span></div><br/>
+              <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
+              <div><span className="checkout__h5Desktop--tax">Shipping</span><span className="checkout__h5Desktop--tax">free</span></div><br/>
+              <div><span className="checkout__h5Desktop--tax">Tax(18%)</span><span className="checkout__h5Desktop--tax" style={{color:"black",fontWeight:"bolder"}}>₹{Math.round(this.state.gTotal*18/100)}</span></div><br/>
+              <hr className="checkout__hr" style={{margin:".2rem",width:"100%"}}/>
+              Grand Total {" "} <span style={{color:"black",fontWeight:"bolder"}}> ₹{(this.state.gTotal+Math.round(this.state.gTotal*18/100)===this.state.finalAmount && this.state.couponDetails.value==="-1")?this.state.finalAmount:<span>{this.state.finalAmount} (coupon applied)</span>}</span></h5>
             </div>
         </div>
      )
