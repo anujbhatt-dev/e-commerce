@@ -137,16 +137,16 @@ import 'react-toastify/dist/ReactToastify.css';
          "&TXN_AMOUNT="+encodeURIComponent(payload.TXN_AMOUNT)+
          "&WEBSITE="+encodeURIComponent(payload.WEBSITE)
 
-          console.log(
-          "https://securegw-stage.paytm.in/theia/processTransaction?"+uri
-          )
+        //  alert(
+        //   "https://securegw-stage.paytm.in/theia/processTransaction?"+uri
+        //   );
 
           window.location.href="https://securegw-stage.paytm.in/theia/processTransaction?"+uri;
           }
-).catch(e=>{
-  document.getElementById("btn__id").disabled = false;
-  this.setState({payButton:"TRY AGAIN"})
-});
+         ).catch(e=>{
+           document.getElementById("btn__id").disabled = false;
+           this.setState({payButton:"TRY AGAIN"})
+         });
 
   e.preventDefault();
    }

@@ -331,6 +331,8 @@ import 'react-toastify/dist/ReactToastify.css';
                         </div>
                    </Modal2>,<Backdrop2 key={"backdrop2"} clicked={this.modalProfileHandler} show={this.state.profile}/>]
      }
+
+     
      // else{
      //   modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
      //                    <div className="userDetail">

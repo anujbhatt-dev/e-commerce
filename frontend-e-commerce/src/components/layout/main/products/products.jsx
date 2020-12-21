@@ -305,7 +305,7 @@ class Products extends Component{
 
                         return (
                         <div key={product.id} onClick={()=>this.modalToggleHandler(product.id,product.productName)} className="card">
-                         <img className="card__image" src={'data:image/png;base64,'+product.defaultImage} alt="thomas"/>
+                         <img className="card__image" src={product.defaultImage} alt="thomas"/>
 
                            <div className="card__details">
                                <div className="card__details-name">
@@ -334,13 +334,13 @@ class Products extends Component{
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
                            {this.state.modalProductDetails.colors[this.state.selectedImageIndex].images.map((image,i)=>(
-                             <li key={image.image+i} onClick={()=>{this.selectedAngleOfTheImageHandler(i)}}  className="product__imageBox--angle-item"><img src={'data:image/png;base64,'+image.image} alt="angle-1"/></li>
+                             <li key={image.image+i} onClick={()=>{this.selectedAngleOfTheImageHandler(i)}}  className="product__imageBox--angle-item"><img src={image.image} alt="angle-1"/></li>
                            ))}
                        </ul>
 
 
                        <div className="product__imageBox--angle-image">
-                       <img id="hoverImage" onMouseMove={this.mouseMoveHandler} onMouseLeave={this.mouseLeaveHandler} src={'data:image/png;base64,'+this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected"/>
+                       <img id="hoverImage" onMouseMove={this.mouseMoveHandler} onMouseLeave={this.mouseLeaveHandler} src={this.state.modalProductDetails.colors[this.state.selectedImageIndex].images[this.state.selectedAngleOfTheImage].image} alt="selected"/>
                        </div>
                    </div>
                    <div className="product__details">
@@ -358,7 +358,7 @@ class Products extends Component{
                       <div className="product__details--similar">
                         {this.state.modalProductDetails.colors.map((color,i)=>(
                           <div onClick={()=>this.imageHandler(i)} key={color.id+i} className="product__details--similar-item">
-                              <img src={'data:image/png;base64,'+color.images[0].image} alt={color.colorName}/>
+                              <img src={color.images[0].image} alt={color.colorName}/>
                               <div className="product__details--similar-color">{color.colorName}</div>
                           </div>
                         ))}
