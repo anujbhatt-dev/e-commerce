@@ -60,6 +60,7 @@ class Main extends Component{
          <Navigation search={this.searchHandler}
          selectedCategoryHandler={this.selectedCategoryHandler}/>
          <BigImage/>
+         {/* <div style="width:100%;height:0px;position:relative;padding-bottom:100.000%;"><iframe src="https://streamable.com/e/f1pcwf?autoplay=1&nocontrols=1" frameborder="0" width="100%" height="100%" allowfullscreen allow="autoplay" style="width:100%;height:100%;position:absolute;left:0px;top:0px;overflow:hidden;"></iframe></div> */}
          <Products
          cart={this.props.cart}
          cartHandler={this.props.cartHandler}

@@ -25,6 +25,7 @@ import Whatsapp from "./whatsapp/whatsapp"
 import GoTOTop from "./goToTop/goToTop"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Showcase from "./showcase/showcase"
 
  class Layout extends Component{
 
@@ -356,6 +357,8 @@ import 'react-toastify/dist/ReactToastify.css';
                    <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
                <Route exact path="/whoAreWe" component={WhoAreWe}/>
+               <Route exact path="/showcase" component={Showcase}/>
+
                <Route exact path="/privacyPolicy" component={PrivacyPolicy}/>
                <Route exact path="/sizeChart" component={SizeChart}/>
                <Route exact path="/deliveryAndReturn" component={DeliveryAndReturn}/>

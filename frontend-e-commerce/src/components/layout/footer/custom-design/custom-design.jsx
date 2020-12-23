@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Aos from "aos"
 import "aos/dist/aos.css"
+import { Link } from "react-router-dom";
+
 
 
  class CustomDesign extends Component{
@@ -95,9 +97,13 @@ import "aos/dist/aos.css"
 
      return (
           <div className="customDesign">
-          <video muted autoPlay={true} loop src={this.state.video} className="customDesign__video"></video>
+          <video muted autoPlay={true} loop src={this.state.video} className="customDesign__video">
+          </video>
+
             <div className="customDesign__videoGradient"></div>
             <form data-aos="custom-anime" onSubmit={this.customHandler} className="customDesign__form">
+            <Link to="/showcase">SHOWCASE</Link>
+
               <h1 className="customDesign__form--head">Your First Customised Product</h1>
               <input required onChange={this.onChangeHandler} value={this.state.customEmail} name="customEmail" placeholder="enter your email" className="customDesign__form--input" type="email"/>
               <textarea required onChange={this.onChangeHandler} className="customDesign__form--description" name="comment" value={this.state.comment} placeholder="description"></textarea>
