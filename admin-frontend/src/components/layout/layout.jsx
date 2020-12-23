@@ -28,6 +28,8 @@ import {Link} from "react-router-dom"
                          <Link to="/promo"><li className="nav__list--item">promo</li></Link>
                          <Link to="/clientui"><li className="nav__list--item">client ui</li></Link>
                          <Link to="/clients"><li className="nav__list--item">clients</li></Link>
+                         <Link to="/showcase"><li className="nav__list--item">showcase</li></Link>
+
                          <li onClick={this.props.logout} className="nav__list--item">logout</li>
                     </ul>
                </div>

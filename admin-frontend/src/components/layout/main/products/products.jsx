@@ -60,7 +60,7 @@ productDeleteHandler=(id)=>{
                      <div className="products__box--details-item">Views:  <span className="products__box--details-span">{product.view}</span></div>
                 </div>
                 <div className="products__box--image">
-                    <img src={'data:image/png;base64,'+product.defaultImage} alt=""/>
+                    <img src={product.defaultImage} alt=""/>
                 </div>
                 <Link to={{
                   pathname:"/updateProduct",

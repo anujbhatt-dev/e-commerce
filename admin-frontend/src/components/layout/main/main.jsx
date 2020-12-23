@@ -14,6 +14,7 @@ import ClientSideUI from "./client-side-ui/client-side-ui"
 import Clients from "./clients/clients"
 import Login from "../../login/login"
 import Landing from "./landing/landing"
+import Showcase from "./showcase/showcase"
 
  class Main extends Component{
 
@@ -37,6 +38,7 @@ import Landing from "./landing/landing"
                   <Route exact path="/designs"><Designs address={address} authenticated={this.props.authenticated}/></Route>
                   <Route exact path="/clientui"><ClientSideUI address={address} authenticated={this.props.authenticated}/></Route>
                   <Route exact path="/clients"><Clients address={address} authenticated={this.props.authenticated}/></Route>
+                  <Route exact path="/showcase"><Showcase address={address} authenticated={this.props.authenticated}/></Route>
               </Switch>
          </div>
      )
