@@ -184,7 +184,7 @@ import UpdateColor from "./update-color/update-color"
                          <input required data-tip="update product default image" onChange={this.productDetailsChangeHandler} name="defaultImage"  id="uploadImage" type="file"/>
                      </div><ReactTooltip />
                      <div className="updateProduct__details--image">
-                         <img  src={'data:image/png;base64,'+this.state.product.defaultImage} alt={this.state.product.productName}/>
+                         <img  src={this.state.product.defaultImage} alt={this.state.product.productName}/>
                      </div>
                      <button type="submit" className="products__box--btn">update</button>
                      <button onClick={this.productDeleteHandler} type="submit" className="products__box--btn updateProduct__delete--btn">delete</button>
@@ -200,7 +200,7 @@ import UpdateColor from "./update-color/update-color"
                              <div className="updateProduct__color-2">
                                  {color.images.map((image,ii)=>(
                                    <div className="updateProduct__color--details-image">
-                                       <img  src={'data:image/png;base64,'+image.image} alt={this.state.product.productName}/>
+                                       <img  src={image.image} alt={this.state.product.productName}/>
                                        <button onClick={()=>this.imageDeleteHandler(image.id,i,ii)}  className="products__box--btn">delete</button>
                                    </div>
                                  ))}

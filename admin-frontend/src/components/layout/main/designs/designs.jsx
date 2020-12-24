@@ -48,7 +48,7 @@ import dwight from "../../../../assets/images/dwight.jpg"
                                 <div className="designs__box--item">{customOrder.email}</div>
                                 <div className="designs__box--item">{customOrder.createdOn}</div>
                                 <div className="designs__box--item">{customOrder.comment}</div>
-                                <img className="designs__box--image" src={'data:image/png;base64,'+customOrder.image} alt="dwight"/>
+                                <img className="designs__box--image" src={customOrder.image} alt="dwight"/>
                                 <button id="delete" onClick={()=>this.designDeleteHandler(customOrder.id,i)} type="submit" className="products__box--btn updateProduct__delete--btn">delete</button>
                               </div>
                             ))}

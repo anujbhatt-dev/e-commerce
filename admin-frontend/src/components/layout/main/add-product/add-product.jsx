@@ -188,7 +188,7 @@ this.setState({savingProduct:true})
      header=(
       <div className="">
          <input disabled="true" className="addProduct__form--name" value={this.state.savedProduct.productName}/>
-         <img className="stage__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
+         <img className="stage__image" src={this.state.savedProduct.defaultImage} alt="productImage"/>
         <AddColor authenticated={this.props.authenticated}   address={this.props.address}  productId={this.state.savedProduct.id} colorsSaved={this.colorsSaved}/>
       </div>
      )
@@ -197,7 +197,7 @@ this.setState({savingProduct:true})
         <div>
           <input disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.productName}/>
           <input  disabled="true" className="addProduct__form--name"  type="text" value={this.state.savedProduct.id}/>
-          <img className="stage__image" src={'data:image/png;base64,'+this.state.savedProduct.defaultImage} alt="productImage"/>
+          <img className="stage__image" src={this.state.savedProduct.defaultImage} alt="productImage"/>
       </div>
         <div  className="stage__2">
             {this.state.savedColors.map(color=>

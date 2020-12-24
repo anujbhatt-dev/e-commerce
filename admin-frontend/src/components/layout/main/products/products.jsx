@@ -59,6 +59,7 @@ productDeleteHandler=(id)=>{
                      <div className="products__box--details-item">Sale:  <span className="products__box--details-span">{product.sale}</span></div>
                      <div className="products__box--details-item">Views:  <span className="products__box--details-span">{product.view}</span></div>
                 </div>
+                {console.log(product)}
                 <div className="products__box--image">
                     <img src={product.defaultImage} alt=""/>
                 </div>
