@@ -143,6 +143,7 @@ import Showcase from "./showcase/showcase"
    }
 
    componentDidMount=()=>{
+     window.scrollTo({top:"0",behavior:"smooth"})
      if(this.props.authenticated){
        axios.get("/v1/client/cart").then(res=>{
 
@@ -333,7 +334,7 @@ import Showcase from "./showcase/showcase"
                    </Modal2>,<Backdrop2 key={"backdrop2"} clicked={this.modalProfileHandler} show={this.state.profile}/>]
      }
 
-     
+
      // else{
      //   modalLogin = [<Modal2 clicked={this.modalProfileHandler} show={this.state.profile}>
      //                    <div className="userDetail">
@@ -357,7 +358,10 @@ import Showcase from "./showcase/showcase"
                    <Main cart={this.state.cart} cartHandler={this.cartHandler} />
                </Route>
                <Route exact path="/whoAreWe" component={WhoAreWe}/>
-               <Route exact path="/showcase" component={Showcase}/>
+               <Route exact path="/showcase">
+                    <SecondaryNavigation/>
+                    <Showcase/>
+               </Route>
 
                <Route exact path="/privacyPolicy" component={PrivacyPolicy}/>
                <Route exact path="/sizeChart" component={SizeChart}/>

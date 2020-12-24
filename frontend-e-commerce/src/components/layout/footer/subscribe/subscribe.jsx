@@ -67,9 +67,9 @@ import "aos/dist/aos.css"
 
      return (
        <div className="subscribe">
-         <div data-aos="fade-down" className="subscribe__head">Subscribe to our Newsletter</div>
-         <div data-aos="fade-right" className="subscribe__subHead">Stay up to date with new product launches and exclusive discounts and offers</div>
-         <form data-aos="fade-left" className="subscribe__form" onSubmit={this.subscribeHandler}>
+         <div  data-aos-once="true" data-aos="fade-down" className="subscribe__head">Subscribe to our Newsletter</div>
+         <div  data-aos-once="true" data-aos="fade-right" className="subscribe__subHead">Stay up to date with new product launches and exclusive discounts and offers</div>
+         <form  data-aos-once="true" data-aos="fade-left" className="subscribe__form" onSubmit={this.subscribeHandler}>
            <input required onChange={this.onChangeHandler} value={this.state.email} name="email" placeholder="subscribe to my Newsletter" className="subscribe__form--input" type="text"/>
            <button className="subscribe__form--btn" type="submit">subscribe</button>
          </form>
