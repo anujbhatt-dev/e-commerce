@@ -266,7 +266,7 @@ import Showcase from "./showcase/showcase"
        </div>
                   {this.state.cart.map((product,i)=>(
                     <div key={product.id+i} className="modalCart__box">
-                        <img className="modalCart__box--item modalCart__box--img" src={'data:image/png;base64,'+product.selectedColorImage} alt=""/>
+                        <img className="modalCart__box--item modalCart__box--img" src={product.selectedColorImage} alt=""/>
                         <div className="modalCart__box--col1">
                             <div data-tip={product.productName} className="modalCart__box--item modalCart__box--name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
                             <div className="modalCart__box--item modalCart__box--size">{product.size}</div>
