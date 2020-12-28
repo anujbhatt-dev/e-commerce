@@ -20,8 +20,23 @@
       position: absolute;
       width: 100%;
       height: 95vh;
-      background-image:linear-gradient(134.5deg, rgba($color-black,.8) 26.5%, rgba($color-black,0.5) 26.5%, rgba($color-black,0.5) 100%);
+      // background-image:linear-gradient(134.5deg, rgba($color-black,.5) 26.5%, rgba($color-black,0.5) 26.5%, rgba($color-black,0.5) 100%);
       // opacity: 0.6;
+    }
+    &__link{
+      position: absolute;
+      bottom: 0rem;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-decoration: none;
+      padding: 2rem 6rem;
+      background: $color-white;
+      &:hover{
+        color:$color-white;
+        background: $color-black;
+      }
     }
     &__form{
       // box-shadow: inset 1rem 1rem 1rem rgba($color-black,.1),inset -1rem -1rem 1rem rgba($color-black,.1);
@@ -31,28 +46,14 @@
       margin-left: 10rem;
       padding: 3rem;
       background: rgba($color-white,.3);
-      border-radius: 18px;
    // background-image:linear-gradient(134.5deg, rgba($color-white,.5) 50.7%, rgba($color-white,0.8) 50.7%, rgba($color-white,0.8) 100%);
-      background: rgba($color-white,1);
+      background: rgba($color-white,.4);
    // border-radius: 19px;
       align-self: flex-start;
       position: absolute;
-      top:10%;
-      &_link{
-        text-decoration: none;
-        margin: auto;
-        color: $color-white;
-        margin-bottom: 2rem;
-        font-size: 1.5rem;
-        font-weight: bold;
-        padding: 1rem 2rem;
-        background: $color-primary-blue;
-        &:hover{
-          background: $color-white;
-          font-weight: bold;
-          box-shadow: 0 0 1rem rgba($color-primary-blue,.5);
-        }
-      }
+      top:20%;
+      border-radius: 18px;
+
       @include respond(phone){
           margin-left: 2rem;
       }
@@ -101,21 +102,17 @@
         }
       }
       &--btn{
-        background: $color-primary-blue;
+        background: transparent;
         display: inline-block;
         border: none;
-        height: 4rem;
+        height: 5rem;
         width: 10rem;
         font-size: 1.5rem;
-        font-weight:bold;
         transition: all .2s;
-        color:$color-white;
-        cursor: pointer;
+        color:$color-grey-dark-3;
         &:hover{
-          background: $color-white;
-          font-weight: bold;
-          color: $color-primary-blue;
-          box-shadow: 0 0 1rem rgba($color-primary-blue,.5);
+          color: #efefef;
+          background: $color-black;
         }
         &:focus{
           outline: none;

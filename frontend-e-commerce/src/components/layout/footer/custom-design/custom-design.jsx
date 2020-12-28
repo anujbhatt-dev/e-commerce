@@ -101,8 +101,8 @@ import { Link } from "react-router-dom";
           </video>
 
             <div className="customDesign__videoGradient"></div>
+            <Link to="/showcase"  className="customDesign__link">SHOWCASE</Link>
             <form data-aos="custom-anime" data-aos-once="true" onSubmit={this.customHandler} className="customDesign__form">
-              <Link to="/showcase"  className="customDesign__form_link">SHOWCASE</Link>
 
               <h1 className="customDesign__form--head">Your First Customised Product</h1>
               <input required onChange={this.onChangeHandler} value={this.state.customEmail} name="customEmail" placeholder="enter your email" className="customDesign__form--input" type="email"/>

@@ -8,7 +8,7 @@ class Showcase extends Component {
 
 
     state={
-        data:[1,1,1,1,1,1,1,1,1,1,1],
+        data:[],
             }
 
     componentDidMount=()=>{
@@ -24,7 +24,7 @@ class Showcase extends Component {
                 <div className="showcase__grid">
                      {this.state.data.map((d,i)=>
 
-                        <img className="showcase__grid_img" src={i%3===0?showcase:showcase2} alt=""/>
+                        <img className="showcase__grid_img" src={d.image} alt=""/>
                      )}
                 </div>
 
