@@ -100,7 +100,7 @@ import Spinner from "../../../UI/spinner/spinner"
                         <div className="orderItems">
                              {order.orderItems.map((orderItem,ii)=>(
                                     <div key={orderItem.id+ii} className="orderItems__card">
-                                        <img className="orderItems__card--item orderItems__card--image" src={'data:image/png;base64,'+orderItem.image} alt=""/>
+                                        <img className="orderItems__card--item orderItems__card--image" src={orderItem.image} alt=""/>
                                         <div className="orderItems__card--items">
                                         <div className="orderItems__card--item orderItems__card--size">Size: <span>{orderItem.size}</span></div>
                                             <div className="orderItems__card--item orderItems__card--name">Name: <span>{orderItem.productName}</span></div>

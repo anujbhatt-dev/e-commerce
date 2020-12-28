@@ -189,7 +189,7 @@ import 'react-toastify/dist/ReactToastify.css';
              <div className="checkout__product">
               {this.state.orders.length?this.state.orders.map((product,i)=>(
                 <div className="checkout__product--box">
-                    <img className="checkout__product--box-item checkout__product--box-img" src={'data:image/png;base64,'+product.selectedColorImage} alt=""/>
+                    <img className="checkout__product--box-item checkout__product--box-img" src={product.selectedColorImage} alt=""/>
                     <div className="checkout__product--box-col1">
                         <div data-tip={product.productName} className="checkout__product--box-item checkout__product--box-name">{(product.productName.length>25)?product.productName.slice(0,25):product.productName}{(product.productName.length>25)?"...":null}</div><ReactToolip/>
                         <div className="checkout__product--box-item checkout__product--box-size">{product.size}</div>
