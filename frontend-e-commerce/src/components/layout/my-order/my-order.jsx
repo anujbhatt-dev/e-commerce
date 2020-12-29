@@ -76,7 +76,7 @@ import Spinner from "../../../UI/spinner/spinner"
 
    render(){
      if(!this.props.authenticated){
-       window.location.href = "http://sheltered-scrubland-77233.herokuapp.com/";
+       window.location.href = "http://glacial-inlet-64341.herokuapp.com/";
      }
 
      if(this.state.flag===-1){

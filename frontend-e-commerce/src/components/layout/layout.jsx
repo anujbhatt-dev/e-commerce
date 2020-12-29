@@ -287,7 +287,7 @@ import Showcase from "./showcase/showcase"
                </div></Modal>,<Backdrop key={"backdrop1"} clicked={this.modalToggleHandler} show={this.state.show}/>]
                :[<Modal key={"modal1"} clicked={this.modalToggleHandler} show={this.state.show}>
                                <div className="user">
-                                   <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> Continue with Google </a>
+                                   <a href="http://innerclan-env.eba-zzm3m6qx.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> Continue with Google </a>
                                    <hr/>
                                    <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                         <h3>logIn</h3>
@@ -311,7 +311,7 @@ import Showcase from "./showcase/showcase"
      if(!this.props.authenticated){
        modalLogin = [<Modal2 key={"modal2"} clicked={this.modalProfileHandler} show={this.state.profile}>
                         <div className="user">
-                            <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
+                            <a href="http://innerclan-env.eba-zzm3m6qx.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
                             <hr/>
                             <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                  <h3>logIn</h3>
