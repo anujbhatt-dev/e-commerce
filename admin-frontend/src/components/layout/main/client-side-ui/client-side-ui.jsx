@@ -62,6 +62,10 @@ class ClientSideUI extends Component {
       let data={};
       data["image"]=this.state.data[i]["image"];
       data["quote"]=this.state.data[i]["quote"];
+
+      if(this.state.data[i]["id"])
+      data["id"]=this.state.data[i]["id"];
+
       axios.post("/v1/admin/ui",data).
         then(res=>{
             alert("Saved");
