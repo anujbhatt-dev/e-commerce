@@ -80,7 +80,13 @@ import Showcase from "./showcase/showcase"
    }
 
    logInSubmitHandler=(e)=>{
+     
+    console.log("Updating cookies")
      axios.post("/v1/client/authenticate",this.state.login).then(res=>{
+
+      document.cookie=`name=${res.data.firstName}`;
+      document.cookie=`email=${res.data.email}`;
+
         this.setState({
           // authenticated:true,
           login:{
@@ -142,9 +148,31 @@ import Showcase from "./showcase/showcase"
                    })
    }
 
+   getCookie=(value)=> {
+
+    let cookies= document.cookie+";";
+ 
+    if(cookies.indexOf(value)<0)
+    return null;
+ 
+   return cookies.substring(cookies.indexOf(value)+(value.length+1),cookies.indexOf(";",cookies.indexOf(value)+1));
+ 
+ }
+
    componentDidMount=()=>{
+
+    
      window.scrollTo({top:"0",behavior:"smooth"})
+     
+    if(this.getCookie("name")){ let userDetail= {};
+     userDetail["firstName"]= this.getCookie("name");
+     userDetail["email"]=this.getCookie("email");
+
+     this.setState({userDetail:{...userDetail}})
+     console.log(userDetail);
+}
      if(this.props.authenticated){
+
        axios.get("/v1/client/cart").then(res=>{
 
          this.setState({cart:[...res.data]})
@@ -287,7 +315,7 @@ import Showcase from "./showcase/showcase"
                </div></Modal>,<Backdrop key={"backdrop1"} clicked={this.modalToggleHandler} show={this.state.show}/>]
                :[<Modal key={"modal1"} clicked={this.modalToggleHandler} show={this.state.show}>
                                <div className="user">
-                                   <a href="http://innerclan-env.eba-zzm3m6qx.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> Continue with Google </a>
+                                   <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i class="fa fa-google" aria-hidden="true"></i> Continue with Google </a>
                                    <hr/>
                                    <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                         <h3>logIn</h3>
@@ -311,7 +339,7 @@ import Showcase from "./showcase/showcase"
      if(!this.props.authenticated){
        modalLogin = [<Modal2 key={"modal2"} clicked={this.modalProfileHandler} show={this.state.profile}>
                         <div className="user">
-                            <a href="http://innerclan-env.eba-zzm3m6qx.ap-south-1.elasticbeanstalk.com/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
+                            <a href="http://localhost:8082/oauth2/authorization/google" className="user__google"><i className="fa fa-google" aria-hidden="true"></i> continue with google </a>
                             <hr/>
                             <form className="user__login" onSubmit={this.logInSubmitHandler}>
                                  <h3>logIn</h3>
@@ -373,7 +401,7 @@ import Showcase from "./showcase/showcase"
                </Route>
                <Route exact path="/myOrders">
                     <SecondaryNavigation/>
-                    <MyOrders authenticated={this.props.authenticated} />
+                    <MyOrders setAuthorizationHeader={this.props.setAuthorizationHeader} authenticated={this.props.authenticated} />
                </Route>
            </Switch>
            <Footer/>
