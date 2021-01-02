@@ -2,19 +2,18 @@
 import axios from "axios"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import pic from "../../../../assets/images/innerclan_page-0001.jpg"
 
  class BigImage extends Component{
 
   state={
-    quote:"",
-    image:""
+    arr:[]
   }
 
   componentDidMount=()=>{
     axios.get("/v1/client/ui").then(res=>{
          this.setState({
-           quote:res.data[0].quote,
-           image:res.data[0].image1
+           arr:res.data
          })
     }).catch(err=>{
       if(err.response && err.response.data[0]){
@@ -29,11 +28,27 @@ import 'react-toastify/dist/ReactToastify.css';
 
      return (
        <div className="bigImage">
-          <img className="bigImage__image" src={this.state.image} alt=""/>
-           <div className="bigImage__quote">
-                <span className="bigImage__quote-span1">Inner Clan</span>
-                <span className="bigImage__quote-span2">{this.state.quote}</span>
+          <div className="bigImage__item">
+             <img className="bigImage__image" src={pic} alt=""/>
+             <div className="bigImage__quote">
+                  <span className="bigImage__quote-span1">Inner Clan</span>
+                  <span className="bigImage__quote-span2">{this.state.quote}</span>
+             </div>
            </div>
+           <div className="bigImage__item">
+              <img className="bigImage__image" src={pic} alt=""/>
+              <div className="bigImage__quote">
+                   <span className="bigImage__quote-span1">Inner Clan</span>
+                   <span className="bigImage__quote-span2">{this.state.quote}</span>
+              </div>
+            </div>
+            <div className="bigImage__item">
+               <img className="bigImage__image" src={pic} alt=""/>
+               <div className="bigImage__quote">
+                    <span className="bigImage__quote-span1">Inner Clan</span>
+                    <span className="bigImage__quote-span2">{this.state.quote}</span>
+               </div>
+             </div>
        </div>
      )
    }
