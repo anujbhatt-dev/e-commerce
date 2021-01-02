@@ -6,32 +6,49 @@ class ClientSideUI extends Component {
 
 
     state={
-       data:{
+       data:[{
         quote:"",
-        image1:"",
-        image2:"",
-       }
+        image:"",
+       }]
     }
 
     componentDidMount=()=>{
 
         axios.get("/v1/admin/ui").then(res=>{
-            if(res.data.length==1){
-               let data={... res.data[0]};
+            if(res.data.length>0){
+              
+              console.log(res.data)
                 this.setState({
-                     data:data,
+                     data:res.data,
                })
             }
         })
     }
 
 
-    onChangeHandler=(e)=>{
+    addUIElement=()=>{
+
+      let newData=[...this.state.data];
+      newData.push({
+        quote:"",
+        image:"",
+      })
+
+      this.setState({data:newData});
+
+    }
+
+    onChangeHandler=(e,i)=>{
         let name=e.target.name;
         let value= e.target.value;
+          
+        let newUi= {...this.state.data[i]};
+        newUi[name]=value;
 
-        let newData={...this.state.data};
-          newData[name]=value;
+
+        let newData=[...this.state.data];
+          newData[i]=newUi;
+
           this.setState({
            data:newData
           })
@@ -39,16 +56,53 @@ class ClientSideUI extends Component {
     }
 
 
-    onSubmitHandler=(e)=>{
+    onSubmitHandler=(i)=>{
 
-      axios.put("/v1/admin/ui",this.state.data).
+
+      let data={};
+      data["image"]=this.state.data[i]["image"];
+      data["quote"]=this.state.data[i]["quote"];
+      axios.post("/v1/admin/ui",data).
         then(res=>{
-            alert("Updated");
-        })
-
-        e.preventDefault();
+            alert("Saved");
+        }).
+        catch(err=>alert("Something went wrong"));
     }
 
+
+    deleteUIHandler=(i)=>{
+
+      if(this.state.data.length===1)
+{       alert("can't delete only one left");
+    
+return ;
+
+}
+
+       if(!this.state.data[i]["id"])
+       {
+        console.log(i+"  "+this.state.data[i]["id"])
+
+        let data=[...this.state.data];
+        data.splice(i,1)
+        
+        this.setState({data:data})
+       
+        return ;
+       }
+
+      axios.delete("/v1/admin/ui/"+this.state.data[i].id)
+      .then(res=>{
+        
+        let data=[...this.state.data];
+        data.splice(i,1)
+        
+        this.setState({data:data})
+       
+      })
+      
+      .catch(err=>alert("OOpss"));
+    }
 
 
 
@@ -60,12 +114,16 @@ class ClientSideUI extends Component {
         return (
             <div className="subscribe">
             <div className="subscribe__box">
-              <form onSubmit={this.onSubmitHandler}>
-                <input required onChange={this.onChangeHandler} name="image1" value={this.state.data.image1} className="subscribe__box--name" type="text" placeholder="image 1 link"/>
-                <textarea required onChange={this.onChangeHandler} name="image2" value={this.state.data.image2} className="subscribe__box--name" type="text" placeholder="image 2 link"></textarea>
-                <input required onChange={this.onChangeHandler} name="quote" value={this.state.data.quote} className="subscribe__box--name" type="text" placeholder="quote"/>
-               <input className="subscribe__box--btn" value="update" type="submit"/>
-              </form>
+              {this.state.data.map((ui,i)=>
+                
+                <div >
+                <input required onChange={(e)=>this.onChangeHandler(e,i)} name="quote" value={ui.quote} className="subscribe__box--name" type="text" placeholder="quote"/>
+                <textarea required onChange={(e)=>this.onChangeHandler(e,i)} name="image" value={ui.image} className="subscribe__box--name" type="text" placeholder="image"></textarea>
+               <button className="subscribe__box--btn"  onClick={()=>this.onSubmitHandler(i)} >Save</button>
+               <button onClick={()=>this.deleteUIHandler(i)}>Delete</button>
+              </div>
+                )}
+            <button onClick={this.addUIElement} >ADD</button>
             </div>
 
         </div>

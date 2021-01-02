@@ -14,8 +14,27 @@ import Spinner from "../../../UI/spinner/spinner"
      querying:false
    }
 
+   getCookie=(value)=> {
+
+    let cookies= document.cookie+";";
+ 
+    if(cookies.indexOf(value)<0)
+    return null;
+ 
+   return cookies.substring(cookies.indexOf(value)+(value.length+1),cookies.indexOf(";",cookies.indexOf(value)+1));
+ 
+ }
+ 
+
    componentDidMount=()=>{
-     window.scrollTo({top:0,behaviour:"smooth"})
+
+    if(this.getCookie("jwt")!==null)
+    {
+      this.props.setAuthorizationHeader(this.getCookie("jwt"),this.getCookie("email"),this.getCookie("name"));
+  }
+
+     window.scrollTo({top:0,behaviour:"smooth"});
+
      axios.get("/v1/order").then(res=>{
 
           let myOrders=[...res.data];
@@ -75,7 +94,11 @@ import Spinner from "../../../UI/spinner/spinner"
 
 
    render(){
-     if(!this.props.authenticated){
+
+
+
+
+     if(!this.props.authenticated && this.getCookie("jwt")===null){
        window.location.href = "http://glacial-inlet-64341.herokuapp.com/";
      }
 
