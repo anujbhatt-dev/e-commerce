@@ -81,7 +81,7 @@ import { Link } from "react-router-dom";
       Aos.init({duration:1500,delay:300})
     axios.get("/v1/client/ui").then(res=>{
          this.setState({
-           video:res.data[0].image2
+           video:res.data[res.data.length-1].image
          })
     }).catch(err=>{
       if(err.response && err.response.data[0]){
@@ -97,8 +97,8 @@ import { Link } from "react-router-dom";
 
      return (
           <div className="customDesign">
-          <video muted autoPlay={true} loop src={this.state.video} className="customDesign__video">
-          </video>
+            <video muted autoPlay={true} loop src={this.state.video} className="customDesign__video">
+            </video>
 
             <div className="customDesign__videoGradient"></div>
             <Link to="/showcase"  className="customDesign__link">SHOWCASE</Link>

@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.scss"
 import Layout from "./components/layout/layout"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
@@ -30,11 +31,11 @@ state={
   email:"",
 }
 
-componentDidUpdate(){  
+componentDidUpdate(){
 
   // if(this.state.authenticated===false)
   // if(this.getCookie("jwt")!==null)
-  // { 
+  // {
   //   alert("jwt present")
   //   axios.defaults.headers.common['authorization'] = this.getCookie("jwt");
   // this.setState({authenticated:true});
@@ -57,7 +58,7 @@ componentDidMount=()=>{
 
 
   if(this.getCookie("jwt")!==null)
-  { 
+  {
     axios.defaults.headers.common['authorization'] = this.getCookie("jwt");
   this.setState({authenticated:true});
 
@@ -70,7 +71,7 @@ componentDidMount=()=>{
 
     if(authorization){
     axios.defaults.headers.common['authorization'] = authorization;
-    document.cookie=`jwt=${authorization}`;   
+    document.cookie=`jwt=${authorization}`;
     console.log(this.getCookie("jwt")===authorization)
   this.setState({authenticated:true});
   }
@@ -81,7 +82,7 @@ componentDidMount=()=>{
 
 setAuthorizationHeader=(jwt,email,name)=>{
   axios.defaults.headers.common['authorization'] = jwt
- 
+
   var now = new Date();
   var time = now.getTime();
   var expireTime = time + 1000*36000;
@@ -101,7 +102,7 @@ logoutHandler=()=>{
 
 render(){
 
-  
+
 
 
 

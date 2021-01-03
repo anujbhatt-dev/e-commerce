@@ -4,6 +4,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import pic from "../../../../assets/images/innerclan_page-0001.jpg"
 
+import { Carousel } from "react-bootstrap"
+
+
  class BigImage extends Component{
 
   state={
@@ -27,29 +30,23 @@ import pic from "../../../../assets/images/innerclan_page-0001.jpg"
    render(){
 
      return (
-       <div className="bigImage">
-          <div className="bigImage__item">
-             <img className="bigImage__image" src={pic} alt=""/>
-             <div className="bigImage__quote">
-                  <span className="bigImage__quote-span1">Inner Clan</span>
-                  <span className="bigImage__quote-span2">{this.state.quote}</span>
-             </div>
-           </div>
-           <div className="bigImage__item">
-              <img className="bigImage__image" src={pic} alt=""/>
-              <div className="bigImage__quote">
-                   <span className="bigImage__quote-span1">Inner Clan</span>
-                   <span className="bigImage__quote-span2">{this.state.quote}</span>
-              </div>
-            </div>
-            <div className="bigImage__item">
-               <img className="bigImage__image" src={pic} alt=""/>
-               <div className="bigImage__quote">
-                    <span className="bigImage__quote-span1">Inner Clan</span>
-                    <span className="bigImage__quote-span2">{this.state.quote}</span>
-               </div>
-             </div>
-       </div>
+       <Carousel className="carousel">
+          {this.state.arr.map((item,i)=>{
+            if(i===this.state.arr.length-1){
+              return null
+            }
+            return  <Carousel.Item  className="carousel__item">
+                      <img
+                        className="d-block w-100 carousel__item-img"
+                        src={item.image}
+                        alt="First slide"
+                      />
+                      <Carousel.Caption>
+                        <h3 className="carousel__item-h3">{item.quote}</h3>
+                      </Carousel.Caption>
+                    </Carousel.Item>
+          })}
+      </Carousel>
      )
    }
  }
