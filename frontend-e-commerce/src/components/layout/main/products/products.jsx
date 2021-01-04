@@ -1,10 +1,13 @@
 import React, {Component} from "react"
 import axios from "axios"
+import chart from "../../../../assets/images/sizeChart.jpeg"
 import Spinner from "../../../../UI/spinner/spinner"
 import Modal from "../../../../UI/modal/modal"
+import Modal3 from "../../../../UI/modal3/modal3"
 import Backdrop from "../../../../UI/backdrop/backdrop"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {Button} from "react-bootstrap";
 
 
 class Products extends Component{
@@ -36,10 +39,15 @@ class Products extends Component{
      ,
      selectedProductId:-1,
      indexOfSelectedProduct:-1,
-     selectedImageIndex:0
+     selectedImageIndex:0,
+     sizeChart:false
    }
 
-
+    modal3Handler=()=>{
+      this.setState({
+        sizeChart:!this.state.sizeChart
+      })
+    }
 
 
     loadingHandler=()=>{
@@ -326,10 +334,11 @@ class Products extends Component{
                   </>
      }
 
+
      let modal = null;
       if(this.state.modalProductDetails.colors[0].images[0].image!==null){
        modal= <Modal clicked={this.modalToggleHandler} show={this.state.show}>
-              {!this.state.changing?<button  onClick={()=>this.arrowHandler("left")} className="productsTogglerLeft"> {"<"} </button>:null}
+              {!this.state.changing?<button  onClick={()=>this.arrowHandler("left")} id="productsTogglerLeft"> {"<"} </button>:null}
                {!this.state.changing?<div className="product">
                    <div className="product__imageBox">
                        <ul className="product__imageBox--angle">
@@ -387,8 +396,8 @@ class Products extends Component{
                       ?<div onClick={this.addCartHandler} className="nav__list--item product__details--cart-btn">Add to cart</div>
                       :<div className="nav__list--item product__details--cart-btn">ADDED</div>
                     }
-
                       </div>
+                      <div onClick={this.modal3Handler} style={{margin:"2rem auto"}} className="nav__list--item product__details--cart-btn">SIze chart</div>
                       <div className="product__details--comment">
                           <div className="product__details--comment-head">{this.state.modalProductDetails.comment}</div>
                           <ul className="product__details--comment-list">
@@ -399,7 +408,7 @@ class Products extends Component{
                       </div>
                    </div>
                </div>:<Spinner/>}
-               {!this.state.changing?<button  onClick={()=>this.arrowHandler("right")} className="productsTogglerRight">{">"}</button>:null}
+               {!this.state.changing?<button  onClick={()=>this.arrowHandler("right")} id="productsTogglerRight">{">"}</button>:null}
          </Modal>
      }
 
@@ -414,6 +423,12 @@ class Products extends Component{
        <>
            {modal}
            <Backdrop clicked={this.modalToggleHandler} show={this.state.show}/>
+           {this.state.sizeChart?[<Modal3 clicked={this.modal3Handler} show={this.state.sizeChart}>
+                <div>
+                    <img src={chart} alt=""/>
+                </div>
+
+             </Modal3>,<Backdrop clicked={this.modal3Handler} show={this.state.sizeChart}/>]:null}
            <div id="heading" className="heading">
                  <span className="heading__span">{this.props.selectedCategory.name} <sup style={{fontSize:"1rem",letterSpacing:"1px",marginLeft:"-1.5rem"}}>{(this.props.selectedCategory.id!==-1 && this.props.selectedCategory.id!==-2)?((this.props.selectedCategory.gender==="MALE")?"[MEN]":"[WOMEN]"):null}</sup></span>
            </div>

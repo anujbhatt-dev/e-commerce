@@ -258,9 +258,9 @@
 
 
 
-.productsTogglerLeft{
+#productsTogglerLeft{
    cursor: pointer;
-   position: absolute;
+   // position: absolute;
    left: -6rem;
    color: $color-grey-dark-3;
    font-size: 5rem;
@@ -278,9 +278,9 @@
      outline: none;
    }
 }
-.productsTogglerRight{
+#productsTogglerRight{
    cursor: pointer;
-  position: absolute;
+  // position: absolute;
   right: -6rem;
   color: $color-grey-dark-3;
   font-size: 5rem;

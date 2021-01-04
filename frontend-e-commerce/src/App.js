@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "./App.scss"
 import Layout from "./components/layout/layout"
 import {BrowserRouter, Route, Switch} from "react-router-dom"
@@ -30,11 +31,11 @@ state={
   email:"",
 }
 
-componentDidUpdate(){  
+componentDidUpdate(){
 
   // if(this.state.authenticated===false)
   // if(this.getCookie("jwt")!==null)
-  // { 
+  // {
   //   alert("jwt present")
   //   axios.defaults.headers.common['authorization'] = this.getCookie("jwt");
   // this.setState({authenticated:true});
@@ -57,7 +58,7 @@ componentDidMount=()=>{
 
 
   if(this.getCookie("jwt")!==null)
-  { 
+  {
     axios.defaults.headers.common['authorization'] = this.getCookie("jwt");
   this.setState({authenticated:true});
 
@@ -113,7 +114,7 @@ logoutHandler=()=>{
 
 render(){
 
-  
+
 
 
 
