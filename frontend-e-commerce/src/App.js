@@ -62,15 +62,15 @@ componentDidMount=()=>{
   this.setState({authenticated:true});
 
 }
-
-
-
+   
   axios.interceptors.response.use(response =>{
     let authorization=response.headers.authorization;
 
     if(authorization){
     axios.defaults.headers.common['authorization'] = authorization;
-    document.cookie=`jwt=${authorization}`;   
+    let expire = 'expires='+this.getExpireTime();
+
+    document.cookie=`jwt=${authorization}; path=/; ${expire}`;   
     console.log(this.getCookie("jwt")===authorization)
   this.setState({authenticated:true});
   }
@@ -78,24 +78,36 @@ componentDidMount=()=>{
     return response;});
 }
 
-
-setAuthorizationHeader=(jwt,email,name)=>{
-  axios.defaults.headers.common['authorization'] = jwt
- 
+getExpireTime=()=>{
   var now = new Date();
   var time = now.getTime();
   var expireTime = time + 1000*36000;
   now.setTime(expireTime);
-  document.cookie = 'expires='+now.toGMTString()+';path=/';
-  document.cookie=`name=${name}`+';path=/';
-  document.cookie=`jwt=${jwt}`+';path=/';
-  document.cookie=`email=${email}`+';path=/';
-  document.cookie='expires='+now.toGMTString()+';path=/';
+  return now.toGMTString();
+}
+
+
+
+setAuthorizationHeader=(jwt,email,name)=>{
+  axios.defaults.headers.common['authorization'] = jwt
+  let expire = 'expires='+this.getExpireTime();
+  document.cookie=`name=${name}; path=/; ${expire}`;
+  document.cookie=`jwt=${jwt}; path=/; ${expire}`;
+  document.cookie=`email=${email}; path=/; ${expire}`;;
   this.setState({authenticated:true,name:name,email:email});
 }
 
 
+ deleteCookie=(name) =>{
+  document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 logoutHandler=()=>{
+
+  this.deleteCookie("name");
+  this.deleteCookie("email");
+  this.deleteCookie("jwt");
+
   window.location.href="http://sheltered-scrubland-77233.herokuapp.com/";
 }
 
